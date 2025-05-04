@@ -1,0 +1,8 @@
+a {
+    color: inherit;       /* Giữ nguyên màu của văn bản */
+    text-decoration: none; /* Bỏ gạch chân */
+}
+a:hover {
+    color: inherit;       /* Giữ nguyên màu khi hover */
+    text-decoration: none; /* Bỏ gạch chân khi hover */
+}
