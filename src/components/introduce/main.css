@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+input{
+    outline: none;
+}
+.main{
+    width: 100%;
+    height: 100vh;
+    background: url('./img/bg.jpg');
+    background-size: cover;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 15vh; /* 20% chiều cao của trang */
+    width: 100%;
+    background-color: #00000000;
+    padding: 0 20px;
+}
+
+.logo {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    flex: 1;
+    margin-left: 10%;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.auth-buttons .btn {
+    white-space: nowrap;
+    font-weight: bold;
+    padding: 15px 20px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid #000000;
+}
+.auth-buttons .btn:hover {
+    background-color: #000000;
+    color: white;
+    border: 2px solid #ffffff;
+}
+
+.content {
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+
+
+
+#wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.image-container {
+    position: fixed;  /* Đặt vị trí cố định */
+    bottom: 0;        /* Cố định ảnh ở dưới cùng của cửa sổ */
+    right: 0;         /* Cố định ảnh ở góc phải của cửa sổ */
+    z-index: 9999;    /* Đảm bảo ảnh và nút hỗ trợ luôn hiển thị trên các phần tử khác */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: tiltAnimation 1.5s infinite;
+}
+
+/* Bức ảnh nền */
+.background-image {
+    width: 100%;
+    height: auto;
+    max-height: 200px; /* Đặt chiều cao tối đa cho ảnh nền */
+    object-fit: cover; /* Đảm bảo ảnh phủ kín và không bị méo */
+}
+
+/* Div chứa ảnh nền */
+.image-top {
+    position: absolute;  /* Đặt vị trí cố định */
+    top: -173px;        /* Cố định ảnh ở dưới cùng của cửa sổ */
+    right: 122px;         /* Cố định ảnh ở góc phải của cửa sổ */
+    z-index: 1;    /* Đảm bảo ảnh và nút hỗ trợ luôn hiển thị trên các phần tử khác */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Bức ảnh nền */
+.top-image {
+    width: 100%;
+    height: auto;
+    max-height: 250px; /* Đặt chiều cao tối đa cho ảnh nền */
+    object-fit: cover; /* Đảm bảo ảnh phủ kín và không bị méo */
+}
+.support-text {
+    font-size: 14px;
+    font-weight: bold;
+}
+.support-btn {
+    position: absolute; /* Đặt nút ở vị trí tuyệt đối */
+    bottom: 15px;       /* Cách đáy của phần tử chứa ảnh nền 20px */
+    right: 51px;        /* Cách cạnh phải của phần tử chứa ảnh nền 20px */
+    background-color: rgba(0, 123, 255, 0); /* Nền màu xanh với độ trong suốt */
+    padding: 10px 7px;
+    border-radius: 0%;  /* Nút có dạng tròn */
+    color: rgb(12, 114, 13);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+@keyframes tiltAnimation {
+    0% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+    100% { transform: rotate(-10deg); }
+}
