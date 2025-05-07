@@ -1,0 +1,240 @@
+/* Container for the entire order management component */
+.order-mgmt-container {
+  margin-bottom: 200px;
+  width: 100%;
+  color: #333; /* Changed from black to dark gray */
+  background-color: #ffffff; /* White background */
+  border-radius: 15px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05); /* Softer shadow */
+}
+
+/* Header styling */
+.order-mgmt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f0f4f8; /* Light background */
+  border-radius: 10px;
+}
+
+.order-mgmt-title {
+  font-size: 24px;
+  color: #2c3e50; /* Navy color for better contrast */
+  font-weight: 600;
+}
+
+.order-mgmt-header-controls {
+  display: flex;
+  align-items: center;
+}
+
+.order-mgmt-search {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 20px;
+  color: #2c3e50; /* Navy for contrast */
+  width: 250px;
+  outline: none;
+}
+
+.order-mgmt-search::placeholder {
+  color: #999;
+}
+
+.order-mgmt-date-picker {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 20px;
+  background-color: #ffffff; /* White */
+  color: #2c3e50; /* Navy */
+  outline: none;
+}
+
+.order-mgmt-create-btn {
+  background-color: #007bff; /* Bright blue for visibility */
+  color: white;
+  padding: 7px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0px 4px 8px rgba(0, 123, 255, 0.2); /* Blue shadow */
+  margin-left: 30px;
+}
+
+.order-mgmt-create-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+.order-mgmt-history-btn {
+  background-color: #ddff00d0; /* Bright blue for visibility */
+  color: rgb(0, 0, 0);
+  padding: 7px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0px 4px 8px rgba(0, 123, 255, 0.2); /* Blue shadow */
+  margin-left: 30px;
+}
+
+.order-mgmt-history-btn:hover {
+  background-color: #849709; /* Darker blue on hover */
+  color: rgb(0, 0, 0);
+}
+/* Table styling */
+.order-mgmt-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.order-mgmt-table th, .order-mgmt-table td {
+  padding: 15px 20px;
+  border: 1px solid #ddd; /* Softer border */
+}
+
+.order-mgmt-table th {
+  font-weight: 600;
+  color: #2c3e50; /* Navy */
+  text-align: left;
+}
+
+.order-mgmt-table td {
+  color: #2c3e50; /* Navy text for contrast */
+  text-align: left;
+}
+
+.order-mgmt-table td small {
+  font-size: 12px;
+  color: #999; /* Lighter gray for secondary text */
+}
+
+/* Status styles */
+.order-mgmt-status {
+  padding: 5px 15px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.order-mgmt-status.deliveried {
+  background-color: #28a745;
+  color: white;
+}
+
+.order-mgmt-status.canceled {
+  background-color: #dc3545;
+  color: white;
+}
+
+.order-mgmt-status.pending {
+  background-color: #ffc107;
+  color: black;
+}
+
+/* Action buttons */
+.order-mgmt-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-right: 10px;
+  padding: 8px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.order-mgmt-button.edit {
+  color: #007bff;
+}
+
+.order-mgmt-button.edit:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.order-mgmt-button.delete {
+  color: #dc3545;
+}
+
+.order-mgmt-button.delete:hover {
+  background-color: #dc3545;
+  color: white;
+}
+/* Small checkbox style */
+.order-mgmt-checkbox {
+  width: 16px;
+  height: 16px;
+  margin-left: 5px;
+  cursor: pointer;
+  accent-color: #007bff; /* Blue color for checked state */
+  border-radius: 3px; /* Slight rounding for modern look */
+}
+.infoDetail:hover{
+  background: #007bff;
+  border-radius: 8px;
+}
+.order-mgmt-table th:first-child, 
+.order-mgmt-table td:first-child {
+  width: 40px;
+  text-align: center; /* Centering the checkbox */
+}
+.save{
+  background-color:green ;
+  color:rgb(255, 255, 255)
+}
+.save:hover{
+  background-color:rgba(0, 128, 0, 0.783) ;
+  color:rgba(255, 255, 255, 0.708)
+}
+.cancel{
+  background-color: rgb(0, 0, 0);
+  color: white;
+  margin-top: 5px;
+}
+.cancel:hover{
+  background-color: rgba(0, 0, 0, 0.468);
+  color: rgba(255, 255, 255, 0.521);
+}
+.order-mgmt-container input[type="text"],
+.order-mgmt-container input[type="email"],
+.order-mgmt-container input[type="date"],
+.order-mgmt-container input[type="String"],
+.order-mgmt-container select {
+  width: 100%; /* Chiều rộng 100% của ô */
+  padding: 5px; /* Khoảng cách bên trong ô */
+  margin: 5px 0; /* Khoảng cách trên và dưới */
+  border-radius: 4px; /* Bo tròn góc */
+  border: 1px solid #ccc; /* Đường viền cho input */
+  box-sizing: border-box; /* Bao gồm padding và border vào chiều rộng */
+}
+.order-mgmt-container td {
+  max-width: 100px; /* Chiều rộng tối đa */
+  overflow-wrap: break-word; /* Cho phép xuống dòng khi cần thiết */
+  white-space: normal; /* Cho phép xuống dòng */
+}
+
+th:nth-child(5), td:nth-child(5) { /* Hành Động */
+ text-align: center;
+}
+th:nth-child(3), td:nth-child(3) { /* Hành Động */
+  text-align: center;
+ }
+ .order-mgmt-table tr:hover {
+  background-color: #f1f1f1; 
+  cursor: pointer;
+}
+
+
+.order-mgmt-table tr {
+  transition: background-color 0.3s ease;
+}
