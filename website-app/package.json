@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "myapp",
+=======
+  "name": "website-app",
+>>>>>>> 331aeb401622a122175ac9e835b4496706f54885
   "version": "0.1.0",
   "private": true,
   "dependencies": {
