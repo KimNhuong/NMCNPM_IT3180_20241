@@ -1,0 +1,245 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;}
+input{
+    outline: none;
+}
+.main{
+    width: 100%;
+    height: 100vh;
+}
+body {
+    position: relative;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 15vh; /* 20% chiều cao của trang */
+    width: 100%;
+    background-color: #000000;
+    padding: 0 20px;
+}
+
+.logo {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    flex: 1;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.auth-buttons .btn {
+    white-space: nowrap;
+    font-weight: bold;
+    padding: 15px 20px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid #000000;
+}
+.return{
+    position: absolute;
+    top:24px;
+    left: 24px;
+    cursor: pointer;
+
+}
+.g_id_signin {
+    text-align: center;
+}
+.auth-buttons .btn:hover {
+    background-color: #000000;
+    color: white;
+    border: 2px solid #ffffff;
+}
+
+.content {
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+ .login{z-index: 2;
+    position: absolute;
+    font-family: Arial, sans-serif;
+    display: block;
+    left: 50%; 
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.login-modal {
+
+    background-color: #1a1a1b;
+    padding: 20px;
+    width: 400px;
+    border-radius: 8px;
+    color: #d7dadc;
+    position: relative;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.login-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: white;
+}
+
+.close-btn {
+    cursor: pointer;
+    font-size: 24px;
+    color: #ffffff;
+}
+
+.login-modal p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #818384;
+}
+
+.login-modal a {
+    color: #0079d3;
+    text-decoration: none;
+}
+
+.login-option {
+    background-color: #ffffff;
+    color: #1a1a1b;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    margin: 10px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.forgoogle{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.google-login .profile-img {
+    margin-right: 10px;
+}
+
+.apple-login {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.divider::before, .divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #424242;
+}
+
+.divider span {
+    margin: 0 10px;
+    color: #818384;
+}
+
+.form-group {
+    margin: 10px 0;
+}
+
+.login-modal input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2a2a2b;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.login-modal input::placeholder {
+    color: #818384;
+}
+
+.forgot-password {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #0079d3;
+    text-decoration: none;
+}
+
+#login-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #3a3a3b;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.signup-text {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.signup-text a {
+    color: #0079d3;
+}
+.custom-google-login {
+    background-color: #4285F4; /* Màu xanh của Google */
+    color: white;              /* Màu chữ trắng */
+    border: none;              /* Bỏ viền */
+    padding: 10px 20px;       /* Điều chỉnh padding */
+    border-radius: 5px;       /* Bo góc */
+    cursor: pointer;           /* Con trỏ chuột dạng tay */
+  }
+/* facebook */
+.facebook-login-button {
+    margin-top: 10px;
+    width:100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff; /* Màu xanh của Facebook */
+    color: rgb(0, 0, 0); /* Màu chữ */
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .facebook-login-button:hover {
+    background-color: #365899; /* Màu khi hover */
+  }
+  
+  .facebook-icon {
+    height: 100%;
+    margin-right: 8px; /* Khoảng cách giữa icon và chữ */
+  }
+  
