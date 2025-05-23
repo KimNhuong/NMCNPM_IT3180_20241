@@ -1,0 +1,189 @@
+/* ProductDetail.css */
+
+.product-detail-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.product-image-show{
+    width: 150px;
+    border-radius: 10px;
+    object-fit: cover; /* Giữ tỉ lệ ảnh, cắt phần thừa để ảnh vừa khung */
+}
+.product-detail-container {
+    position: relative;
+    width: 80%;
+    max-width: 800px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #000;
+}
+
+.product-info h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.product-info p {
+    margin: 8px 0;
+    color: #555;
+}
+
+
+.product-info-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .product-info-details-row {
+    display: flex;
+    flex-wrap: wrap;
+    word-wrap: break-word; /* Cho phép nội dung dài được chia dòng nếu cần */
+    white-space: normal; /* Nội dung có thể xuống dòng */
+  }
+
+  .product-info-details-row strong {
+    width: 30%; /* Cột đầu tiên chiếm 30% */
+    color: gray;
+  }
+
+  .product-info-details-row span {
+    width: 70%; /* Cột thứ hai chiếm 70% */
+    padding-left: 10px;
+  }
+
+
+
+.edit-button-detail {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ffc107;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.edit-button-detail:hover {
+    background-color: #e0a800;
+}
+
+.product-edit-form h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.product-edit-form .form-group {
+    margin-bottom: 15px;
+}
+
+.product-edit-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+}
+
+.product-edit-form input[type="text"],
+.product-edit-form input[type="number"],
+.product-edit-form input[type="date"],
+.product-edit-form select,
+.product-edit-form textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.product-edit-form input[type="text"]:focus,
+.product-edit-form input[type="number"]:focus,
+.product-edit-form input[type="date"]:focus,
+.product-edit-form select:focus,
+.product-edit-form textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.product-edit-form textarea {
+    resize: vertical;
+    height: 80px;
+}
+
+.submit-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.save-button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.save-button:hover {
+    background-color: #218838;
+}
+
+.cancel-button {
+    padding: 10px 20px;
+    background-color: #6c757d;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.cancel-button:hover {
+    background-color: #5a6268;
+}
+.change_image{
+    height: 40px;
+    width: 150px;
+    margin-top: 3px;
+    background-color: #000;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.change_image:hover{
+    background-color: #000;
+    color: rgba(255, 255, 255, 0.564);
+}

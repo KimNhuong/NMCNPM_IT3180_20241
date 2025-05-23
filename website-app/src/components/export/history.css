@@ -1,0 +1,9 @@
+.have_phone{
+    cursor: pointer;
+}
+.have_phone:hover{
+    background-color: rgb(122, 167, 167);
+}
+.product_detail_customer{
+    margin-top: 2px;
+}

@@ -1,0 +1,97 @@
+.header-order{
+    margin:10px 12px;
+    display: flex;
+    justify-content: space-between;
+    position: sticky; /* Đặt phần header ở vị trí cố định */
+    top: 0; /* Đặt khoảng cách từ đầu modal */
+    background: white; /* Nền trắng để giữ cho nó rõ ràng */
+    z-index: 10; /* Đảm bảo header ở trên cùng */
+  }
+
+  /* Container for the entire app */
+.container_modal {
+  max-height: 400px;
+  width: 100%;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  overflow-y: auto; /* Tự động hiển thị thanh cuộn khi cần thiết */
+  scrollbar-width: thin; /* Cho các trình duyệt Firefox */
+  scrollbar-color: #888 #f1f1f1;
+}
+.supplier2{
+  display: flex;
+}
+/* Title styling */
+/* h1 {
+  text-align: center;
+  color: #333;
+} */
+
+/* Style for the table */
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.order-table th, .order-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.order-table th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.order-table tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Style for Detail button */
+.detail-btn {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.detail-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Style for the detailed information when a row is clicked */
+.detail-info {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+.detail-info h3 {
+  color: #333;
+}
+
+.detail-info p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+.tr:nth-child(3), tr:nth-child(3){
+  width: 30px;
+}
+.tr:nth-child(7), tr:nth-child(7){
+  width: 100px;
+}
+
+.loadMore:hover{
+  cursor: pointer;
+  color:rgb(59, 118, 226);
+  text-decoration: underline;
+}
+.product-table td{
+  vertical-align: middle;
+}

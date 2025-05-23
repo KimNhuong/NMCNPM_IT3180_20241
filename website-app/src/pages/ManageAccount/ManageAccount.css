@@ -1,0 +1,246 @@
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+}
+
+.account-table {
+  width: 100%;
+  margin: 20px auto;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.account-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.account-table h2 {
+  font-size: 24px;
+  margin: 0;
+  color: #333;
+}
+
+.uy-search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 200px;
+  margin-right: 10px;
+}
+
+.create-order-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-order-btn:hover {
+  background-color: #0056b3;
+}
+
+.account-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.account-table table th, .account-table table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.account-table table th {
+  background-color: #f4f4f9;
+  font-weight: bold;
+}
+
+.checkbox-all,
+.checkbox-user {
+  margin: 0;
+}
+
+.status.active {
+  color: green;
+}
+
+.status.inactive {
+  color: orange;
+}
+
+.status.delete {
+  color: red;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.uy-dropdown-menu {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.uy-dropdown-menu ul {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+}
+
+.uy-dropdown-menu ul li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.uy-dropdown-menu ul li:hover {
+  background-color: #f4f4f9;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Ensure it's above other elements */
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  max-width: 100%;
+  position: relative;
+  top: 10%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.create-account-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-account-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.create-account-form button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create-account-form button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.create-account-form button[type="button"] {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.create-account-form button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.create-account-form button[type="button"]:hover {
+  background-color: #5a6268;
+}
+
+/* Close Button */
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Định dạng chung cho dropdown */
+.create-account-form select {
+  width: 100%;           /* Độ rộng chiếm toàn bộ vùng chứa */
+  padding: 10px;         /* Khoảng cách bên trong */
+  border: 1px solid #ccc; /* Màu viền nhạt */
+  border-radius: 5px;    /* Bo tròn góc */
+  background-color: #f9f9f9; /* Màu nền nhạt */
+  font-size: 16px;       /* Cỡ chữ */
+  color: #333;           /* Màu chữ */   
+  margin-bottom: 10px;      /* Khoảng cách phía trên */
+}
+
+.create-account-form select:focus {
+  border-color: #007bff; /* Đổi màu viền khi focus */
+  outline: none;         /* Tắt viền outline mặc định */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Tạo hiệu ứng đổ bóng khi focus */
+}
+
+.uy-sentagain {
+  text-align: center;
+  color: #007bff; /* Màu chữ xanh */
+  cursor: pointer; /* Thay đổi con trỏ thành pointer khi di chuột */
+  text-decoration: underline; /* Gạch chân để nhấn mạnh */
+  font-weight: bold; /* Chữ đậm */
+  font-size: 16px; /* Kích thước chữ */
+  margin: 10px 0; /* Khoảng cách trên dưới */
+  display: inline-block; /* Hiển thị như một khối nội tuyến */
+  transition: color 0.3s ease, text-shadow 0.3s ease; /* Hiệu ứng chuyển đổi màu và bóng chữ */
+}
+
+.uy-sentagain:hover {
+  color: #0056b3; /* Thay đổi màu khi di chuột */
+  text-shadow: 0px 0px 5px rgba(0, 123, 255, 0.6); /* Hiệu ứng bóng chữ khi di chuột */
+}
+
+.uy-sentagain:active {
+  color: #003d80; /* Màu khi nhấn vào */
+  text-shadow: none; /* Loại bỏ bóng chữ khi nhấn */
+}
+
+.deleteAccountBtn{
+  background-color: red; 
+  color: white; 
+  border: none; 
+  padding: 10px 20px; 
+  border-radius: 5px; 
+  cursor: pointer;
+}

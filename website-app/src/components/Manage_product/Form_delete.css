@@ -1,0 +1,68 @@
+/* CSS cho DeleteProductModal */
+.delete_form-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Nền mờ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Đảm bảo modal luôn ở phía trước */
+  }
+  
+  .delete_form-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 600px;
+    max-width: 90%;
+    text-align: center;
+  }
+  
+  .delete_form-input-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .delete_form-input-group input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .delete_form-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .delete_form-btn-delete {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .delete_form-btn-delete:hover {
+    background-color: darkred;
+  }
+  
+  .delete_form-btn-cancel {
+    background-color: grey;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .delete_form-btn-cancel:hover {
+    background-color: darkgrey;
+  }
+  

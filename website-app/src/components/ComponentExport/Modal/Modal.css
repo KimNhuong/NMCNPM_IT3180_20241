@@ -1,0 +1,44 @@
+
+.modal-overlay button{
+  outline:none;
+  display: block;  
+}
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal {
+    display:block;
+    background: white;
+    margin-top: 100px;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 1200px;
+    width: 100%;
+    position: relative;
+    min-height: 60vh;
+    max-height: 80vh;
+    overflow: hidden; /* Ẩn thanh cuộn của modal */
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .modal-CircleX{
+    color:#333;
+  }
+  

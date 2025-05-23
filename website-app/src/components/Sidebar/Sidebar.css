@@ -1,0 +1,72 @@
+.sidebar{
+    padding: 10px;
+    border-right: 2px #b7b7b7 solid;
+    width: 20%;
+    position: fixed;
+    height: 100vh; 
+    overflow-y: auto;
+    background-color: #0e0f28;
+    scroll-behavior: smooth;
+    overflow: hidden; 
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 8px; /* Độ rộng của thanh cuộn */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #8686d6; /* Màu của thanh kéo */
+  border-radius: 4px; /* Bo góc thanh kéo */
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #5a5aa1; /* Màu của thanh kéo khi hover */
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #0e0f28; /* Màu nền của thanh cuộn */
+}
+  
+  .sidebar>li{
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Inter';
+  }
+  
+  .sidebar__link{
+    display: flex;
+    align-items: center;
+    padding: 15px 24px;
+    border: 8px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    color: #b7b7b7;
+  }
+  
+  .sidebar__link:hover{
+    color: #1514ef;
+    background-color: #E7EDFF;
+  }
+  
+  .sidebar__icon{
+    font-size: 24px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .sidebar__link.active {
+    color: #8686d6;  /* Đổi màu text thành xanh */
+  }
+  .logo-header{
+    height: 57px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5px;
+    margin-bottom: 15px;
+  }
+  .add_jus{
+    justify-content: center;
+  }

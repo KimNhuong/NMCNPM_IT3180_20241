@@ -1,0 +1,144 @@
+/* CSS chung cho modal overlay và modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+
+}
+
+.payment-modal {  max-height: 500px;
+  overflow-y: auto;
+  background-color: white;
+  padding: 20px 30px;
+  width: 700px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+/* Header của form */
+.payment-modal h2 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Phong cách chung cho các nhãn */
+.payment-modal label {
+  display: block;
+  font-weight: bold;
+  color: #555;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Phong cách cho các input và select */
+.payment-modal input[type="text"],
+.payment-modal input[type="number"],
+.payment-modal select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.payment-modal input[type="text"]:focus,
+.payment-modal input[type="number"]:focus,
+.payment-modal select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Phong cách cho phần tổng tiền */
+.payment-modal .total-amount {
+  color: red;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: right;
+  margin-top: 10px;
+}
+
+/* Căn chỉnh các nút bấm ở cuối form */
+.payment-modal .button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Phong cách cho các nút bấm */
+.payment-modal button {
+  background-color: #007bff;
+  color: white;
+  margin-left:5px;
+  padding:8px 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.payment-modal button:hover {
+  background-color: #0056b3;
+}
+
+.payment-modal button:active {
+  background-color: #004494;
+}
+
+.payment-modal .cancel-button {
+  background-color: #f44336;
+}
+
+.payment-modal .cancel-button:hover {
+  background-color: #d32f2f;
+}
+
+.payment-modal .cancel-button:active {
+  background-color: #b71c1c;
+}
+.delete_bill{
+  font-size: 25px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+.qr-code-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.qr-code-container img {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.bank-payment-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.bank-payment-button:hover {
+  background-color: #45a049;
+}
