@@ -156,7 +156,7 @@ const Forgot_password = ({ off, turnon }) => {
                 <input
                   name="ma"
                   type="text"
-                  placeholder="điền mã xác nhận ở đây"
+                  placeholder="Điền mã xác nhận ở đây"
                   value={ma}
                   onChange={(e) => {
                     SetMa(e.target.value);
