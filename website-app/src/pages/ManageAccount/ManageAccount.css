@@ -1,246 +1,597 @@
-/* Global styles */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  margin: 0;
-  padding: 0;
+/* ===== MANAGE ACCOUNT STYLES ===== */
+
+.manage-account {
+  padding: 24px;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 }
 
-.account-table {
-  width: 100%;
-  margin: 20px auto;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 20px;
-}
-
+/* ===== HEADER SECTION ===== */
 .account-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
+  color: white;
 }
 
-.account-table h2 {
-  font-size: 24px;
+.account-header h1 {
   margin: 0;
-  color: #333;
+  font-size: 28px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.uy-search-container {
+.header-actions {
   display: flex;
+  gap: 16px;
   align-items: center;
 }
 
+/* ===== SEARCH AND FILTER BAR ===== */
+.search-filter-bar {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+}
+
+.search-container {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+
 .search-input {
-  padding: 8px 12px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  width: 200px;
-  margin-right: 10px;
+  width: 100%;
+  padding: 12px 16px 12px 44px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  background-color: #f8fafc;
 }
 
-.create-order-btn {
-  background-color: #007bff;
-  color: #fff;
-  padding: 8px 12px;
+.search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  font-size: 16px;
+}
+
+.filter-select {
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #f8fafc;
+  min-width: 150px;
+  transition: all 0.2s ease;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-.create-order-btn:hover {
-  background-color: #0056b3;
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
-.account-table table {
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.btn-secondary:hover {
+  background-color: #e2e8f0;
+  color: #334155;
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  color: white;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+}
+
+.btn-icon {
+  padding: 8px;
+  min-width: 36px;
+  justify-content: center;
+}
+
+/* ===== TABLE STYLES ===== */
+.accounts-table-container {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.accounts-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  font-size: 14px;
 }
 
-.account-table table th, .account-table table td {
-  padding: 12px;
-  border: 1px solid #ddd;
+.accounts-table th {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 16px 20px;
   text-align: left;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 2px solid #e2e8f0;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-.account-table table th {
-  background-color: #f4f4f9;
-  font-weight: bold;
+.accounts-table th:hover {
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
 }
 
-.checkbox-all,
-.checkbox-user {
+.accounts-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.accounts-table tr:hover {
+  background-color: #f8fafc;
+}
+
+.accounts-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ===== STATUS BADGES ===== */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-active {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-inactive {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.status-pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+/* ===== ROLE BADGES ===== */
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: #e0e7ff;
+  color: #3730a3;
+}
+
+/* ===== AVATAR ===== */
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e2e8f0;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-details h4 {
   margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
 }
 
-.status.active {
-  color: green;
+.user-details p {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
 }
 
-.status.inactive {
-  color: orange;
+/* ===== ACTION DROPDOWN ===== */
+.action-dropdown {
+  position: relative;
+  display: inline-block;
 }
 
-.status.delete {
-  color: red;
-}
-
-.menu-btn {
+.action-btn {
   background: none;
   border: none;
+  padding: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 20px;
+  color: #6b7280;
+  transition: all 0.2s ease;
 }
 
-.uy-dropdown-menu {
+.action-btn:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.dropdown-menu {
   position: absolute;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 150px;
+  overflow: hidden;
 }
 
-.uy-dropdown-menu ul {
+.dropdown-menu ul {
   list-style: none;
-  padding: 10px;
   margin: 0;
+  padding: 8px 0;
 }
 
-.uy-dropdown-menu ul li {
-  padding: 5px 10px;
+.dropdown-menu li {
+  padding: 0;
+}
+
+.dropdown-menu button {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: none;
+  text-align: left;
   cursor: pointer;
+  font-size: 14px;
+  color: #374151;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.uy-dropdown-menu ul li:hover {
-  background-color: #f4f4f9;
+.dropdown-menu button:hover {
+  background-color: #f3f4f6;
 }
 
-/* Modal Styles */
+.dropdown-menu button.danger:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+/* ===== MODAL STYLES ===== */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Dark transparent background */
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 999; /* Ensure it's above other elements */
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
 .modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  width: 400px;
-  max-width: 100%;
-  position: relative;
-  top: 10%;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.create-account-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.create-account-form input {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  position: relative;
+  animation: modalSlideIn 0.3s ease-out;
 }
 
-.create-account-form button {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.create-account-form button[type="submit"] {
-  background-color: #007bff;
-  color: #fff;
-  margin-bottom: 10px;
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.create-account-form button[type="button"] {
-  background-color: #6c757d;
-  color: #fff;
+.modal-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
 }
 
-.create-account-form button[type="submit"]:hover {
-  background-color: #0056b3;
-}
-
-.create-account-form button[type="button"]:hover {
-  background-color: #5a6268;
-}
-
-/* Close Button */
-.close-modal {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.close-btn {
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 24px;
   cursor: pointer;
+  color: #6b7280;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
-/* Định dạng chung cho dropdown */
-.create-account-form select {
-  width: 100%;           /* Độ rộng chiếm toàn bộ vùng chứa */
-  padding: 10px;         /* Khoảng cách bên trong */
-  border: 1px solid #ccc; /* Màu viền nhạt */
-  border-radius: 5px;    /* Bo tròn góc */
-  background-color: #f9f9f9; /* Màu nền nhạt */
-  font-size: 16px;       /* Cỡ chữ */
-  color: #333;           /* Màu chữ */   
-  margin-bottom: 10px;      /* Khoảng cách phía trên */
+.close-btn:hover {
+  background-color: #f3f4f6;
+  color: #374151;
 }
 
-.create-account-form select:focus {
-  border-color: #007bff; /* Đổi màu viền khi focus */
-  outline: none;         /* Tắt viền outline mặc định */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Tạo hiệu ứng đổ bóng khi focus */
+/* ===== FORM STYLES ===== */
+.form-group {
+  margin-bottom: 20px;
 }
 
-.uy-sentagain {
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  background-color: #f9fafb;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-input.error {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.form-error {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.password-input-container {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 4px;
+}
+
+.password-toggle:hover {
+  color: #374151;
+}
+
+/* ===== OTP SECTION ===== */
+.otp-section {
+  background-color: #f0f9ff;
+  border: 1px solid #0ea5e9;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.otp-info {
+  color: #0369a1;
+  font-size: 14px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.resend-otp {
+  color: #0ea5e9;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.resend-otp:hover {
+  color: #0284c7;
+}
+
+/* ===== FORM ACTIONS ===== */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* ===== LOADING STATES ===== */
+.loading-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .manage-account {
+    padding: 16px;
+  }
+
+  .account-header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .search-filter-bar {
+    flex-direction: column;
+  }
+
+  .accounts-table-container {
+    overflow-x: auto;
+  }
+
+  .accounts-table {
+    min-width: 600px;
+  }
+
+  .modal-content {
+    margin: 16px;
+    padding: 24px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+}
+
+/* ===== UTILITY CLASSES ===== */
+.text-center {
   text-align: center;
-  color: #007bff; /* Màu chữ xanh */
-  cursor: pointer; /* Thay đổi con trỏ thành pointer khi di chuột */
-  text-decoration: underline; /* Gạch chân để nhấn mạnh */
-  font-weight: bold; /* Chữ đậm */
-  font-size: 16px; /* Kích thước chữ */
-  margin: 10px 0; /* Khoảng cách trên dưới */
-  display: inline-block; /* Hiển thị như một khối nội tuyến */
-  transition: color 0.3s ease, text-shadow 0.3s ease; /* Hiệu ứng chuyển đổi màu và bóng chữ */
 }
-
-.uy-sentagain:hover {
-  color: #0056b3; /* Thay đổi màu khi di chuột */
-  text-shadow: 0px 0px 5px rgba(0, 123, 255, 0.6); /* Hiệu ứng bóng chữ khi di chuột */
+.text-right {
+  text-align: right;
 }
-
-.uy-sentagain:active {
-  color: #003d80; /* Màu khi nhấn vào */
-  text-shadow: none; /* Loại bỏ bóng chữ khi nhấn */
+.mb-0 {
+  margin-bottom: 0;
 }
-
-.deleteAccountBtn{
-  background-color: red; 
-  color: white; 
-  border: none; 
-  padding: 10px 20px; 
-  border-radius: 5px; 
-  cursor: pointer;
+.mt-4 {
+  margin-top: 16px;
+}
+.hidden {
+  display: none;
+}
+.flex {
+  display: flex;
+}
+.items-center {
+  align-items: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.gap-2 {
+  gap: 8px;
+}
+.gap-4 {
+  gap: 16px;
 }
