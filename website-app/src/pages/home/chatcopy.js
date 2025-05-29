@@ -10,7 +10,7 @@ function Chat({ chats, ring }) {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const messageHandled = useRef(false);
-  // const socket = io("http://localhost:8080");
+  const socket = io("http://localhost:8080");
   useEffect(() => {
     const fetchMessages = async () => {
       if (loading) return;
@@ -67,30 +67,30 @@ function Chat({ chats, ring }) {
     // };
   }, [loading, user]);
   useEffect(() => {
-    // socket.on("receive_message", (data) => {
-    //   console.log(!messageHandled.current);
-    //   console.log(data.sender._id !== user._id);
-    //   if (!messageHandled.current && data.sender._id !== user._id) {
-    //     messageHandled.current = true;
+    socket.on("receive_message", (data) => {
+      console.log(!messageHandled.current);
+      console.log(data.sender._id !== user._id);
+      if (!messageHandled.current && data.sender._id !== user._id) {
+        messageHandled.current = true;
 
-    //     const newMessage = {
-    //       ...data,
-    //       isUser: data.sender._id === user._id,
-    //     };
-    //     console.log("day la chat ", chats);
-    //     if (!chats) {
-    //       ring();
-    //     }
-    //     setChat((prev) => [...prev, newMessage]);
-    //     setTimeout(() => {
-    //       messageHandled.current = false; // Đặt lại để xử lý tin nhắn mới
-    //     }, 1000); // Ví dụ reset sau 1 giây
-    //   }
-    // });
+        const newMessage = {
+          ...data,
+          isUser: data.sender._id === user._id,
+        };
+        console.log("day la chat ", chats);
+        if (!chats) {
+          ring();
+        }
+        setChat((prev) => [...prev, newMessage]);
+        setTimeout(() => {
+          messageHandled.current = false; // Đặt lại để xử lý tin nhắn mới
+        }, 1000); // Ví dụ reset sau 1 giây
+      }
+    });
 
     // Cleanup khi component unmount
     return () => {
-      // socket.disconnect();
+      socket.disconnect();
     };
   }, [ring]);
   useEffect(() => {
@@ -104,7 +104,7 @@ function Chat({ chats, ring }) {
         content: message,
       };
 
-      // socket.emit("send_message", newMessage);
+      socket.emit("send_message", newMessage);
 
       setChat((prev) => [
         ...prev,

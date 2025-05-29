@@ -1378,6 +1378,7 @@ const ContentOrder = ({
           <button onClick={() => handleSubmit()}>Complete</button>
         </div>
       </div>
+      {/* <Import2 /> */}
     </>
   );
 };

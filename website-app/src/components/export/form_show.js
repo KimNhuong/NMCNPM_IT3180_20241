@@ -65,10 +65,10 @@ const History = ({ turnoff, supplier }) => {
   //   Lọc các đơn hàng theo tìm kiếm
   const filteredOrders = initialOrders.filter(
     (order) =>
-      (order.name && order.name.includes(searchTerm)) ||
-      (order.email && order.email.includes(searchTerm)) ||
-      (order.phone && order.phone.includes(searchTerm)) ||
-      (order.money && order.money.includes(searchTerm))
+      (order?.name && order?.name?.includes(searchTerm)) ||
+      (order?.email && order?.email.includes(searchTerm)) ||
+      (order?.phone && order?.phone.includes(searchTerm)) ||
+      (order?.money && order?.money.includes(searchTerm))
   );
 
   // Cập nhật selectedOrders mỗi khi filteredOrders thay đổi
@@ -285,10 +285,10 @@ const History = ({ turnoff, supplier }) => {
               {filteredOrders.map((order, index) => (
                 <tr key={index}>
                   <td>
-                    {order.creater.name}
-                    <br /> <small>{order.creater.email}</small>
+                    {order?.creater.name}
+                    <br /> <small>{order?.creater.email}</small>
                   </td>
-                  <td>{formatDateTime(order.createdAt)}</td>
+                  <td>{formatDateTime(order?.createdAt)}</td>
                   <td>
                     {editingIndex === index ? (
                       <div>
@@ -307,12 +307,12 @@ const History = ({ turnoff, supplier }) => {
                       </div>
                     ) : (
                       <div>
-                        {order.name} <br /> <small>{order.email}</small>
+                        {order?.name} <br /> <small>{order?.email}</small>
                       </div>
                     )}
                   </td>
                   <td>
-                    <span className={`history-mgmt-status ${order.action}`}>
+                    <span className={`history-mgmt-status ${order?.action}`}>
                       {editingIndex === index ? (
                         <div>
                           <input
@@ -323,7 +323,7 @@ const History = ({ turnoff, supplier }) => {
                           />
                         </div>
                       ) : (
-                        <div>{order.phone}</div>
+                        <div>{order?.phone}</div>
                       )}
                     </span>
                   </td>
@@ -340,7 +340,7 @@ const History = ({ turnoff, supplier }) => {
                             />
                           </div>
                         ) : (
-                          <div>{order.rate}</div>
+                          <div>{order?.rate}</div>
                         )}
                       </td>
                       <td>
@@ -354,7 +354,7 @@ const History = ({ turnoff, supplier }) => {
                             />
                           </div>
                         ) : (
-                          <div>{order.money}</div>
+                          <div>{order?.money}</div>
                         )}
                       </td>
                     </>

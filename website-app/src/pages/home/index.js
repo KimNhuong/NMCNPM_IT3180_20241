@@ -200,58 +200,58 @@ function Home() {
           console.error("Error fetching income:", error);
         }
       };
-      const get_report_customer = async () => {
-        try {
-          const response = await fetch(
-            "http://localhost:8080/api/home/generateCustomerReport",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                user: user,
-              }),
-            }
-          );
+      // const get_report_customer = async () => {
+      //   try {
+      //     const response = await fetch(
+      //       "http://localhost:8080/api/home/generateCustomerReport",
+      //       {
+      //         method: "POST",
+      //         headers: {
+      //           "Content-Type": "application/json",
+      //         },
+      //         body: JSON.stringify({
+      //           user: user,
+      //         }),
+      //       }
+      //     );
 
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
+      //     if (!response.ok) {
+      //       throw new Error("Network response was not ok");
+      //     }
 
-          const data = await response.json();
-          console.log("customer:", data);
-          setData(data);
-        } catch (error) {
-          console.error("Error fetching income:", error);
-        }
-      };
-      const get_top_product = async () => {
-        try {
-          const response = await fetch(
-            "http://localhost:8080/api/home/generate_top_product",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                user: user,
-              }),
-            }
-          );
+      //     const data = await response.json();
+      //     console.log("customer:", data);
+      //     setData(data);
+      //   } catch (error) {
+      //     console.error("Error fetching income:", error);
+      //   }
+      // };
+      // const get_top_product = async () => {
+      //   try {
+      //     const response = await fetch(
+      //       "http://localhost:8080/api/home/generate_top_product",
+      //       {
+      //         method: "POST",
+      //         headers: {
+      //           "Content-Type": "application/json",
+      //         },
+      //         body: JSON.stringify({
+      //           user: user,
+      //         }),
+      //       }
+      //     );
 
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
+      //     if (!response.ok) {
+      //       throw new Error("Network response was not ok");
+      //     }
 
-          const data = await response.json();
-          console.log("products:", data);
-          setTopproduct(data);
-        } catch (error) {
-          console.error("Error fetching income:", error);
-        }
-      };
+      //     const data = await response.json();
+      //     console.log("products:", data);
+      //     setTopproduct(data);
+      //   } catch (error) {
+      //     console.error("Error fetching income:", error);
+      //   }
+      // };
       const get_pending = async () => {
         try {
           const response = await fetch(
@@ -303,8 +303,8 @@ function Home() {
         get_revenue(),
         get_income(),
         get_customer(),
-        get_report_customer(),
-        get_top_product(),
+        // get_report_customer(),
+        // get_top_product(),
         get_pending(),
         get_activity(),
       ]);

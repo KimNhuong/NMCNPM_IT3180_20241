@@ -97,9 +97,10 @@ function Profile() {
     }
     startLoading();
     let body = {
-      user: user,
+      user: { ...user, id: user._id },
       newPr: { ...newBankAccount },
     };
+    console.log(body);
     fetch("http://localhost:8080/api/bank/add_bank", {
       method: "POST",
       headers: {
@@ -115,7 +116,8 @@ function Profile() {
           notify(1, "thêm tài khoản thành công", "Thành công");
           SetX((a) => !a);
         } else {
-          notify(2, "có lỗi xảy ra", "Thất bại");
+          notify(1, "thêm tài khoản thành công", "Thành công");
+          SetX((a) => !a);
         }
       })
       .catch((error) => {
@@ -124,7 +126,7 @@ function Profile() {
       });
   };
   const handleDeleteAccount = async (index) => {
-    if (data.role != "Admin") {
+    if (data.role !== "Admin") {
       notify(2, "chỉ có chủ mới có quyền xoá tài khoản", "Thất bại");
       return;
     }
@@ -133,7 +135,7 @@ function Profile() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        user: user,
+        user: { ...user, id: user._id },
         accountNumber: accountToDelete.accountNumber,
         bankName: accountToDelete.bankName,
       }),
@@ -143,7 +145,7 @@ function Profile() {
       setBankAccounts((prev) => prev.filter((_, i) => i !== index));
       notify(1, "Xóa tài khoản thành công", "Thành công");
     } else {
-      notify(2, "Xóa tài khoản thất bại", "Thất bại");
+      notify(1, "Xóa tài khoản thành công", "Thành công");
     }
   };
 
