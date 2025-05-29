@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import LayoutDefault from "./layouts/LayoutDefault";
-import Home from "./pages/Home";
+import Home from "./pages/home";
 import ManageProduct from "./pages/ManageProduct";
 import Page404 from "./pages/Page404";
 import Import from "./pages/Import";
@@ -11,15 +11,15 @@ import Profile from "./pages/Profile/index.js";
 import Surprised from "./pages/Surprised/index.js";
 import ProtectedRoute from "../src/components/introduce/protect.js";
 import Cookies from "js-cookie";
-import { Loading } from "./components/introduce/Loading.js";
+import { LoadingProvider, Loading } from "./components/introduce/Loading.js";
+import Notification from "./components/Notification/notification.js";
 import ManageAccount from "./pages/ManageAccount/index.js";
 import RolesGroup from "./pages/RolesGroup/index.js";
 import Permissions from "./pages/Permission/index.js";
-import Notification from "./components/Notification/notification.js";
 import CalendarComponent from "./pages/Calendar/index.js";
 function App() {
   return (
-    <>
+    <LoadingProvider>
       <Loading />
       <Notification />
       <Routes>
@@ -45,7 +45,7 @@ function App() {
         </Route>
         <Route path="*" element={<Page404 />} />
       </Routes>
-    </>
+    </LoadingProvider>
   );
 }
 

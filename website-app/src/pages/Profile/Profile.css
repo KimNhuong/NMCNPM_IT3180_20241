@@ -1,0 +1,243 @@
+.profile-container {
+  font-family: Arial, sans-serif;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.profile-header {
+  position: relative;
+  text-align: center;
+}
+
+.banner {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.profile-picture {
+  position: absolute;
+  top: 120px; /* Điều chỉnh vị trí của avatar */
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  border: 3px solid white;
+  overflow: hidden;
+  background-color: white; /* Đặt màu nền cho avatar */
+}
+
+.profile-picture .avatar .uy-avatar,
+.profile-picture .avatar .uy-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  border-radius: 50%; 
+}
+
+.profile-info {
+  margin-top: 25px; /* Cách phần header một khoảng để không bị chồng lấn với avatar */
+  text-align: center;
+}
+
+.uy-avatar {
+  width: 100%;
+  height: 100%;
+}
+
+.profile-picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Đảm bảo ảnh luôn bao phủ hết avatar mà không bị biến dạng */
+}
+.profile-picture:hover{
+  opacity: 0.8;
+}
+
+.profile-info .profile-info__name {
+  font-weight: 700;
+  font-size: 32px;
+  margin: 10px 0;
+}
+
+.message-btn {
+  background-color: #5a7dfe;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.connect-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.connect-section ul li {
+  margin: 10px 0;
+}
+
+.logout{
+  background-color: #e91313;
+  margin-top: 20px; /* Đảm bảo Logout button không bị dính sát dưới */
+}
+
+.message-btn {
+  background-color: #5a7dfe;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+.profile-info input{
+ display: block;
+  padding: 5px; /* Khoảng cách bên trong ô */
+  margin: 5px 0; /* Khoảng cách trên và dưới */
+  border-radius: 4px; /* Bo tròn góc */
+  border: 1px solid #ccc; /* Đường viền cho input */
+  box-sizing: border-box; /* Bao gồm padding và border vào chiều rộng */
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+/* .bank-section {
+  margin: 20px 0;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+} */
+
+.bank-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.bank-header h3 {
+  font-size: 20px;
+  color: #333;
+  margin: 0;
+}
+
+.add-bank-btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  color: white;
+  background: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.add-bank-btn:hover {
+  background: #218838;
+}
+
+.bank-form {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.bank-form label {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.bank-form input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.bank-form button {
+  padding: 10px 20px;
+  font-size: 14px;
+  color: white;
+  background: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: "background 0.3s";
+}
+
+.bank-form button:hover {
+  background: #0056b3;
+}
+.edit_account{
+  background-color: #ffc107; /* Màu vàng */
+  color: #000000; /* Màu chữ trắng */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: "background-color 0.3s ease";
+}
+.delete_account{
+  background-color: #dc3545; /* Màu đỏ */
+  color: #ffffff; /* Màu chữ trắng */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: "background-color 0.3s ease";
+}
+/* Dropdown chọn ngân hàng */
+.bank-select-container {
+  margin: 20px 0;
+  position: relative;
+}
+
+.bank-select-label {
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.bank-select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  appearance: none; /* Xóa mũi tên mặc định */
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.bank-select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+.bank-select-container::after {
+  content: "▼";
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #666;
+  pointer-events: none;
+}

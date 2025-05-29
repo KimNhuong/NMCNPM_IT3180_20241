@@ -1,0 +1,311 @@
+.dashboard-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .dashboard-title {
+    margin-bottom: 0;
+  }
+  
+  .dashboard-title h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 4px;
+  }
+  
+  .dashboard-title h6 {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 0;
+  }
+  
+  .dashboard-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .dashboard-actions a {
+    display: inline-block;
+    padding: 14px 16px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #007bff;
+    border-radius: 15px;
+    text-decoration: none;
+  }
+  
+  .dashboard-actions a:hover {
+    background-color: #0056b3;
+  }
+  /* Dashboard Cards Styles */
+  .row-card-no-pd {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .card {
+    border: none;
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card h6 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 8px;
+  }
+  
+  .card p.text-muted {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 0;
+  }
+  
+  .card h4.fw-bold {
+    font-size: 24px;
+    font-weight: 700;
+    white-space: nowrap; /* Không cho phép xuống dòng */
+    overflow: hidden;    /* Ẩn phần văn bản tràn */
+    text-overflow: ellipsis; /* Thêm dấu ba chấm nếu văn bản vượt quá */
+  }
+  
+  .card .progress {
+    height: 15px;
+    margin: 10px 0px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .card .progress-bar {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .card .progress-bar.bg-info {
+    background-color: #007bff !important;
+  }
+  
+  .card .progress-bar.bg-success {
+    background-color: #28a745 !important;
+  }
+  
+  .card .progress-bar.bg-danger {
+    background-color: #dc3545 !important;
+  }
+  
+  .card .progress-bar.bg-secondary {
+    background-color: #6c757d !important;
+  }
+  .card .d-flex.justify-content-between.mt-2 p {
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
+  /* Responsive Styles */
+  @media (min-width: 1200px) {
+    .col-xl-3 {
+      flex: 0 0 25%;
+      max-width: 25%;
+    }
+  }
+  
+  @media (min-width: 768px) and (max-width: 1199.98px) {
+    .col-md-6 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+  }
+  
+  @media (max-width: 767.98px) {
+    .col-12 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+   .justify-content-between {
+    display: flex;
+    justify-content: space-between !important;
+    align-items: center;
+}
+.d-flex{
+ display: flex!important;
+}
+.card-head-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between ;
+}
+.card-title {
+  margin: 0;
+  color: #2a2f5b;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.btn-sm {
+  font-size: 11px!important;
+  padding: 7px 13px;
+}
+.btn {
+  padding: .65rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 1;
+  border-radius: 25px;}
+  .me-2 {
+    margin-right: .5rem !important;
+}
+.btn-label-success {
+  background: rgba(49, 206, 54, .1);
+  color: #31ce36 !important;
+  border-color: transparent;
+}
+.btn-label-info {
+  background: rgba(72, 171, 247, .1);
+  color: #48abf7 !important;
+  border-color: transparent;
+}
+@media (min-width: 1200px) {
+  .container, .container-lg, .container-md, .container-sm, .container-xl {
+      max-width: 100%;
+  }
+}
+.row-card-no-pd {
+  border-radius: 10px;
+  margin-left: 0;
+  margin-right: 0;
+  background: #fff;
+  margin-bottom: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  position: relative;
+  -webkit-box-shadow: 2px 6px 15px 0 rgba(69, 65, 78, .1);
+  -moz-box-shadow: 2px 6px 15px 0 rgba(69, 65, 78, .1);
+  box-shadow: 2px 6px 15px 0 rgba(69, 65, 78, .1);
+  border: 0;}
+  .avatar .avatar-title {
+    font-size: 18px;
+}
+.avatar .border {
+  border-width: 3px !important;
+  width: 40px;
+}
+.avatar-title {
+  width: 100%;
+  height: 100%;
+  background-color: #6861ce;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rounded-circle {
+  max-width: 90px;
+  border-radius: 50% !important;
+  object-fit: cover;
+  width:100%
+}
+.bg-info {
+  --bs-bg-opacity: 1;
+}
+.border-white {
+  --bs-border-opacity: 1;
+  border-color: rgba(var(--bs-white-rgb), var(--bs-border-opacity)) !important; 
+}
+.border {
+  border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+}
+.separator-dashed{
+  margin-bottom: 15px;
+    border-top: 3px solid #0000003c;
+  margin: 15px 0;
+}
+.ps-3 {
+
+  padding-left: 1rem !important;
+}
+.mb-1 {
+  margin-bottom: .25rem !important;
+}
+.text-muted{
+  font-size: 14px;
+  white-space: nowrap; /* Không cho phép xuống dòng */
+  overflow: hidden;    /* Ẩn phần văn bản tràn */
+  text-overflow: ellipsis; /* Thêm dấu ba chấm nếu văn bản vượt quá */
+}
+.flex-1{ flex-grow: 1 }
+.activity-feed .feed-item {
+  position: relative;
+  padding-bottom: 20px;
+  padding-left: 30px;
+  border-left: 2px solid #e4e8eb;
+}
+.activity-feed {
+  padding: 15px;
+  list-style: none;
+}
+.activity-feed .feed-item::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -7px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #177dff;
+}
+.feed-item-success::after {
+  background: #31ce36 !important;
+}
+.feed-item-secondary::after {
+  background: #6861ce !important;
+}
+.feed-item-info::after {
+  background: #48abf7 !important;
+}
+.feed-item-warning::after {
+  background: #ffad46 !important;
+}
+.feed-item-danger::after {
+  background: #f25961 !important;
+}
+.activity-feed .feed-item .date {
+  display: block;
+  position: relative;
+  top: -5px;
+  color: #8c96a3;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+.activity-feed .feed-item {
+  position: relative;
+  padding-bottom: 40px;
+  padding-left: 30px;
+  border-left: 2px solid #e4e8eb;
+}
+.footer {margin-top: 50px;
+  border-top: 1px solid #eee;
+  padding: 15px;
+  background: #fff;
+  width: 100%;
+}
+.footer .container, .footer .container-fluid {
+  display: flex;
+  align-items: center;
+}
+.text-danger, .text-danger a {
+  color: #f25961 !important;
+}

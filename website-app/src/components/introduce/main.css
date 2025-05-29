@@ -1,0 +1,398 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+input {
+  outline: none;
+}
+.main {
+  width: 100%;
+  height: 100vh;
+  background: url("./img/bg.jpg");
+  background-size: cover;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 15vh; /* 20% chiều cao của trang */
+  width: 100%;
+  background-color: #00000000;
+  padding: 0 20px;
+}
+
+.logo {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+  margin-left: 10%;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.auth-buttons .btn {
+  white-space: nowrap;
+  font-weight: bold;
+  padding: 15px 20px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 2px solid #000000;
+}
+.auth-buttons .btn:hover {
+  background-color: #000000;
+  color: white;
+  border: 2px solid #ffffff;
+}
+
+.content {
+  padding: 20px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+#wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.image-container {
+  position: fixed; /* Đặt vị trí cố định */
+  bottom: 0; /* Cố định ảnh ở dưới cùng của cửa sổ */
+  right: 0; /* Cố định ảnh ở góc phải của cửa sổ */
+  z-index: 9999; /* Đảm bảo ảnh và nút hỗ trợ luôn hiển thị trên các phần tử khác */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: tiltAnimation 1.5s infinite;
+}
+
+/* Bức ảnh nền */
+.background-image {
+  width: 100%;
+  height: auto;
+  max-height: 200px; /* Đặt chiều cao tối đa cho ảnh nền */
+  object-fit: cover; /* Đảm bảo ảnh phủ kín và không bị méo */
+}
+
+/* Div chứa ảnh nền */
+.image-top {
+  position: absolute; /* Đặt vị trí cố định */
+  top: -173px; /* Cố định ảnh ở dưới cùng của cửa sổ */
+  right: 122px; /* Cố định ảnh ở góc phải của cửa sổ */
+  z-index: 1; /* Đảm bảo ảnh và nút hỗ trợ luôn hiển thị trên các phần tử khác */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Bức ảnh nền */
+.top-image {
+  width: 100%;
+  height: auto;
+  max-height: 250px; /* Đặt chiều cao tối đa cho ảnh nền */
+  object-fit: cover; /* Đảm bảo ảnh phủ kín và không bị méo */
+}
+.support-text {
+  font-size: 14px;
+  font-weight: bold;
+}
+.support-btn {
+  position: absolute; /* Đặt nút ở vị trí tuyệt đối */
+  bottom: 15px; /* Cách đáy của phần tử chứa ảnh nền 20px */
+  right: 51px; /* Cách cạnh phải của phần tử chứa ảnh nền 20px */
+  background-color: rgba(0, 123, 255, 0); /* Nền màu xanh với độ trong suốt */
+  padding: 10px 7px;
+  border-radius: 0%; /* Nút có dạng tròn */
+  color: rgb(12, 114, 13);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+@keyframes tiltAnimation {
+  0% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
+  }
+}
+
+.intro-bg {
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+  position: relative;
+  overflow: hidden;
+  font-family: "Segoe UI", "Roboto", Arial, sans-serif;
+  animation: introFadeIn 1s;
+}
+
+@keyframes introFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(120deg, #6366f1 0%, #f472b6 100%);
+  opacity: 0.08;
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 0.5s;
+}
+.intro-overlay.faded {
+  opacity: 0.3;
+}
+
+.intro-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 64px 0 64px;
+  background: transparent;
+  z-index: 2;
+  position: relative;
+}
+.intro-logo {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3b3b3b;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px #fff8;
+}
+.intro-logo img {
+  height: 64px;
+  width: 64px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 12px #6366f133;
+  object-fit: contain;
+}
+.intro-auth-buttons {
+  display: flex;
+  gap: 18px;
+}
+.intro-btn {
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(90deg, #6366f1 0%, #f472b6 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #6366f122;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+.intro-btn:hover {
+  background: linear-gradient(90deg, #f472b6 0%, #6366f1 100%);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 24px #6366f144;
+}
+
+.intro-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  z-index: 1;
+  position: relative;
+}
+.intro-hero {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  margin-top: 40px;
+  animation: heroSlideIn 1.2s cubic-bezier(0.77, 0, 0.18, 1);
+}
+@keyframes heroSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.intro-hero-content {
+  max-width: 480px;
+  z-index: 2;
+}
+.intro-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #2d2d2d;
+  margin-bottom: 18px;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  text-shadow: 0 2px 8px #fff6;
+}
+.intro-title span {
+  color: #6366f1;
+  background: linear-gradient(90deg, #6366f1 0%, #f472b6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.intro-desc {
+  font-size: 1.25rem;
+  color: #555;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+.intro-cta-group {
+  display: flex;
+  gap: 18px;
+}
+.intro-cta {
+  padding: 12px 36px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(90deg, #f472b6 0%, #6366f1 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #f472b633;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+.intro-cta:hover {
+  background: linear-gradient(90deg, #6366f1 0%, #f472b6 100%);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 24px #6366f144;
+}
+.intro-hero-img {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.intro-hero-img img {
+  width: 340px;
+  height: auto;
+  border-radius: 32px;
+  box-shadow: 0 8px 32px #6366f122, 0 1.5px 8px #f472b622;
+  animation: floatImg 3s ease-in-out infinite;
+}
+@keyframes floatImg {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.intro-hero-bg-effect {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  width: 320px;
+  height: 120px;
+  background: radial-gradient(circle, #6366f1 0%, #f472b6 100%);
+  opacity: 0.18;
+  filter: blur(32px);
+  z-index: 0;
+  transform: translate(-50%, -50%);
+}
+.intro-footer {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 10;
+}
+.intro-support-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #6366f1 0%, #f472b6 100%);
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 32px;
+  text-decoration: none;
+  box-shadow: 0 2px 8px #6366f122;
+  transition: background 0.3s, box-shadow 0.2s, transform 0.2s;
+  font-size: 1.1rem;
+}
+.intro-support-btn:hover {
+  background: linear-gradient(90deg, #f472b6 0%, #6366f1 100%);
+  box-shadow: 0 6px 24px #6366f144;
+  transform: scale(1.05);
+}
+
+@media (max-width: 900px) {
+  .intro-header {
+    flex-direction: column;
+    gap: 18px;
+    padding: 24px 12px 0 12px;
+  }
+  .intro-main {
+    min-height: 60vh;
+  }
+  .intro-hero {
+    flex-direction: column;
+    gap: 32px;
+  }
+  .intro-hero-img img {
+    width: 220px;
+  }
+  .intro-hero-bg-effect {
+    width: 180px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 600px) {
+  .intro-header {
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 4px 0 4px;
+  }
+  .intro-title {
+    font-size: 1.5rem;
+  }
+  .intro-hero-img img {
+    width: 120px;
+  }
+  .intro-hero-bg-effect {
+    width: 80px;
+    height: 30px;
+  }
+  .intro-footer {
+    right: 8px;
+    bottom: 8px;
+  }
+  .intro-support-btn {
+    padding: 8px 12px;
+    font-size: 0.95rem;
+  }
+}

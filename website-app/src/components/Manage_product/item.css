@@ -1,0 +1,92 @@
+/* index2.css */
+
+/* Đặt khung chính của các sản phẩm */
+.product-grid {
+  display: grid; /* Chuyển sang chế độ grid */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Đặt số cột */
+  gap: 30px; /* Khoảng cách giữa các sản phẩm */
+  padding: 30px; /* Padding cho khung */
+}
+
+.item {
+  max-width: 100%; /* Đảm bảo mỗi sản phẩm không vượt quá chiều rộng của cột */
+}
+
+.product-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-image {
+  width: 100%;
+  height: 200px; /* Bạn có thể tùy chỉnh chiều cao theo nhu cầu */
+  border-radius: 10px;
+  object-fit: contain; /* Giữ tỉ lệ ảnh, cắt phần thừa để ảnh vừa khung */
+}
+
+.product-name {
+  margin: 16px 0;
+  font-size: 18px;
+  font-weight: bold;
+  white-space: nowrap;    /* Không cho phép xuống dòng */
+  overflow: hidden;       /* Ẩn phần nội dung tràn ra ngoài */
+  text-overflow: ellipsis; /* Hiển thị dấu "..." khi nội dung quá dài */
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.action-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Nút chi tiết */
+.edit-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #218838;
+}
+
+/* Nút xóa */
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .product-grid {
+    justify-content: center;
+  }
+
+  .item {
+    max-width: 100%;
+  }
+}
+/* td{
+  white-space:normal;
+  overflow-wrap: break-word;max-width: 300px;
+} */

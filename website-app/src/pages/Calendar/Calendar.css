@@ -1,0 +1,125 @@
+.rbc-toolbar {
+  background-color: #4285f4; /* Màu nền Google Blue */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.rbc-toolbar button {
+  background: white;
+  color: #4285f4;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.rbc-toolbar button:hover {
+  background-color: #e8f0fe; /* Màu hover nhẹ */
+}
+
+.rbc-month-view {
+  background-color: #f8f9fa; /* Màu nền sáng */
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.rbc-header {
+  font-weight: bold;
+  font-size: 16px;
+  color: #5f6368;
+  text-transform: uppercase;
+  padding: 5px 0;
+}
+
+.rbc-date-cell {
+  color: #5f6368;
+}
+
+.rbc-today {
+  background-color: #e8f0fe !important; /* Màu ngày hiện tại */
+  border-radius: 5px;
+}
+
+.rbc-day-slot:hover {
+  background-color: #f1f3f4; /* Hiệu ứng hover cho từng ô */
+}
+
+.rbc-selected {
+  background-color: #d2e3fc !important;
+  border: 2px solid #4285f4 !important;
+  border-radius: 5px;
+}
+
+.rbc-calendar {
+  font-family: "Roboto", sans-serif;
+}
+
+
+/* Calendar.css */
+
+.ca-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.ca-modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 90%;
+}
+
+.ca-modal h2 {
+  margin-top: 0;
+}
+
+.ca-modal-close {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 20px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.ca-modal-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.ca-modal-form input,
+.ca-modal-form button {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.ca-modal-form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.ca-modal-form button:hover {
+  background-color: #0056b3;
+}

@@ -1,0 +1,205 @@
+/* Container for the entire order management component */
+.history-mgmt-main{
+    position: fixed;
+    top:0px;
+    left:0px;
+    right:0px;
+    bottom:0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.history-mgmt-container {
+    overflow-y: auto;
+    height: 80%;
+    width: 80%;
+    color: #333; /* Changed from black to dark gray */
+    background-color: #ffffff; /* White background */
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05); /* Softer shadow */
+    position: relative;
+  }
+  
+  /* Header styling */
+  .history-mgmt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f0f4f8; /* Light background */
+    border-radius: 10px;
+  }
+  
+  .history-mgmt-title {
+    font-size: 24px;
+    color: #2c3e50; /* Navy color for better contrast */
+    font-weight: 600;
+  }
+  
+  .history-mgmt-header-controls {
+    display: flex;
+    align-items: center;
+  }
+  
+  .history-mgmt-search {
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 20px!important;
+    background-color: #ffffff; /* White for clean look */
+    color: #2c3e50; /* Navy for contrast */
+    width: 250px;
+    outline: none;
+  }
+  
+  .history-mgmt-search::placeholder {
+    color: #999;
+  }
+  
+  .history-mgmt-date-picker {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 20px;
+    background-color: #ffffff; /* White */
+    color: #2c3e50; /* Navy */
+    outline: none;
+  }
+  
+  .history-mgmt-create-btn {
+    background-color: #007bff; /* Bright blue for visibility */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0px 4px 8px rgba(0, 123, 255, 0.2); /* Blue shadow */
+  }
+  
+  .history-mgmt-create-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Table styling */
+  .history-mgmt-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .history-mgmt-table th, .history-mgmt-table td {
+    padding: 15px 20px;
+    border: 1px solid #ddd; /* Softer border */
+  }
+  
+  .history-mgmt-table th {
+    background-color: #f0f4f8; /* Light gray background for headers */
+    font-weight: 600;
+    color: #2c3e50; /* Navy */
+    text-align: left;
+  }
+  
+  .history-mgmt-table td {
+    background-color: #ffffff; /* White background for rows */
+    color: #2c3e50; /* Navy text for contrast */
+    text-align: left;
+  }
+  
+  .history-mgmt-table td small {
+    font-size: 12px;
+    color: #999; /* Lighter gray for secondary text */
+  }
+  
+  /* Status styles */
+  .history-mgmt-status {
+    padding: 5px 15px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+  }
+  
+  .history-mgmt-status.create {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .history-mgmt-status.delete {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .history-mgmt-status.update {
+    background-color: #ffc107;
+    color: black;
+  }
+  
+  /* Action buttons */
+  .history-mgmt-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    margin-right: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .history-mgmt-button.edit {
+    color: #007bff;
+  }
+  
+  .history-mgmt-button.edit:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .history-mgmt-button.delete {
+    color: #dc3545;
+  }
+  
+  .history-mgmt-button.delete:hover {
+    background-color: #dc3545;
+    color: white;
+  }
+  /* Small checkbox style */
+  .history-mgmt-checkbox {
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
+    cursor: pointer;
+    accent-color: #007bff; /* Blue color for checked state */
+    border-radius: 3px; /* Slight rounding for modern look */
+  }
+  
+  .history-mgmt-table th:first-child, 
+  .history-mgmt-table td:first-child {
+    text-align: center; /* Centering the checkbox */
+  }
+  .close{
+    position: absolute;
+    font-size: 30px;
+    right: 5px;
+    cursor: pointer;
+    top: 5px;
+  }
+  .history-mgmt-container input[type="text"],
+  .history-mgmt-container input[type="email"],
+  .history-mgmt-container input[type="date"],
+  .history-mgmt-container input[type="String"],
+  .history-mgmt-container select {
+    width: 100%; /* Chiều rộng 100% của ô */
+    padding: 5px; /* Khoảng cách bên trong ô */
+    margin: 5px 0; /* Khoảng cách trên và dưới */
+    border-radius: 4px; /* Bo tròn góc */
+    border: 1px solid #ccc; /* Đường viền cho input */
+    box-sizing: border-box; /* Bao gồm padding và border vào chiều rộng */
+  }
