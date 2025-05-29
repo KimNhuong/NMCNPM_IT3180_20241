@@ -9,14 +9,19 @@ import { notify } from "../../components/Notification/notification";
 
 const localizer = momentLocalizer(moment);
 
-const CalendarComponent = ({defaultView}) => {
+const CalendarComponent = ({ defaultView }) => {
   const [events, setEvents] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({ title: "", employee: "", start_time: "", end_time: "" });
+  const [formData, setFormData] = useState({
+    title: "",
+    employee: "",
+    start_time: "",
+    end_time: "",
+  });
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const { user, loading } = useAuth();
-  const { startLoading, stopLoading } = useLoading(); 
+  const { startLoading, stopLoading } = useLoading();
 
   const formatEvents = (data) =>
     data.map((event) => ({
@@ -26,31 +31,34 @@ const CalendarComponent = ({defaultView}) => {
       end: new Date(event.end_time),
     }));
 
-    const fetchEvents = async (userId) => {
-      try {
-        const response = await fetch(`http://localhost:5000/calendar/show?userId=${userId}`, {
+  const fetchEvents = async (userId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/calendar/show?userId=${userId}`,
+        {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-        });
-  
-        if (!response.ok) throw new Error("Failed to fetch events");
-  
-        const data = await response.json();
-        setEvents(formatEvents(data));
-      } catch (error) {
-        console.error("Error fetching events:", error);
-      }
-    };
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to fetch events");
+
+      const data = await response.json();
+      setEvents(formatEvents(data));
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
   // Fetch sự kiện từ server
   useEffect(() => {
     startLoading();
-    const fetchData = async () =>{
-      if(user){
+    const fetchData = async () => {
+      if (user) {
         await fetchEvents(user.id_owner);
       }
-    }
+    };
     fetchData();
     stopLoading();
   }, [user]);
@@ -105,25 +113,28 @@ const CalendarComponent = ({defaultView}) => {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/calendar/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          task: formData.title,
-          employee: formData.employee,
-          start_time: startDateTime.toISOString(),
-          end_time: endDateTime.toISOString(),
-          id_owner: user.id_owner,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:8080/api/calendar/create",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            task: formData.title,
+            employee: formData.employee,
+            start_time: startDateTime.toISOString(),
+            end_time: endDateTime.toISOString(),
+            id_owner: user.id_owner,
+          }),
+        }
+      );
 
-      if(response.ok){
-        notify(1,"Thêm lịch làm việc thành công","Thành công");
+      if (response.ok) {
+        notify(1, "Thêm lịch làm việc thành công", "Thành công");
       }
-      if (!response.ok){
-        notify(2,"Thêm lịch làm việc thất bại","Thất bại");
+      if (!response.ok) {
+        notify(2, "Thêm lịch làm việc thất bại", "Thất bại");
         throw new Error("Failed to delete event");
-      } 
+      }
 
       setEvents([...events, newEvent]);
       await fetchEvents(user.id_owner);
@@ -141,40 +152,49 @@ const CalendarComponent = ({defaultView}) => {
     const updatedEvent = {
       id: selectedEvent.id,
       title: `${formData.title} - ${formData.employee}`,
-      start: moment(selectedEvent.start).set({
-        hour: parseInt(formData.start_time.split(":")[0]),
-        minute: parseInt(formData.start_time.split(":")[1]),
-      }).toDate(),
-      end: moment(selectedEvent.start).set({
-        hour: parseInt(formData.end_time.split(":")[0]),
-        minute: parseInt(formData.end_time.split(":")[1]),
-      }).toDate(),
+      start: moment(selectedEvent.start)
+        .set({
+          hour: parseInt(formData.start_time.split(":")[0]),
+          minute: parseInt(formData.start_time.split(":")[1]),
+        })
+        .toDate(),
+      end: moment(selectedEvent.start)
+        .set({
+          hour: parseInt(formData.end_time.split(":")[0]),
+          minute: parseInt(formData.end_time.split(":")[1]),
+        })
+        .toDate(),
     };
     console.log(updatedEvent, selectedEvent.id);
-    
-    try {
-      const response = await fetch(`http://localhost:5000/calendar/update/${selectedEvent.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          task: formData.title,
-          employee: formData.employee,
-          start_time: updatedEvent.start.toISOString(),
-          end_time: updatedEvent.end.toISOString(),
-          id_owner: user.id_owner,
-        }),
-      });
 
-      if(response.ok){
-        notify(1,"SửaSửa lịch làm việc thành công","Thành công");
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/calendar/update/${selectedEvent.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            task: formData.title,
+            employee: formData.employee,
+            start_time: updatedEvent.start.toISOString(),
+            end_time: updatedEvent.end.toISOString(),
+            id_owner: user.id_owner,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        notify(1, "SửaSửa lịch làm việc thành công", "Thành công");
       }
-      if (!response.ok){
-        notify(2,"Sửa lịch làm việc thất bại","Thất bại");
+      if (!response.ok) {
+        notify(2, "Sửa lịch làm việc thất bại", "Thất bại");
         throw new Error("Failed to delete event");
-      } 
+      }
 
       setEvents((prev) =>
-        prev.map((event) => (event.id === selectedEvent.id ? updatedEvent : event))
+        prev.map((event) =>
+          event.id === selectedEvent.id ? updatedEvent : event
+        )
       );
       closeModal();
     } catch (error) {
@@ -188,22 +208,27 @@ const CalendarComponent = ({defaultView}) => {
     e.preventDefault();
     startLoading();
     try {
-      const response = await fetch(`http://localhost:5000/calendar/delete/${selectedEvent.id}?id_owner=${user.id_owner}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });      
+      const response = await fetch(
+        `http://localhost:8080/api/calendar/delete/${selectedEvent.id}?id_owner=${user.id_owner}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       console.log(response);
-      if(response.ok){
-        notify(1,"Xóa lịch làm việc thành công","Thành công");
+      if (response.ok) {
+        notify(1, "Xóa lịch làm việc thành công", "Thành công");
       }
-      if (!response.ok){
-        notify(2,"Xóa lịch làm việc thất bại","Thất bại");
+      if (!response.ok) {
+        notify(2, "Xóa lịch làm việc thất bại", "Thất bại");
         throw new Error("Failed to delete event");
-      } 
+      }
 
-      setEvents((prev) => prev.filter((event) => event.id !== selectedEvent.id));
+      setEvents((prev) =>
+        prev.filter((event) => event.id !== selectedEvent.id)
+      );
       closeModal();
     } catch (error) {
       console.error("Error deleting event:", error);
@@ -229,38 +254,55 @@ const CalendarComponent = ({defaultView}) => {
         <div className="ca-modal-overlay">
           <div className="ca-modal">
             <h2>{selectedEvent ? "Chỉnh sửa sự kiện" : "Thêm sự kiện"}</h2>
-            <form className="ca-modal-form" onSubmit={selectedEvent ? handleEditEvent : handleSubmit}>
+            <form
+              className="ca-modal-form"
+              onSubmit={selectedEvent ? handleEditEvent : handleSubmit}
+            >
               <label>Việc cần làm:</label>
               <input
                 type="text"
                 value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, title: e.target.value })
+                }
                 required
               />
               <label>Tên nhân viên:</label>
               <input
                 type="text"
                 value={formData.employee}
-                onChange={(e) => setFormData({ ...formData, employee: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, employee: e.target.value })
+                }
                 required
               />
               <label>Thời gian làm (bắt đầu):</label>
               <input
                 type="time"
                 value={formData.start_time}
-                onChange={(e) => setFormData({ ...formData, start_time: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, start_time: e.target.value })
+                }
                 required
               />
               <label>Thời gian làm (kết thúc):</label>
               <input
                 type="time"
                 value={formData.end_time}
-                onChange={(e) => setFormData({ ...formData, end_time: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, end_time: e.target.value })
+                }
                 required
               />
-              <button type="submit">{selectedEvent ? "Lưu thay đổi" : "Lưu"}</button>
+              <button type="submit">
+                {selectedEvent ? "Lưu thay đổi" : "Lưu"}
+              </button>
               {selectedEvent && (
-                <button type="button" className="danger" onClick={handleDeleteEvent}>
+                <button
+                  type="button"
+                  className="danger"
+                  onClick={handleDeleteEvent}
+                >
                   Xóa
                 </button>
               )}

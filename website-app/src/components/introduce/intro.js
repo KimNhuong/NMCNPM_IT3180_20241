@@ -224,7 +224,7 @@ function LoginModal({ off, isSignup }) {
     // };
     // console.log(body);
     // startLoading();
-    // fetch("http://localhost:5000/login/sign_up", {
+    // fetch("http://localhost:8080/api/login/sign_up", {
     //   method: "POST",
     //   headers: {
     //     "Content-Type": "application/json",

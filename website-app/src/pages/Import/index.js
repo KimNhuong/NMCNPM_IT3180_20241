@@ -48,7 +48,7 @@
 //       try {
 //         if(loading)return;
 //         const res = await fetch(
-//           `http://localhost:5000/import/orderHistory/lastProductTop100?ownerId=${user.id_owner}`
+//           `http://localhost:8080/api/import/orderHistory/lastProductTop100?ownerId=${user.id_owner}`
 //         );
 //         const dataRes = await res.json();
 //         setDataTop(dataRes);
@@ -69,7 +69,7 @@
 //       if (keyword.length > 0) {
 //         debouncedFetchSuggestions(
 //           keyword,
-//           `http://localhost:5000/import/supplier/search`
+//           `http://localhost:8080/api/import/supplier/search`
 //         );
 //       } else {
 //         setSuggestions([]); // Nếu không có từ khóa, xóa kết quả gợi ý
@@ -89,7 +89,7 @@
 //           console.log("jellooo");
 //           debouncedFetchSuggestions(
 //             keyword,
-//             `http://localhost:5000/import/products/exhibitProN`
+//             `http://localhost:8080/api/import/products/exhibitProN`
 //           );
 //         }
 //       } else {
@@ -135,7 +135,7 @@
 //         let response;
 //         if (!suppOrPro) {
 //           response = await fetch(
-//             `http://localhost:5000/import/products/exhibitPro?productId=${suppliersId._id}&ownerId=${user.id_owner}`,
+//             `http://localhost:8080/api/import/products/exhibitPro?productId=${suppliersId._id}&ownerId=${user.id_owner}`,
 //             {
 //               method: "GET",
 //               headers: {
@@ -248,7 +248,7 @@
 //             setIdProductAdded={setIdProductAdded}
 //             apiFetchOrderHistory = {apiGetOrder}
 //             apiGetHistory = {apiGetHistory}
-            
+
 //           />
 //         </div>
 //       </Modal>
@@ -486,10 +486,10 @@
 //       role:user.role
 //     };
 //     groupBySupplier.tax = myTax
-//     const url = "http://localhost:5000/import/orderHistory/save";
-    
+//     const url = "http://localhost:8080/api/import/orderHistory/save";
+
 //     try {
- 
+
 //       const response = await fetch(url, {
 //         method: "POST", // Phương thức POST
 //         headers: {
@@ -504,7 +504,7 @@
 //         const responseData = await response.json();
 //         console.log("Dữ liệu đã được gửi thành công", responseData);
 //         await apiFetchOrderHistory.current.fetchOrder("")
-//         await apiGetHistory.current.debouncedFetchSuggestions(" ", "http://localhost:5000/import/loggingOrder/listOrder", 1, 10);
+//         await apiGetHistory.current.debouncedFetchSuggestions(" ", "http://localhost:8080/api/import/loggingOrder/listOrder", 1, 10);
 
 //         setIdProductAdded([]);
 //         setListProductWereAdded([]);
@@ -530,7 +530,7 @@
 //                 <th>Ảnh Mô Tả</th>
 //                 <th>Sản Phẩm</th>
 //                 <th>Nhà Cung Cấp</th>
-//                 <th>Số Lượng</th> 
+//                 <th>Số Lượng</th>
 //                 <th>Thành Tiền</th>
 //                 <th>Status</th>
 //                 <th>Delete</th>
@@ -653,7 +653,7 @@
 //         </div>
 //         <div className="order-tax">
 //           TAX :{" "}
-//           <input 
+//           <input
 //           type = "text"
 //           style={{borderRadius:"8px",maxWidth:"60px", border:"1px solid #333",    fontSize:"16px",
 //             color:"#333",
@@ -689,22 +689,17 @@
 // export default Import;
 import OrderManagement from "../../components/test/index";
 import ModalHistory from "./ModalHistory";
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-} from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import axios from "axios";
 import debounce from "lodash.debounce";
 import Modal from "./../../components/ComponentExport/Modal";
 import "./import.css";
 import ModalDetail from "./ModalDetail";
-import { useAuth} from "../../components/introduce/useAuth";
+import { useAuth } from "../../components/introduce/useAuth";
 import { notify } from "../../components/Notification/notification";
 import { useLoading } from "../../components/introduce/Loading";
 function Import() {
-  const {startLoading,stopLoading}=useLoading();
+  const { startLoading, stopLoading } = useLoading();
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
@@ -717,11 +712,11 @@ function Import() {
   const [idOrder, setIdOrder] = useState(null);
   const [dataTop, setDataTop] = useState([]);
   const { user, loading } = useAuth();
-  const apiGetOrder = useRef()
-  const apiGetHistory = useRef()
-  const [view,setView] = useState(true);
-  const [loadLog,setLoadLog] = useState(false)
-  const [loadOrder,setLoadOrder] = useState(false)
+  const apiGetOrder = useRef();
+  const apiGetHistory = useRef();
+  const [view, setView] = useState(true);
+  const [loadLog, setLoadLog] = useState(false);
+  const [loadOrder, setLoadOrder] = useState(false);
   // const id_owner = user.id_owner;
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -732,27 +727,25 @@ function Import() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if(loading)return;
+        if (loading) return;
         const res = await fetch(
-          `http://localhost:5000/import/orderHistory/lastProductTop100?ownerId=${user.id_owner}`
+          `http://localhost:8080/api/import/orderHistory/lastProductTop100?ownerId=${user.id_owner}`
         );
         startLoading();
         const dataRes = await res.json();
         stopLoading();
-        setDataTop((prev)=>{
-          let newData
-          if(prev)
-           newData = [...prev,...dataRes];
-          else newData =[...dataRes]
-          return newData
+        setDataTop((prev) => {
+          let newData;
+          if (prev) newData = [...prev, ...dataRes];
+          else newData = [...dataRes];
+          return newData;
         });
-
       } catch (err) {
         console.error(err);
       }
     };
     fetchData();
-  }, [loading,user]);
+  }, [loading, user]);
 
   const handleSearch = (event) => {
     const term = event.target.value;
@@ -764,29 +757,37 @@ function Import() {
       if (keyword.length > 0) {
         debouncedFetchSuggestions(
           keyword,
-          `http://localhost:5000/import/supplier/search`
+          `http://localhost:8080/api/import/supplier/search`
         );
       } else {
-        setSuggestions([]); 
-        setResults([])
+        setSuggestions([]);
+        setResults([]);
       }
     } else {
       setSuppOrPro(true);
-      if(keyword){
-        if(!dataTop.some(d=>d.name.toLowerCase().includes(keyword.toLowerCase))){
+      if (keyword) {
+        if (
+          !dataTop.some((d) =>
+            d.name.toLowerCase().includes(keyword.toLowerCase)
+          )
+        ) {
           debouncedFetchSuggestions(
             keyword,
-            `http://localhost:5000/import/products/exhibitProN`
+            `http://localhost:8080/api/import/products/exhibitProN`
           );
         }
-        setResults([])
-        setSuggestions([])
-        const data_match = dataTop.filter((item) =>item.name.toLowerCase().includes(keyword.toLowerCase())).slice(0, 5);
-        setResults(data_match.map(d=>d.name))
-        setSuggestions(data_match)
-      }else {
-        setSuggestions([]); 
-        setResults([])
+        setResults([]);
+        setSuggestions([]);
+        const data_match = dataTop
+          .filter((item) =>
+            item.name.toLowerCase().includes(keyword.toLowerCase())
+          )
+          .slice(0, 5);
+        setResults(data_match.map((d) => d.name));
+        setSuggestions(data_match);
+      } else {
+        setSuggestions([]);
+        setResults([]);
       }
     }
   };
@@ -800,9 +801,11 @@ function Import() {
       });
       const sugg = response.data.map((s) => s.name);
       setDataTop((prev) => {
-        const existingIds = new Set(prev.map((item) => item._id)); 
-        const newData = response.data.filter((item) => !existingIds.has(item._id)); 
-        return [...prev, ...newData]; 
+        const existingIds = new Set(prev.map((item) => item._id));
+        const newData = response.data.filter(
+          (item) => !existingIds.has(item._id)
+        );
+        return [...prev, ...newData];
       });
     } catch (error) {
       console.error("Error fetching suggestions:", error);
@@ -813,18 +816,18 @@ function Import() {
       (keyword, hrefLink) => fetchProductSuggestions(keyword, hrefLink),
       500
     ),
-    [user,loading] // Chỉ tạo ra một lần
+    [user, loading] // Chỉ tạo ra một lần
   );
 
   const handleAddToOrder = async () => {
-    const idPro = suggestions.filter((sugg) => sugg.name == searchTerm);    
+    const idPro = suggestions.filter((sugg) => sugg.name == searchTerm);
     const suppliersId = idPro ? idPro[0] : null;
     try {
       if (suppliersId) {
         let response;
         if (!suppOrPro) {
           response = await fetch(
-            `http://localhost:5000/import/products/exhibitPro?productId=${suppliersId._id}&ownerId=${user.id_owner}`,
+            `http://localhost:8080/api/import/products/exhibitPro?productId=${suppliersId._id}&ownerId=${user.id_owner}`,
             {
               method: "GET",
               headers: {
@@ -835,7 +838,7 @@ function Import() {
         }
 
         if (!suppOrPro && response.ok) {
-          const data = await response.json(); 
+          const data = await response.json();
           setIdProductAdded(data);
           setSearchTerm("");
           setResults([]);
@@ -846,7 +849,7 @@ function Import() {
         } else {
           console.error("Error adding to order");
         }
-        setSuggestions([])
+        setSuggestions([]);
       }
     } catch (error) {
       console.error("Request failed", error);
@@ -858,10 +861,10 @@ function Import() {
     }, 700);
   };
   const handleSelectLiResult = (result) => {
-    setSearchTerm(result); 
-    setShowDropdown(false); 
+    setSearchTerm(result);
+    setShowDropdown(false);
   };
- 
+
   return (
     <>
       <OrderManagement
@@ -869,11 +872,11 @@ function Import() {
         onHistory={openModalHistory}
         openModalDetail={openModalDetail}
         setIdOrder={setIdOrder}
-        refOrder ={apiGetOrder}
-        setView = {setView}
-        loadOrder = {loadOrder}
-        setLoadLog =  {setLoadLog}
-        setLoadOrder = {setLoadOrder}
+        refOrder={apiGetOrder}
+        setView={setView}
+        loadOrder={loadOrder}
+        setLoadLog={setLoadLog}
+        setLoadOrder={setLoadOrder}
       />
 
       <Modal isOpen={isOpen} onClose={closeModal}>
@@ -910,7 +913,11 @@ function Import() {
                             <div
                               className="search-container-img"
                               style={{
-                                backgroundImage: `url(${suggestions[index].image?suggestions[index].image.secure_url:"https://www.shutterstock.com/shutterstock/photos/600304136/display_1500/stock-vector-full-basket-of-food-grocery-shopping-special-offer-vector-line-icon-design-600304136.jpg"})`,
+                                backgroundImage: `url(${
+                                  suggestions[index].image
+                                    ? suggestions[index].image.secure_url
+                                    : "https://www.shutterstock.com/shutterstock/photos/600304136/display_1500/stock-vector-full-basket-of-food-grocery-shopping-special-offer-vector-line-icon-design-600304136.jpg"
+                                })`,
                               }}
                             ></div>
                           )}
@@ -934,10 +941,10 @@ function Import() {
           <ContentOrder
             dataHis={idProductAdded}
             setIdProductAdded={setIdProductAdded}
-            apiFetchOrderHistory = {apiGetOrder}
-            apiGetHistory = {apiGetHistory}
-            setLoadOrder ={setLoadOrder}
-            setLoadLog = {setLoadLog}
+            apiFetchOrderHistory={apiGetOrder}
+            apiGetHistory={apiGetHistory}
+            setLoadOrder={setLoadOrder}
+            setLoadLog={setLoadLog}
           />
         </div>
       </Modal>
@@ -946,17 +953,17 @@ function Import() {
         onClose={closeModalHistory}
         openModalDetail={openModalDetail}
         setIdOrder={setIdOrder}
-        apiGetHistory= {apiGetHistory}
-        setView = {setView}
-        loadLog = {loadLog}
+        apiGetHistory={apiGetHistory}
+        setView={setView}
+        loadLog={loadLog}
       />
       <ModalDetail
         isOpen={openDetail}
         onClose={closeModalDetail}
         idOrder={idOrder}
-        view = {view}
-        setLoadLog = {setLoadLog}
-        setLoadOrder = {setLoadOrder}
+        view={view}
+        setLoadLog={setLoadLog}
+        setLoadOrder={setLoadOrder}
       >
         {" "}
       </ModalDetail>
@@ -964,14 +971,23 @@ function Import() {
   );
 }
 
-const ContentOrder = ({ dataHis, setIdProductAdded,apiFetchOrderHistory,apiGetHistory,setLoadLog,setLoadOrder }) => {
+const ContentOrder = ({
+  dataHis,
+  setIdProductAdded,
+  apiFetchOrderHistory,
+  apiGetHistory,
+  setLoadLog,
+  setLoadOrder,
+}) => {
   const initItem = (item) => {
     return {
       name: item.name,
       description: item.description,
       supplier: item.supplierDetails.name,
       price: item.purchasePrice.replace(/\./g, ""),
-      imageUrl: item.image?item.image.secure_url:"https://www.shutterstock.com/shutterstock/photos/600304136/display_1500/stock-vector-full-basket-of-food-grocery-shopping-special-offer-vector-line-icon-design-600304136.jpg",
+      imageUrl: item.image
+        ? item.image.secure_url
+        : "https://www.shutterstock.com/shutterstock/photos/600304136/display_1500/stock-vector-full-basket-of-food-grocery-shopping-special-offer-vector-line-icon-design-600304136.jpg",
       supplierId: item.supplierDetails._id,
       quantity: 1,
       status: "pending",
@@ -981,7 +997,7 @@ const ContentOrder = ({ dataHis, setIdProductAdded,apiFetchOrderHistory,apiGetHi
       productId: item._id,
     };
   };
-  const {startLoading,stopLoading}=useLoading();
+  const { startLoading, stopLoading } = useLoading();
   const { user, loading } = useAuth();
   const [listProductWereAdded, setListProductWereAdded] = useState([]);
   const listItem = dataHis.map((item) => initItem(item));
@@ -999,7 +1015,7 @@ const ContentOrder = ({ dataHis, setIdProductAdded,apiFetchOrderHistory,apiGetHi
   const [isOpen, setIsOpen] = useState(
     new Array(listProductWereAdded.length).fill(false)
   ); // Khởi tạo mảng isOpen
-  const [myTax,setMyTax]= useState(10);
+  const [myTax, setMyTax] = useState(10);
   useEffect(() => {
     if (dataHis && dataHis.length > 0) {
       const newItems = dataHis.map(initItem);
@@ -1138,7 +1154,7 @@ const ContentOrder = ({ dataHis, setIdProductAdded,apiFetchOrderHistory,apiGetHi
   };
 
   const handleSubmit = async () => {
-    console.log("baby take my hand")
+    console.log("baby take my hand");
     const groupBySupplier = listProductWereAdded.reduce(
       (acc, item) => {
         // Kiểm tra xem đã có supplier này trong nhóm chưa
@@ -1155,13 +1171,12 @@ const ContentOrder = ({ dataHis, setIdProductAdded,apiFetchOrderHistory,apiGetHi
       name: user.name,
       email: user.email,
       ownerId: user.id_owner,
-      id_owner:user.id_owner,
-      role:user.role
+      id_owner: user.id_owner,
+      role: user.role,
     };
-    groupBySupplier.tax = myTax
-    const url = "http://localhost:5000/import/orderHistory/save";
-    
-   
+    groupBySupplier.tax = myTax;
+    const url = "http://localhost:8080/api/import/orderHistory/save";
+
     try {
       startLoading();
       const response = await fetch(url, {
@@ -1173,18 +1188,17 @@ const ContentOrder = ({ dataHis, setIdProductAdded,apiFetchOrderHistory,apiGetHi
       });
       stopLoading();
       if (response.ok) {
-        
-        notify(1,"you've completed importing goods","Successfully!")
+        notify(1, "you've completed importing goods", "Successfully!");
         const responseData = await response.json();
         console.log("Dữ liệu đã được gửi thành công", responseData);
         //await apiFetchOrderHistory.current.fetchOrder(" ")
-        //await apiGetHistory.current.debouncedFetchSuggestions(" ", "http://localhost:5000/import/loggingOrder/listOrder", 1, 10);
-        setLoadOrder((prev)=>!prev)
-        setLoadLog((prev)=>!prev)
+        //await apiGetHistory.current.debouncedFetchSuggestions(" ", "http://localhost:8080/api/import/loggingOrder/listOrder", 1, 10);
+        setLoadOrder((prev) => !prev);
+        setLoadLog((prev) => !prev);
         setIdProductAdded([]);
         setListProductWereAdded([]);
       } else {
-        notify(2,"you don't have the role to do this","Fail!")
+        notify(2, "you don't have the role to do this", "Fail!");
         // Nếu có lỗi từ server
         console.error("Lỗi khi gửi dữ liệu:", response.statusText);
       }
@@ -1205,7 +1219,7 @@ const ContentOrder = ({ dataHis, setIdProductAdded,apiFetchOrderHistory,apiGetHi
                 <th>Ảnh Mô Tả</th>
                 <th>Sản Phẩm</th>
                 <th>Nhà Cung Cấp</th>
-                <th>Số Lượng</th> 
+                <th>Số Lượng</th>
                 <th>Thành Tiền</th>
                 <th>Status</th>
                 <th>Delete</th>
@@ -1328,25 +1342,32 @@ const ContentOrder = ({ dataHis, setIdProductAdded,apiFetchOrderHistory,apiGetHi
         </div>
         <div className="order-tax">
           TAX :{" "}
-          <input 
-          type = "text"
-          style={{borderRadius:"8px",maxWidth:"60px", border:"1px solid #333",    fontSize:"16px",
-            color:"#333",
-            textAlign:"right",lineHeight:"24px",
-            paddingRight:"8px",
-          }}
-          value={myTax}
-          name= "tax"
-          onChange={(e)=>{if (/^\d*$/.test(e.target.value)){setMyTax(e.target.value)}}}
+          <input
+            type="text"
+            style={{
+              borderRadius: "8px",
+              maxWidth: "60px",
+              border: "1px solid #333",
+              fontSize: "16px",
+              color: "#333",
+              textAlign: "right",
+              lineHeight: "24px",
+              paddingRight: "8px",
+            }}
+            value={myTax}
+            name="tax"
+            onChange={(e) => {
+              if (/^\d*$/.test(e.target.value)) {
+                setMyTax(e.target.value);
+              }
+            }}
           />
-          <span style={{ fontSize: 16, fontWeight: 300 }}>
-                {"   "}%
-          </span>{" "}
+          <span style={{ fontSize: 16, fontWeight: 300 }}>{"   "}%</span>{" "}
         </div>
         <div className="order-tax">
           Tổng tiền:{" "}
           <span style={{ fontSize: 16, fontWeight: 300 }}>
-            {(amountBill() *( myTax+100)/100)
+            {((amountBill() * (myTax + 100)) / 100)
               .toFixed(0)
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}

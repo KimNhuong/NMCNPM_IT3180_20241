@@ -1,12 +1,12 @@
 // ProductDetail.js
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../Manage_product/Product_detail.css";
 import { useLoading } from "../introduce/Loading";
 import { useAuth } from "../introduce/useAuth";
-import { notify } from '../../components/Notification/notification';
+import { notify } from "../../components/Notification/notification";
 const ProductDetail = ({ product, onClose, onUpdate }) => {
   const { startLoading, stopLoading } = useLoading();
-  const { user,loading} = useAuth();
+  const { user, loading } = useAuth();
   const CLOUD_NAME = "ddgrjo6jr";
   const UPLOAD_PRESET = "my-app";
   const [g, setg] = useState(false);
@@ -33,7 +33,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
       };
       try {
         let response = await fetch(
-          "http://localhost:5000/products/get_supplier",
+          "http://localhost:8080/api/products/get_supplier",
           {
             method: "POST",
             headers: {
@@ -127,7 +127,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
         };
       } catch (error) {
         console.error("Error uploading image:", error);
-        notify(2,"Đã xảy ra lỗi khi tải lên hình ảnh.","Thất bại")
+        notify(2, "Đã xảy ra lỗi khi tải lên hình ảnh.", "Thất bại");
       }
     }
     onUpdate(x, details, editData.image != product.image && editData.image);
@@ -186,7 +186,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
     const { name, value } = e.target;
     setEditData({
       ...editData,
-      [name]: value.toLowerCase()
+      [name]: value.toLowerCase(),
     });
   };
   return (
@@ -275,11 +275,17 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
               </div>
               <div className="product-info-details-row">
                 <strong>Nhà cung cấp:</strong>
-                <span>{products.supplier?products.supplier.name:"nhà cung cấp của sản phầm này  đã bị xóa vui lòng hãy thêm nhà cung cấp"}</span>
+                <span>
+                  {products.supplier
+                    ? products.supplier.name
+                    : "nhà cung cấp của sản phầm này  đã bị xóa vui lòng hãy thêm nhà cung cấp"}
+                </span>
               </div>
               <div className="product-info-details-row">
                 <strong>Ngày nhập:</strong>
-                <span>{new Date(products.purchaseDate).toLocaleDateString()}</span>
+                <span>
+                  {new Date(products.purchaseDate).toLocaleDateString()}
+                </span>
               </div>
               <div className="product-info-details-row">
                 <strong>Vị trí:</strong>

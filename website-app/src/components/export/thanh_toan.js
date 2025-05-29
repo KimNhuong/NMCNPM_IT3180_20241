@@ -4,7 +4,14 @@ import { useLoading } from "../introduce/Loading";
 import { useAuth } from "../introduce/useAuth";
 import { notify } from "../../components/Notification/notification";
 
-function PaymentComponent({ close, products, totalAmount, customers, discount, vat }) {
+function PaymentComponent({
+  close,
+  products,
+  totalAmount,
+  customers,
+  discount,
+  vat,
+}) {
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerPaid, setCustomerPaid] = useState(0);
   const [change, setChange] = useState(0);
@@ -18,11 +25,14 @@ function PaymentComponent({ close, products, totalAmount, customers, discount, v
     const fetchBanks = async () => {
       try {
         startLoading();
-        const response = await fetch("http://localhost:5000/bank/get_bank", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ user }),
-        });
+        const response = await fetch(
+          "http://localhost:8080/api/bank/get_bank",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user }),
+          }
+        );
         const data = await response.json();
         stopLoading();
         if (data) setBanks(data);
@@ -37,7 +47,11 @@ function PaymentComponent({ close, products, totalAmount, customers, discount, v
   const handleCustomerPaidChange = (e) => {
     const amount = parseFloat(e.target.value) || 0;
     setCustomerPaid(amount);
-    setChange(amount - totalAmount > 0 ? (amount - totalAmount).toLocaleString("vi-VN") : 0);
+    setChange(
+      amount - totalAmount > 0
+        ? (amount - totalAmount).toLocaleString("vi-VN")
+        : 0
+    );
   };
 
   const handleBankChange = (e) => {
@@ -68,7 +82,7 @@ function PaymentComponent({ close, products, totalAmount, customers, discount, v
         notes: "",
       };
       startLoading();
-      const response = await fetch("http://localhost:5000/sell/history", {
+      const response = await fetch("http://localhost:8080/api/sell/history", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(billData),
@@ -115,14 +129,22 @@ function PaymentComponent({ close, products, totalAmount, customers, discount, v
               onChange={(e) => {
                 setCustomerPhone(e.target.value);
                 const filtered = e.target.value
-                  ? customers.filter((customer) => customer.phone.includes(e.target.value))
+                  ? customers.filter((customer) =>
+                      customer.phone.includes(e.target.value)
+                    )
                   : [];
                 setSuggestion(filtered);
               }}
             />
             <ul id="suggestions-sell">
               {suggestions.map((customer, index) => (
-                <li key={index} onClick={() => { setCustomerPhone(customer.phone); setSuggestion([]); }}>
+                <li
+                  key={index}
+                  onClick={() => {
+                    setCustomerPhone(customer.phone);
+                    setSuggestion([]);
+                  }}
+                >
                   {customer.phone}
                 </li>
               ))}
@@ -130,11 +152,17 @@ function PaymentComponent({ close, products, totalAmount, customers, discount, v
           </div>
           <div className="total-amount">
             <label>Tổng tiền phải trả</label>
-            <p style={{ marginTop: "5px" }}>{totalAmount.toLocaleString("vi-VN")} VND</p>
+            <p style={{ marginTop: "5px" }}>
+              {totalAmount.toLocaleString("vi-VN")} VND
+            </p>
           </div>
           <div>
             <label>Tiền khách đưa</label>
-            <input type="number" value={customerPaid} onChange={handleCustomerPaidChange} />
+            <input
+              type="number"
+              value={customerPaid}
+              onChange={handleCustomerPaidChange}
+            />
           </div>
           <div>
             <label>Tiền trả lại khách</label>
@@ -154,11 +182,19 @@ function PaymentComponent({ close, products, totalAmount, customers, discount, v
           {selectedBankDetails && (
             <div className="bank-details">
               <h3>Thông tin ngân hàng</h3>
-              <p><strong>Tên:</strong> {selectedBankDetails.name}</p>
-              <p><strong>Số tài khoản:</strong> {selectedBankDetails.accountNumber}</p>
+              <p>
+                <strong>Tên:</strong> {selectedBankDetails.name}
+              </p>
+              <p>
+                <strong>Số tài khoản:</strong>{" "}
+                {selectedBankDetails.accountNumber}
+              </p>
               <div className="qr-code">
                 <h4>Mã QR</h4>
-                <img src={`https://img.vietqr.io/image/${selectedBankDetails.bankName}-${selectedBankDetails.accountNumber}-compact.jpg?amount=${totalAmount}`} alt="QR Code" />
+                <img
+                  src={`https://img.vietqr.io/image/${selectedBankDetails.bankName}-${selectedBankDetails.accountNumber}-compact.jpg?amount=${totalAmount}`}
+                  alt="QR Code"
+                />
               </div>
             </div>
           )}

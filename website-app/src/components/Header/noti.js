@@ -20,7 +20,7 @@ const Notification = () => {
     startLoading();
 
     try {
-      const response = await fetch("http://localhost:5000/products/show", {
+      const response = await fetch("http://localhost:8080/api/products/show", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user }),
@@ -65,7 +65,6 @@ const Notification = () => {
       setHasUnreadNotifications(false);
     }
   };
-  
 
   return (
     <div className="notification-container">
@@ -78,7 +77,7 @@ const Notification = () => {
           fontSize: "24px",
         }}
       />
-      
+
       {/* Hiển thị hình tròn đỏ nếu có thông báo */}
       {hasUnreadNotifications && (
         <div className="notification-badge">{products.length}</div>
@@ -96,7 +95,10 @@ const Notification = () => {
             products.map((product, index) => (
               <div className="notification-item" key={index}>
                 <img
-                  src={product.image?.secure_url || "https://www.shutterstock.com/shutterstock/photos/600304136/display_1500/stock-vector-full-basket-of-food-grocery-shopping-special-offer-vector-line-icon-design-600304136.jpg"}
+                  src={
+                    product.image?.secure_url ||
+                    "https://www.shutterstock.com/shutterstock/photos/600304136/display_1500/stock-vector-full-basket-of-food-grocery-shopping-special-offer-vector-line-icon-design-600304136.jpg"
+                  }
                   alt="Product"
                   style={{ width: "30px", height: "30px" }}
                 />

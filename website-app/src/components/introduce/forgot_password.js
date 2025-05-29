@@ -45,7 +45,7 @@ const Forgot_password = ({ off, turnon }) => {
       ma: ma,
     };
     startLoading();
-    fetch("http://localhost:5000/login/change_password", {
+    fetch("http://localhost:8080/api/login/change_password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ const Forgot_password = ({ off, turnon }) => {
       email: email,
     };
     startLoading();
-    fetch("http://localhost:5000/login/forgot_password", {
+    fetch("http://localhost:8080/api/login/forgot_password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

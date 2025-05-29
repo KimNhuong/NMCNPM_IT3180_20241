@@ -4,28 +4,29 @@ import { useAuth } from "../../components/introduce/useAuth";
 import { IoCallSharp } from "react-icons/io5";
 import { FaVideo } from "react-icons/fa";
 
-function Chat({chats,ring}) {
+function Chat({ chats, ring }) {
   const { user, loading } = useAuth();
   const chatEndRef = useRef(null);
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const messageHandled = useRef(false);
-    const socket = io("http://localhost:5000");
+  const socket = io("http://localhost:8080");
   useEffect(() => {
-
-
     const fetchMessages = async () => {
       if (loading) return;
       try {
-        const response = await fetch("http://localhost:5000/chat/getMessages", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({user}),
-        });
+        const response = await fetch(
+          "http://localhost:8080/api/chat/getMessages",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user }),
+          }
+        );
         const data = await response.json();
-        console.log(data)
+        console.log(data);
         if (Array.isArray(data)) {
           const formattedData = data.map((msg) => ({
             ...msg,
@@ -39,13 +40,13 @@ function Chat({chats,ring}) {
     };
 
     fetchMessages();
-      
+
     // socket.on("receive_message", (data) => {
     //   console.log(!messageHandled.current)
     //   console.log(data.sender._id !== user._id)
     //   if(!messageHandled.current&&data.sender._id !== user._id){
     //     messageHandled.current = true;
-        
+
     //     const newMessage = {
     //     ...data,
     //     isUser: data.sender._id === user._id,
@@ -57,7 +58,7 @@ function Chat({chats,ring}) {
     //     messageHandled.current = false;  // Đặt lại để xử lý tin nhắn mới
     //   }, 1000); // Ví dụ reset sau 1 giây
     //   }
-      
+
     // });
 
     // // Cleanup khi component unmount
@@ -65,32 +66,33 @@ function Chat({chats,ring}) {
     //   socket.disconnect();
     // };
   }, [loading, user]);
-  useEffect(()=>{
+  useEffect(() => {
     socket.on("receive_message", (data) => {
-      console.log(!messageHandled.current)
-      console.log(data.sender._id !== user._id)
-      if(!messageHandled.current&&data.sender._id !== user._id){
+      console.log(!messageHandled.current);
+      console.log(data.sender._id !== user._id);
+      if (!messageHandled.current && data.sender._id !== user._id) {
         messageHandled.current = true;
-        
+
         const newMessage = {
-        ...data,
-        isUser: data.sender._id === user._id,
-      };
-      console.log("day la chat ",chats)
-      if(!chats){ring()}
-      setChat((prev) => [...prev, newMessage]);
-      setTimeout(() => {
-        messageHandled.current = false;  // Đặt lại để xử lý tin nhắn mới
-      }, 1000); // Ví dụ reset sau 1 giây
+          ...data,
+          isUser: data.sender._id === user._id,
+        };
+        console.log("day la chat ", chats);
+        if (!chats) {
+          ring();
+        }
+        setChat((prev) => [...prev, newMessage]);
+        setTimeout(() => {
+          messageHandled.current = false; // Đặt lại để xử lý tin nhắn mới
+        }, 1000); // Ví dụ reset sau 1 giây
       }
-      
     });
 
     // Cleanup khi component unmount
     return () => {
       socket.disconnect();
     };
-  },[ring])
+  }, [ring]);
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
@@ -101,23 +103,21 @@ function Chat({chats,ring}) {
         owner: user.id_owner,
         content: message,
       };
-  
+
       socket.emit("send_message", newMessage);
-  
+
       setChat((prev) => [
         ...prev,
         {
-          ...{sender:user,
-            content:message
-          },
+          ...{ sender: user, content: message },
           isUser: true,
         },
       ]);
-  
+
       setMessage(""); // Xóa nội dung tin nhắn sau khi gửi
     }
   };
-  
+
   return (
     <div style={{ ...styles.container, display: chats ? "block" : "none" }}>
       {/* Header */}
@@ -127,8 +127,11 @@ function Chat({chats,ring}) {
           <span style={styles.headerName}>{user?.name || "Chat"}</span>
         </div>
         <div style={styles.headerRight}>
-          <button style={styles.headerButton}><IoCallSharp /></button>
-          <button style={styles.headerButton}><FaVideo />
+          <button style={styles.headerButton}>
+            <IoCallSharp />
+          </button>
+          <button style={styles.headerButton}>
+            <FaVideo />
           </button>
         </div>
       </div>
@@ -175,12 +178,10 @@ function Chat({chats,ring}) {
       </div>
     </div>
   );
-  
 }
 
 const styles = {
   container: {
-    
     width: "300px",
     margin: "20px auto",
     border: "1px solid #ccc",
@@ -188,10 +189,9 @@ const styles = {
     overflow: "hidden",
     fontFamily: "Arial, sans-serif",
     position: "fixed",
-    right:"150px",
-    bottom:"95px",
-    zIndex:1000,
-    
+    right: "150px",
+    bottom: "95px",
+    zIndex: 1000,
   },
   chatWindow: {
     height: "300px",
@@ -220,7 +220,7 @@ const styles = {
     display: "flex",
     borderTop: "1px solid #ccc",
     padding: "10px",
-    backgroundColor:"white"
+    backgroundColor: "white",
   },
   input: {
     flex: 1,
@@ -240,46 +240,44 @@ const styles = {
     cursor: "pointer",
     marginLeft: "5px",
   },
-    header: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: "10px",
-      backgroundColor: "#007bff",
-      color: "#fff",
-      borderBottom: "1px solid #ccc",
-    },
-    headerLeft: {
-      display: "flex",
-      alignItems: "center",
-    },
-    headerAvatar: {
-      width: "40px",
-      height: "40px",
-      borderRadius: "50%",
-      marginRight: "10px",
-    },
-    headerName: {
-      fontSize: "16px",
-      fontWeight: "bold",
-    },
-    headerRight: {
-      display: "flex",
-      gap: "5px",
-    },
-    headerButton: {
-      padding: "5px 10px",
-      fontSize: "14px",
-      backgroundColor: "#0056b3",
-      color: "#fff",
-      border: "none",
-      borderRadius: "4px",
-      cursor: "pointer",
-    
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "10px",
+    backgroundColor: "#007bff",
+    color: "#fff",
+    borderBottom: "1px solid #ccc",
+  },
+  headerLeft: {
+    display: "flex",
+    alignItems: "center",
+  },
+  headerAvatar: {
+    width: "40px",
+    height: "40px",
+    borderRadius: "50%",
+    marginRight: "10px",
+  },
+  headerName: {
+    fontSize: "16px",
+    fontWeight: "bold",
+  },
+  headerRight: {
+    display: "flex",
+    gap: "5px",
+  },
+  headerButton: {
+    padding: "5px 10px",
+    fontSize: "14px",
+    backgroundColor: "#0056b3",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+
     // Các kiểu khác giữ nguyên
-  }
-  
+  },
 };
 
 export default Chat;
-

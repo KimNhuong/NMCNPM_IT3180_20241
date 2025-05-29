@@ -5,15 +5,22 @@ import { AuthContext } from "../../components/introduce/AuthContext";
 import { useAuth } from "../../components/introduce/useAuth";
 import { notify } from "../../components/Notification/notification";
 
-const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder}) => {
+const ModalDetail = ({
+  isOpen,
+  onClose,
+  idOrder,
+  view,
+  setLoadLog,
+  setLoadOrder,
+}) => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [supplierName, setSupplierName] = useState({});
   const [dropdownOpenIndex, setDropdownOpenIndex] = useState(null);
   const [filter, setFilter] = useState([]);
   const dropdownRef = useRef(null);
-  const { user,loading } = useAuth();
-  const [myTax,setMyTax] = useState(0)
+  const { user, loading } = useAuth();
+  const [myTax, setMyTax] = useState(0);
   const handleSearchChange = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
@@ -43,7 +50,7 @@ const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder})
   const getSupplierByOrderId = async (orderId) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/import/orderHistory/supplierName?orderId=${idOrder}&ownerId=${user.id_owner}`,
+        `http://localhost:8080/api/import/orderHistory/supplierName?orderId=${idOrder}&ownerId=${user.id_owner}`,
         {
           method: "GET",
           headers: {
@@ -54,7 +61,7 @@ const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder})
 
       if (response.ok) {
         const data = await response.json(); // Phân tích dữ liệu JSON từ response
-        if(data.tax)setMyTax(Number(data.tax))
+        if (data.tax) setMyTax(Number(data.tax));
         console.log(data);
         setSupplierName(data);
       } else {
@@ -67,7 +74,7 @@ const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder})
   const getData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/import/orderDetail/listorder?idOrder=${idOrder}`
+        `http://localhost:8080/api/import/orderDetail/listorder?idOrder=${idOrder}`
       );
       const data = await response.json();
 
@@ -83,12 +90,12 @@ const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder})
     }
   };
   useEffect(() => {
-    if(loading)return
+    if (loading) return;
     if (idOrder) {
       getSupplierByOrderId(idOrder); // Gọi hàm khi component mount hoặc khi idOrder thay đổi
       getData();
     }
-  }, [idOrder,loading]);
+  }, [idOrder, loading]);
   const transfer = (date) => {
     const date2 = new Date(date);
     return date2.toLocaleString("vi-VN", {
@@ -131,7 +138,7 @@ const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder})
     return sum;
   };
   const handleSubmit = async () => {
-    const url = "http://localhost:5000/import/orderDetail/updateDetail";
+    const url = "http://localhost:8080/api/import/orderDetail/updateDetail";
     const state = products.some((pro) => pro.status === "pending");
 
     const data = { formData: products };
@@ -146,15 +153,15 @@ const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder})
     } else {
       data.status = "pending";
     }
-   
+
     // Calculate total amount
-    data.total = Math.floor(amountBill()*(100+myTax)/100)
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    data.total = Math.floor((amountBill() * (100 + myTax)) / 100)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     data.userName = user.name;
     data.userId = user._id;
     data.ownerId = user.id_owner;
-    data.user=user;
+    data.user = user;
     console.log("Submitting data:", data);
 
     try {
@@ -167,17 +174,17 @@ const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder})
       });
 
       if (!response.ok) {
-        notify(2,"You don't have right to do this!","Fail!")
+        notify(2, "You don't have right to do this!", "Fail!");
         throw new Error(
           `Failed to submit data: ${response.status} ${response.statusText}`
         );
-      }else{
-        notify(1,"you've updated importing goods","Successfully!")
+      } else {
+        notify(1, "you've updated importing goods", "Successfully!");
       }
 
       const responseData = await response.json();
-      setLoadLog((prev)=>!prev)
-      setLoadOrder((prev)=>!prev)
+      setLoadLog((prev) => !prev);
+      setLoadOrder((prev) => !prev);
       console.log("Success:", responseData);
 
       // Clear products only after successful submission
@@ -220,7 +227,15 @@ const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder})
           </div>
         </div>
       </div>
-      <div className="containerKhoe" style={{maxHeight:"480px",overflowY:"auto",scrollbarWidth: "thin",paddingBottom:"20px"}}>
+      <div
+        className="containerKhoe"
+        style={{
+          maxHeight: "480px",
+          overflowY: "auto",
+          scrollbarWidth: "thin",
+          paddingBottom: "20px",
+        }}
+      >
         <div
           style={{
             display: "flex",
@@ -228,7 +243,7 @@ const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder})
             fontWeight: 600,
             fontSize: 24,
             justifyContent: "center",
-            maxHeight:"600px"
+            maxHeight: "600px",
           }}
         >
           Danh sách đơn hàng
@@ -248,7 +263,7 @@ const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder})
                 <th>Trạng thái</th>
                 <th>Số lượng</th>
                 <th>Thành tiền</th>
-                {view&&(<th>Note</th>)}
+                {view && <th>Note</th>}
               </tr>
             </thead>
             <tbody>
@@ -261,7 +276,7 @@ const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder})
                           style={{ display: "flex", justifyContent: "center" }}
                         >
                           <div
-                            style={{ maxWidth: "80px", textAlign: "center"}}
+                            style={{ maxWidth: "80px", textAlign: "center" }}
                           >
                             #{product._id}
                           </div>
@@ -278,7 +293,11 @@ const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder})
                           <div
                             className="body-container-img-description"
                             style={{
-                              backgroundImage: `url(${product.image?product.image.secure_url:"https://www.shutterstock.com/shutterstock/photos/600304136/display_1500/stock-vector-full-basket-of-food-grocery-shopping-special-offer-vector-line-icon-design-600304136.jpg"})`,
+                              backgroundImage: `url(${
+                                product.image
+                                  ? product.image.secure_url
+                                  : "https://www.shutterstock.com/shutterstock/photos/600304136/display_1500/stock-vector-full-basket-of-food-grocery-shopping-special-offer-vector-line-icon-design-600304136.jpg"
+                              })`,
                               minWidth: "120px",
                             }}
                           ></div>
@@ -386,15 +405,16 @@ const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder})
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
                         VND
                       </td>
-                      {view&&(
+                      {view && (
                         <td>
-                        <input
-                          type="text"
-                          value={product.note}
-                          onChange={(event) => handleChangeNote(event, index)} // Use onChange instead of onchange
-                          placeholder="Nhập ghi chú"
-                        />
-                      </td>)}
+                          <input
+                            type="text"
+                            value={product.note}
+                            onChange={(event) => handleChangeNote(event, index)} // Use onChange instead of onchange
+                            placeholder="Nhập ghi chú"
+                          />
+                        </td>
+                      )}
                     </tr>
                   )
               )}
@@ -402,23 +422,25 @@ const ModalDetail = ({ isOpen, onClose, idOrder, view ,setLoadLog,setLoadOrder})
           </table>
         </div>
 
-
         <div className="order-tax">
-        <span >{`Tax : ${myTax} %`}</span>
-          
-          <div style={{paddingTop:"10px" }}>
-          Tổng tiền:{" "}
-          <span style={{ fontSize: 16, fontWeight: 300 }}>
-            {(amountBill().toString().replace(/\./g, "") * (100+myTax)/100)
-              .toFixed(0)
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
-            VND
-          </span>      
+          <span>{`Tax : ${myTax} %`}</span>
+
+          <div style={{ paddingTop: "10px" }}>
+            Tổng tiền:{" "}
+            <span style={{ fontSize: 16, fontWeight: 300 }}>
+              {(
+                (amountBill().toString().replace(/\./g, "") * (100 + myTax)) /
+                100
+              )
+                .toFixed(0)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+              VND
+            </span>
           </div>
         </div>
         <div className="complete-order">
-          {view&&(<button onClick={() => handleSubmit()}>Complete</button>)}
+          {view && <button onClick={() => handleSubmit()}>Complete</button>}
         </div>
       </div>
     </Modal>
