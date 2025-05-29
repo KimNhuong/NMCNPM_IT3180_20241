@@ -53,7 +53,7 @@ const OrderManagement = forwardRef(
 
     const fetchOrder = async (keyword) => {
       try {
-        const apiUrl = `http://localhost:8080/api/import/orderHistory/getOrder?search=${keyword}&ownerId=${user.id_owner}&userId=${user._id}`;
+        const apiUrl = `http://localhost:8080/api/import/orderHistory/getOrder?search=${keyword}&ownerId=${user?.id_owner}&userId=${user._id}`;
         const response = await fetch(apiUrl);
 
         if (!response.ok) {
@@ -77,7 +77,7 @@ const OrderManagement = forwardRef(
     }));
     const updateData = async (newData) => {
       try {
-        newData.ownerId = user.id_owner;
+        newData.ownerId = user?.id_owner;
         newData.user = user;
         const response = await fetch(
           `http://localhost:8080/api/import/orderHistory/updateOrderhistory`,

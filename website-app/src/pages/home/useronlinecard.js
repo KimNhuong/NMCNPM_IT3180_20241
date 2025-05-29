@@ -29,37 +29,37 @@ function UsersOnlineCard() {
     responsive: true,
     maintainAspectRatio: false,
   };
-  useEffect(() => {
-    const fetchData = async () => {
-      if (loading) return;
-      try {
-        const response = await fetch(
-          "http://localhost:8080/api/home/generatedailyCustomer",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              user: user,
-            }),
-          }
-        );
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (loading) return;
+  //     try {
+  //       const response = await fetch(
+  //         "http://localhost:8080/api/home/generatedailyCustomer",
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             user: user,
+  //           }),
+  //         }
+  //       );
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
 
-        const data = await response.json();
-        console.log("generatedailyuser:", data);
-        Setdt(data);
-      } catch (error) {
-        console.error("Error fetching revenue:", error);
-      }
-    };
+  //       const data = await response.json();
+  //       console.log("generatedailyuser:", data);
+  //       Setdt(data);
+  //     } catch (error) {
+  //       console.error("Error fetching revenue:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [loading]);
+  //   fetchData();
+  // }, [loading]);
   return (
     <Box
       sx={{
