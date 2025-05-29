@@ -24,26 +24,27 @@ const History = ({ turnoff, supplier }) => {
     const responses = async () => {
       startLoading();
       let response;
-      if (!supplier) {
-        response = await fetch("http://localhost:8080/api/sell/get_customer", {
+      // if (!supplier) {
+      //   response = await fetch("http://localhost:8080/api/sell/get_customer", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify(body),
+      //   });
+      // }
+      // else {
+      response = await fetch(
+        "http://localhost:8080/api/products/get_supplier",
+        {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(body),
-        });
-      } else {
-        response = await fetch(
-          "http://localhost:8080/api/products/get_supplier",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-          }
-        );
-      }
+        }
+      );
+      // }
 
       let datas = await response.json();
       console.log(datas);

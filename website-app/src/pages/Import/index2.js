@@ -125,7 +125,7 @@ function Import2() {
   );
 
   const handleAddToOrder = async () => {
-    const idPro = suggestions.filter((sugg) => sugg.name == searchTerm);
+    const idPro = suggestions.filter((sugg) => sugg.name === searchTerm);
     setSuggestions([]);
     const suppliersId = idPro ? idPro[0] : null;
     try {
@@ -301,7 +301,7 @@ const ContentOrder = ({
       name: item.name,
       description: item.description,
       supplier: item.supplierDetails.name,
-      price: item.purchasePrice.replace(/\./g, ""),
+      price: parseFloat(item.purchasePrice.replace(/\./g, "")) || 0,
       imageUrl: item.image.secure_url,
       supplierId: item.supplierDetails._id,
       quantity: 1,

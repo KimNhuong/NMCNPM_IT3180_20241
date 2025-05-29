@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import "./ManageAccount.css";
 import { getRoles } from "../../services/Roles/rolesService";
 import { useAuth } from "../../components/introduce/useAuth";
@@ -6,58 +6,123 @@ import { useLoading } from "../../components/introduce/Loading";
 import { notify } from "../../components/Notification/notification";
 import { useNavigate } from "react-router-dom";
 
-function AccountTable() {
-  const [accounts, setAccounts] = useState([]);
-  const [rolesData, setRolesData] = useState([]);
-  const { startLoading, stopLoading } = useLoading();
-  const { user, logout } = useAuth();
-  const [showMenuIndex, setShowMenuIndex] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const dropdownRef = useRef(null);
-  const [confirmOtp, setConfirmOtp] = useState(false);
-  const navigate = useNavigate();
+// Icons
+import {
+  FaSearch,
+  FaPlus,
+  FaEdit,
+  FaTrash,
+  FaEye,
+  FaEyeSlash,
+  FaTimes,
+  FaCheck,
+  FaUser,
+  FaEnvelope,
+  FaLock,
+  FaUserTag,
+  FaCode,
+  FaRefreshCw,
+  FaSort,
+  FaSortUp,
+  FaSortDown,
+  FaFilter,
+  FaUsers,
+  FaShieldAlt,
+} from "react-icons/fa";
 
+// ✅ Di chuyển defaultRoles ra ngoài component để tránh infinite loop
+const DEFAULT_ROLES = [
+  { _id: "1", role: "Admin", description: "Quản trị viên hệ thống" },
+  { _id: "2", role: "Manager", description: "Quản lý cửa hàng" },
+  { _id: "3", role: "Staff", description: "Nhân viên bán hàng" },
+  { _id: "4", role: "Cashier", description: "Thu ngân" },
+  { _id: "5", role: "Warehouse", description: "Nhân viên kho" },
+  { _id: "6", role: "Accountant", description: "Kế toán" },
+  { _id: "7", role: "Customer Service", description: "Chăm sóc khách hàng" },
+  { _id: "8", role: "Security", description: "Bảo vệ" },
+];
+
+const ManageAccount = () => {
+  // State management
+  const [accounts, setAccounts] = useState([]);
+  const [rolesData, setRolesData] = useState(DEFAULT_ROLES); // ✅ Khởi tạo với roles mặc định
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  const [filterRole, setFilterRole] = useState("");
+  const [showMenuIndex, setShowMenuIndex] = useState(null);
+
+  // Modal states
+  const [showModal, setShowModal] = useState(false); // ✅ Thêm showModal state
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedAccount, setSelectedAccount] = useState(null);
+
+  // Form states
   const [formData, setFormData] = useState({
-    id: user ? user.id : "",
     name: "",
     email: "",
     password: "",
     role: "",
-    id_owner: user ? user.id_owner : "",
     code: "",
   });
+  const [confirmOtp, setConfirmOtp] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
 
-  const getAccounts = async (userId) => {
-    if (!userId) {
-      console.error("Lỗi: userId không hợp lệ!");
-      return;
-    }
+  // Hooks
+  const { startLoading, stopLoading } = useLoading();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const dropdownRef = useRef(null);
 
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/accounts/show?userId=${userId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (!response.ok) {
-        console.log("Response status:", response.status);
-        throw new Error(`Network response was not ok: ${response.statusText}`);
+  // API Functions
+  const getAccounts = useCallback(
+    async (userId) => {
+      if (!userId) {
+        console.error("Lỗi: userId không hợp lệ!");
+        return;
       }
 
-      const data = await response.json();
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/user/list?userId=${userId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
 
-      setAccounts(data);
-    } catch (error) {
-      console.error("Lỗi khi gọi API:", error);
-    }
-  };
+        if (!response.ok) {
+          throw new Error(
+            `Network response was not ok: ${response.statusText}`
+          );
+        }
+
+        const data = await response.json();
+        console.log("API Response data:", data); // ✅ Debug logging
+
+        // ✅ Xử lý cấu trúc response {message: 'Success', data: Array}
+        if (data && data.data && Array.isArray(data.data)) {
+          setAccounts(data.data); // Lấy array từ data.data
+          console.log("✅ Loaded accounts from API:", data.data);
+        } else if (Array.isArray(data)) {
+          setAccounts(data); // Fallback nếu response là array trực tiếp
+          console.log("✅ Loaded accounts (direct array):", data);
+        } else {
+          console.warn("API response structure not recognized:", data);
+          setAccounts([]); // Set empty array nếu response không đúng format
+        }
+      } catch (error) {
+        console.error("Lỗi khi gọi API:", error);
+        notify(2, "Không thể tải danh sách tài khoản", "Lỗi");
+      }
+    },
+    [] // ✅ Loại bỏ startLoading, stopLoading khỏi dependencies
+  );
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -74,18 +139,43 @@ function AccountTable() {
   }, []);
 
   useEffect(() => {
-    const fetchRoles = async () => {
-      if (user) {
-        startLoading();
-        await getAccounts(user.id_owner);
-        const roles = await getRoles(user.id_owner);
-        setRolesData(roles);
-        stopLoading();
-        setFormData((prevData) => ({ ...prevData, id_owner: user._id })); // cập nhật id_owner
+    const fetchData = async () => {
+      if (user && user.id_owner) {
+        try {
+          // ✅ Fetch accounts
+          await getAccounts(user.id_owner);
+
+          // ✅ Fetch roles với fallback
+          try {
+            const rolesResponse = await getRoles(user.id_owner);
+            console.log("Roles API Response:", rolesResponse);
+
+            // Xử lý roles response
+            if (Array.isArray(rolesResponse) && rolesResponse.length > 0) {
+              setRolesData(rolesResponse);
+              console.log("✅ Loaded roles from API:", rolesResponse);
+            } else {
+              console.log("⚠️ Using default roles");
+              setRolesData(DEFAULT_ROLES);
+            }
+          } catch (roleError) {
+            console.warn(
+              "⚠️ Failed to fetch roles, using defaults:",
+              roleError
+            );
+            setRolesData(DEFAULT_ROLES);
+          }
+
+          // ✅ Set form data
+          setFormData((prevData) => ({ ...prevData, id_owner: user._id }));
+        } catch (error) {
+          console.error("❌ Error in fetchData:", error);
+        }
       }
     };
-    fetchRoles();
-  }, [user]);
+
+    fetchData();
+  }, [user?.id_owner, user?._id, getAccounts]); // ✅ Loại bỏ DEFAULT_ROLES vì nó là constant
 
   const toggleMenu = (index) => {
     setShowMenuIndex(showMenuIndex === index ? null : index);
@@ -95,17 +185,20 @@ function AccountTable() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredAccounts = accounts.filter((account) => {
-    const name = account.name ? account.name.toLowerCase() : "";
-    const email = account.email ? account.email.toLowerCase() : "";
-    const role = account.role ? account.role.toLowerCase() : "";
+  // ✅ Đảm bảo accounts luôn là array trước khi filter
+  const filteredAccounts = Array.isArray(accounts)
+    ? accounts.filter((account) => {
+        const name = account.name ? account.name.toLowerCase() : "";
+        const email = account.email ? account.email.toLowerCase() : "";
+        const role = account.role ? account.role.toLowerCase() : "";
 
-    return (
-      name.includes(searchTerm.toLowerCase()) ||
-      email.includes(searchTerm.toLowerCase()) ||
-      role.includes(searchTerm.toLowerCase())
-    );
-  });
+        return (
+          name.includes(searchTerm.toLowerCase()) ||
+          email.includes(searchTerm.toLowerCase()) ||
+          role.includes(searchTerm.toLowerCase())
+        );
+      })
+    : []; // Trả về array rỗng nếu accounts không phải array
 
   const handleCreateAccount = async (e) => {
     e.preventDefault();
@@ -120,23 +213,23 @@ function AccountTable() {
         confirmOtp: confirmOtp,
         code: formData.code,
       };
+
       startLoading();
-      const response = await fetch(
-        "http://localhost:8080/api/accounts/create",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ dataUser, user }),
-        }
-      );
+      const response = await fetch("http://localhost:8080/api/user/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ dataUser, user }),
+      });
 
       const data = await response.json();
       stopLoading();
-      console.log(data);
+      console.log("Create account response:", data);
 
       if (confirmOtp) {
+        // ✅ Đang ở bước xác nhận OTP
         if (data.message === "Staff is created successfully") {
           notify(1, "Tạo thành công tài khoản", "Thành công");
           setFormData({
@@ -149,12 +242,13 @@ function AccountTable() {
             code: "",
           });
           setConfirmOtp(false);
-          setShowModal(false); // Đóng modal khi tạo tài khoản thành công
-          await getAccounts(user.id_owner); // Cập nhật danh sách tài khoản
+          setShowModal(false);
+          await getAccounts(user.id_owner);
         } else {
           notify(2, data.message || "Lỗi xác nhận mã", "Thất bại");
         }
       } else {
+        // ✅ Đang ở bước gửi OTP
         if (data.message === "Confirmation code sent") {
           setConfirmOtp(true);
           notify(1, "Mã xác nhận đã được gửi", "Thành công");
@@ -170,88 +264,16 @@ function AccountTable() {
             code: "",
           });
           setConfirmOtp(false);
-          setShowModal(false); // Đóng modal khi tạo tài khoản thành công
-          await getAccounts(user.id_owner); // Cập nhật danh sách tài khoản
+          setShowModal(false);
+          await getAccounts(user.id_owner);
         } else {
           notify(2, data.message || "Không thể gửi mã xác nhận", "Thất bại");
         }
       }
     } catch (error) {
       console.error("Error:", error);
-    }
-  };
-
-  const sentAgain = async () => {
-    setConfirmOtp(true);
-    try {
-      const dataUser = {
-        id: user ? user.id : "",
-        role: user ? user.role : "",
-        id_owner: user ? user.id_owner : "",
-        email: formData.email,
-        password: formData.password,
-        name: formData.name,
-        confirmOtp: confirmOtp,
-        code: formData.code,
-      };
-      startLoading();
-      const response = await fetch(
-        "http://localhost:8080/api/accounts/send_again",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ dataUser, user }),
-        }
-      );
-
-      const data = await response.json();
+      notify(2, "Có lỗi xảy ra", "Lỗi");
       stopLoading();
-      // Khi gửi mã xác nhận
-      if (data.message === "Confirmation code sent") {
-        setConfirmOtp(true); // Chuyển sang trạng thái nhập mã xác nhận
-        setFormData((prev) => ({ ...prev, code: "" }));
-        notify(1, "Mã xác nhận đã được gửi", "Thành công");
-      } else {
-        notify(2, data.message || "Không thể gửi mã xác nhận", "Thất bại");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const handleDeleteAccount = async (accountId) => {
-    if (window.confirm("Are you sure you want to delete this account?")) {
-      try {
-        startLoading();
-        const response = await fetch(
-          `http://localhost:8080/api/accounts/delete/${accountId}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(user),
-          }
-        );
-
-        if (!response.ok) {
-          notify(2, "Xóa tài khoản thất bại", "Thất bại");
-          throw new Error(`Failed to delete account: ${response.statusText}`);
-        }
-        if (user._id === accountId) {
-          logout();
-        }
-
-        await getAccounts(user.id_owner); // Refresh the accounts list
-        stopLoading();
-        notify(1, "Xóa thành công tài khoản", "Thành công");
-      } catch (error) {
-        notify(2, "Xóa tài khoản thất bại", "Thất bại");
-        console.error("Error deleting account:", error);
-        stopLoading();
-      }
     }
   };
 
@@ -271,13 +293,19 @@ function AccountTable() {
     try {
       startLoading();
       const response = await fetch(
-        `http://localhost:8080/api/accounts/edit/${formData.id}`,
+        `http://localhost:8080/api/user/${formData.id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+            role: formData.role,
+          }),
         }
       );
 
@@ -285,17 +313,93 @@ function AccountTable() {
       console.log("Success:", data);
       stopLoading();
       notify(1, "Chỉnh sửa tài khoản thành công", "Thành công");
-      await getAccounts(user.id_owner); // Use await here as handleCreateAccount is async
-      setShowModal(false); // Hide modal on success
+      await getAccounts(user.id_owner);
+      setShowModal(false);
     } catch (error) {
       notify(2, "Chỉnh sửa tài khoản thất bại", "Thất bại");
       console.error("Error edit:", error);
     }
   };
 
+  // ✅ Handle delete account sử dụng DELETE /api/user/{id}
+  const handleDeleteAccount = async (accountId) => {
+    try {
+      startLoading();
+      const response = await fetch(
+        `http://localhost:8080/api/user/${accountId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete account: ${response.statusText}`);
+      }
+
+      if (user._id === accountId) {
+        logout();
+        navigate("/");
+      } else {
+        await getAccounts(user.id_owner);
+        notify(1, "Xóa thành công tài khoản", "Thành công");
+      }
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      notify(2, "Xóa tài khoản thất bại", "Thất bại");
+    } finally {
+      stopLoading();
+      setShowDeleteModal(false);
+      setSelectedAccount(null);
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  // ✅ Function để gửi lại mã OTP
+  const sentAgain = async () => {
+    try {
+      const dataUser = {
+        id: user?.id || "",
+        role: formData.role,
+        id_owner: user?.id_owner || "",
+        email: formData.email,
+        password: formData.password,
+        name: formData.name,
+        confirmOtp: confirmOtp,
+        code: formData.code,
+      };
+
+      startLoading();
+      const response = await fetch("http://localhost:8080/api/user/resend", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ dataUser, user }),
+      });
+
+      const data = await response.json();
+      stopLoading();
+
+      if (data.message === "Confirmation code sent") {
+        setFormData((prev) => ({ ...prev, code: "" }));
+        notify(1, "Mã xác nhận đã được gửi lại", "Thành công");
+      } else {
+        notify(2, data.message || "Không thể gửi lại mã xác nhận", "Thất bại");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      notify(2, "Có lỗi xảy ra khi gửi lại mã", "Lỗi");
+      stopLoading();
+    }
   };
 
   return (
@@ -361,11 +465,11 @@ function AccountTable() {
                 required
               >
                 <option value="" disabled>
-                  Select Role
+                  Chọn vai trò
                 </option>
                 {rolesData.map((role) => (
                   <option key={role._id} value={role.role}>
-                    {role.role}
+                    {role.role} - {role.description}
                   </option>
                 ))}
               </select>
@@ -380,9 +484,9 @@ function AccountTable() {
                     onChange={handleInputChange}
                     required
                   />
-                  <p className="uy-sentagain" onClick={sentAgain}>
+                  {/* <p className="uy-sentagain" onClick={sentAgain}>
                     Gửi lại mã
-                  </p>
+                  </p> */}
                 </>
               )}
 
@@ -440,11 +544,11 @@ function AccountTable() {
                 required
               >
                 <option value="" disabled>
-                  Select Role
+                  🎯 Chọn vai trò
                 </option>
                 {rolesData.map((role) => (
                   <option key={role._id} value={role.role}>
-                    {role.role}
+                    {role.role} - {role.description}
                   </option>
                 ))}
               </select>
@@ -522,6 +626,6 @@ function AccountTable() {
       </button>
     </div>
   );
-}
+};
 
-export default AccountTable;
+export default ManageAccount;

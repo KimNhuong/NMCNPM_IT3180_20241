@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useApiDocReader } from '../../utils/apiDocReader';
-import './ApiDocViewer.css';
+import React, { useState, useEffect } from "react";
+import { useApiDocReader } from "../../utils/apiDocReader";
+import "./ApiDocViewer.css";
 
 const ApiDocViewer = () => {
   const [apiReader, setApiReader] = useState(null);
   const [endpoints, setEndpoints] = useState([]);
   const [groupedEndpoints, setGroupedEndpoints] = useState({});
   const [selectedEndpoint, setSelectedEndpoint] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
+
   const { loadApiDocs } = useApiDocReader();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const ApiDocViewer = () => {
   const loadApiDocumentation = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const reader = await loadApiDocs();
       if (reader) {
@@ -29,7 +29,7 @@ const ApiDocViewer = () => {
         setEndpoints(allEndpoints);
         setGroupedEndpoints(reader.displayEndpointsByTags());
       } else {
-        setError('Could not load API documentation');
+        setError("Could not load API documentation");
       }
     } catch (err) {
       setError(err.message);
@@ -65,11 +65,11 @@ const ApiDocViewer = () => {
   const exportMarkdown = () => {
     if (apiReader) {
       const markdown = apiReader.exportAsMarkdown();
-      const blob = new Blob([markdown], { type: 'text/markdown' });
+      const blob = new Blob([markdown], { type: "text/markdown" });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = 'api-documentation.md';
+      a.download = "api-documentation.md";
       a.click();
       URL.revokeObjectURL(url);
     }
@@ -95,51 +95,121 @@ const ApiDocViewer = () => {
           <button onClick={loadApiDocumentation} className="retry-btn">
             🔄 Retry
           </button>
-          
+
           <div className="fallback-info">
             <h4>📋 Known Endpoints (from code analysis):</h4>
             <div className="known-endpoints">
               <div className="endpoint-group">
                 <h5>🔐 Authentication</h5>
                 <ul>
-                  <li><code>POST /api/auth/signup</code></li>
-                  <li><code>POST /api/auth/login</code></li>
+                  <li>
+                    <code>POST /api/auth/signup</code>
+                  </li>
+                  <li>
+                    <code>POST /api/auth/login</code>
+                  </li>
+                  <li>
+                    <code>POST /api/auth/google</code>
+                  </li>
+                  <li>
+                    <code>POST /api/auth/reset_password</code>
+                  </li>
                 </ul>
               </div>
-              
+
+              <div className="endpoint-group">
+                <h5>👥 Account Management</h5>
+                <ul>
+                  <li>
+                    <code>GET /api/accounts/show?userId={userId}</code>
+                  </li>
+                  <li>
+                    <code>POST /api/accounts/create</code>
+                  </li>
+                  <li>
+                    <code>POST /api/accounts/send_again</code>
+                  </li>
+                  <li>
+                    <code>PUT /api/accounts/edit/{accountId}</code>
+                  </li>
+                  <li>
+                    <code>DELETE /api/accounts/delete/{accountId}</code>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="endpoint-group">
+                <h5>🛡️ Roles & Permissions</h5>
+                <ul>
+                  <li>
+                    <code>GET /roles/show?userId={userId}</code>
+                  </li>
+                  <li>
+                    <code>POST /roles/create</code>
+                  </li>
+                  <li>
+                    <code>DELETE /roles/delete/{roleId}</code>
+                  </li>
+                </ul>
+              </div>
+
               <div className="endpoint-group">
                 <h5>🏠 Dashboard</h5>
                 <ul>
-                  <li><code>POST /api/home/total_revenue</code></li>
-                  <li><code>POST /api/home/new_customer</code></li>
-                  <li><code>POST /api/home/total_pending</code></li>
-                  <li><code>POST /api/home/recent_activity</code></li>
+                  <li>
+                    <code>POST /api/home/total_revenue</code>
+                  </li>
+                  <li>
+                    <code>POST /api/home/new_customer</code>
+                  </li>
+                  <li>
+                    <code>POST /api/home/total_pending</code>
+                  </li>
+                  <li>
+                    <code>POST /api/home/recent_activity</code>
+                  </li>
                 </ul>
               </div>
-              
+
               <div className="endpoint-group">
                 <h5>💬 Chat</h5>
                 <ul>
-                  <li><code>POST /api/chat/getMessages</code></li>
-                  <li><code>Socket.IO: send_message, receive_message</code></li>
+                  <li>
+                    <code>POST /api/chat/getMessages</code>
+                  </li>
+                  <li>
+                    <code>Socket.IO: send_message, receive_message</code>
+                  </li>
                 </ul>
               </div>
-              
+
               <div className="endpoint-group">
                 <h5>🛒 Sales</h5>
                 <ul>
-                  <li><code>POST /api/sell/findcode</code></li>
-                  <li><code>POST /api/sell/get_customer</code></li>
-                  <li><code>POST /api/sell/get_history</code></li>
+                  <li>
+                    <code>POST /api/sell/findcode</code>
+                  </li>
+                  <li>
+                    <code>POST /api/sell/get_customer</code>
+                  </li>
+                  <li>
+                    <code>POST /api/sell/get_history</code>
+                  </li>
                 </ul>
               </div>
-              
+
               <div className="endpoint-group">
                 <h5>📦 Products</h5>
                 <ul>
-                  <li><code>POST /api/products/show</code></li>
-                  <li><code>POST /api/products/get_supplier</code></li>
-                  <li><code>POST /api/products/history</code></li>
+                  <li>
+                    <code>POST /api/products/show</code>
+                  </li>
+                  <li>
+                    <code>POST /api/products/get_supplier</code>
+                  </li>
+                  <li>
+                    <code>POST /api/products/history</code>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -180,8 +250,10 @@ const ApiDocViewer = () => {
                 <div
                   key={`${endpoint.method}-${endpoint.path}-${index}`}
                   className={`endpoint-item ${
-                    selectedEndpoint?.method === endpoint.method && 
-                    selectedEndpoint?.path === endpoint.path ? 'selected' : ''
+                    selectedEndpoint?.method === endpoint.method &&
+                    selectedEndpoint?.path === endpoint.path
+                      ? "selected"
+                      : ""
                   }`}
                   onClick={() => selectEndpoint(endpoint.method, endpoint.path)}
                 >
@@ -199,43 +271,50 @@ const ApiDocViewer = () => {
           {selectedEndpoint ? (
             <div className="endpoint-details">
               <div className="endpoint-header">
-                <span className={`method ${selectedEndpoint.method.toLowerCase()}`}>
+                <span
+                  className={`method ${selectedEndpoint.method.toLowerCase()}`}
+                >
                   {selectedEndpoint.method}
                 </span>
                 <span className="path">{selectedEndpoint.path}</span>
               </div>
-              
+
               <div className="endpoint-info">
                 <h4>📝 Summary</h4>
                 <p>{selectedEndpoint.summary}</p>
-                
+
                 {selectedEndpoint.description && (
                   <>
                     <h4>📄 Description</h4>
                     <p>{selectedEndpoint.description}</p>
                   </>
                 )}
-                
+
                 <h4>🔗 Full URL</h4>
                 <code>{selectedEndpoint.fullUrl}</code>
-                
-                {selectedEndpoint.parameters && selectedEndpoint.parameters.length > 0 && (
-                  <>
-                    <h4>📥 Parameters</h4>
-                    <ul>
-                      {selectedEndpoint.parameters.map((param, index) => (
-                        <li key={index}>
-                          <strong>{param.name}</strong> ({param.in}) - {param.description}
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-                
+
+                {selectedEndpoint.parameters &&
+                  selectedEndpoint.parameters.length > 0 && (
+                    <>
+                      <h4>📥 Parameters</h4>
+                      <ul>
+                        {selectedEndpoint.parameters.map((param, index) => (
+                          <li key={index}>
+                            <strong>{param.name}</strong> ({param.in}) -{" "}
+                            {param.description}
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+
                 <h4>💻 Code Example</h4>
                 <pre className="code-example">
                   <code>
-                    {generateExample(selectedEndpoint.method, selectedEndpoint.path)}
+                    {generateExample(
+                      selectedEndpoint.method,
+                      selectedEndpoint.path
+                    )}
                   </code>
                 </pre>
               </div>
@@ -243,7 +322,10 @@ const ApiDocViewer = () => {
           ) : (
             <div className="no-selection">
               <h3>👈 Select an endpoint to view details</h3>
-              <p>Choose an endpoint from the sidebar to see detailed information and code examples.</p>
+              <p>
+                Choose an endpoint from the sidebar to see detailed information
+                and code examples.
+              </p>
             </div>
           )}
         </div>
