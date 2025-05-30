@@ -34,7 +34,11 @@ const Billing = () => {
       let body = {
         user: user,
       };
+<<<<<<< HEAD
       let response = await fetch("http://localhost:8080/api/sell/findcode", {
+=======
+      let response = await fetch("http://localhost:5000/sell/findcode", {
+>>>>>>> 486fdc614f99766b70e05b0cfb10804a2f2fbe0e
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,14 +46,22 @@ const Billing = () => {
         body: JSON.stringify(body),
       });
       let datas = await response.json();
+<<<<<<< HEAD
       console.log(datas.message);
       if (datas.message === "Success") {
+=======
+      if (datas.message == "success") {
+>>>>>>> 486fdc614f99766b70e05b0cfb10804a2f2fbe0e
         console.log(datas.product);
         setData(datas.product);
       } else {
         notify(2, "Load sản phẩm thất bại", "Thất bại");
       }
+<<<<<<< HEAD
       response = await fetch("http://localhost:8080/api/sell/getCustomer", {
+=======
+      response = await fetch("http://localhost:5000/sell/get_customer", {
+>>>>>>> 486fdc614f99766b70e05b0cfb10804a2f2fbe0e
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,7 +69,11 @@ const Billing = () => {
         body: JSON.stringify(body),
       });
       datas = await response.json();
+<<<<<<< HEAD
       if (datas.message === "Success") {
+=======
+      if (datas.message == "success") {
+>>>>>>> 486fdc614f99766b70e05b0cfb10804a2f2fbe0e
         setCustomers(datas.customers);
       } else {
         notify(2, "Load sản phẩm thất bại", "Thất bại");
@@ -91,7 +107,11 @@ const Billing = () => {
 
       setInvoices(updatedInvoices);
     } else {
+<<<<<<< HEAD
       const result = Array.from(data || []).find((element) => element.sku == i);
+=======
+      const result = data.find((element) => element.sku == i);
+>>>>>>> 486fdc614f99766b70e05b0cfb10804a2f2fbe0e
       if (result) {
         const newProduct = {
           ...result,
@@ -297,8 +317,11 @@ const Billing = () => {
   const onform = () => {
     if (total > 0) {
       setForm(true);
+<<<<<<< HEAD
     } else {
       notify(2, "Chưa có sản phẩm để thanh toán");
+=======
+>>>>>>> 486fdc614f99766b70e05b0cfb10804a2f2fbe0e
     }
   };
   const onclose = () => {
@@ -388,8 +411,13 @@ const Billing = () => {
               value={productCode}
               onChange={(e) => {
                 setProductCode(e.target.value);
+<<<<<<< HEAD
                 if (e.target.value !== "") {
                   const x = Array.from(data || []).filter((product, index) =>
+=======
+                if (e.target.value != "") {
+                  const x = data.filter((product, index) =>
+>>>>>>> 486fdc614f99766b70e05b0cfb10804a2f2fbe0e
                     product.sku.includes(e.target.value)
                   );
                   setSuggestion(x);
