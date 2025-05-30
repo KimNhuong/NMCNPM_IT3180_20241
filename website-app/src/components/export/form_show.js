@@ -24,8 +24,24 @@ const History = ({ turnoff, supplier }) => {
     const responses = async () => {
       startLoading();
       let response;
+<<<<<<< HEAD
       if (!supplier) {
         response = await fetch("http://localhost:8080/api/sell/getCustomer", {
+=======
+      // if (!supplier) {
+      //   response = await fetch("http://localhost:8080/api/sell/get_customer", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify(body),
+      //   });
+      // }
+      // else {
+      response = await fetch(
+        "http://localhost:8080/api/products/get_supplier",
+        {
+>>>>>>> a05fc3285cb6eb35364b56f96593ac6dbb25aeb7
           method: "POST",
           headers: {
             "Content-Type": "application/json",
