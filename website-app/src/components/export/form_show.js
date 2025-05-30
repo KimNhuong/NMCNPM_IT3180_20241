@@ -24,27 +24,26 @@ const History = ({ turnoff, supplier }) => {
     const responses = async () => {
       startLoading();
       let response;
-      // if (!supplier) {
-      //   response = await fetch("http://localhost:8080/api/sell/get_customer", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify(body),
-      //   });
-      // }
-      // else {
-      response = await fetch(
-        "http://localhost:8080/api/products/get_supplier",
-        {
+      if (!supplier) {
+        response = await fetch("http://localhost:8080/api/sell/getCustomer", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(body),
-        }
-      );
-      // }
+        });
+      } else {
+        response = await fetch(
+          "http://localhost:8080/api/products/getSupplier",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+          }
+        );
+      }
 
       let datas = await response.json();
       console.log(datas);
@@ -56,7 +55,7 @@ const History = ({ turnoff, supplier }) => {
       }
     };
     responses();
-  }, [x]);
+  }, []);
   const change = () => {
     setX(!x);
   };
@@ -115,7 +114,7 @@ const History = ({ turnoff, supplier }) => {
       return;
     }
     startLoading();
-    let url = "http://localhost:8080/api/sell/edit_customer";
+    let url = "http://localhost:8080/api/sell/editCustomer";
     if (supplier) {
       url = "http://localhost:8080/api/products/edit_supplier";
     }
@@ -166,7 +165,7 @@ const History = ({ turnoff, supplier }) => {
   };
   const delete_action = async (supplier, reason) => {
     startLoading();
-    let url = "http://localhost:8080/api/sell/delete_customer";
+    let url = "http://localhost:8080/api/sell/deleteCustomer";
     if (supplier) {
       url = "http://localhost:8080/api/products/delete_supplier";
     }

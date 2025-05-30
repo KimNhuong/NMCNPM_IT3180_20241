@@ -12,9 +12,9 @@ const History = ({ turnoff, customer, supplier }) => {
         startLoading();
         let url = "http://localhost:8080/api/products/history";
         if (customer) {
-          url = "http://localhost:8080/api/sell/get_history_customer";
+          url = "http://localhost:8080/api/sell/getHistoryCustomer";
         } else if (supplier) {
-          url = "http://localhost:8080/api/products/get_history_supplier";
+          url = "http://localhost:8080/api/products/getHistorySupplier";
         }
 
         const response = await fetch(url, {
@@ -38,7 +38,7 @@ const History = ({ turnoff, customer, supplier }) => {
       }
     };
     response();
-  }, []);
+  }, [customer, supplier, user]);
   // const [orders, setOrders] = useState(initialOrders);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedOrders, setSelectedOrders] = useState([]);

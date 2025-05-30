@@ -14,7 +14,7 @@ const History = ({ turnoff }) => {
       try {
         startLoading();
         const response = await fetch(
-          "http://localhost:8080/api/sell/get_history",
+          "http://localhost:8080/api/sell/getHistory",
           {
             method: "POST",
             headers: {

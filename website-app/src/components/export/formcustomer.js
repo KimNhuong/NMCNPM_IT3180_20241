@@ -31,7 +31,7 @@ function CustomerForm({ close, show_customer, show_bill, supplier, change }) {
     startLoading();
     let response;
     if (!supplier) {
-      response = await fetch("http://localhost:8080/api/sell/create_customer", {
+      response = await fetch("http://localhost:8080/api/sell/createCustomer", {
         method: "Post",
         headers: {
           "Content-Type": "application/json",

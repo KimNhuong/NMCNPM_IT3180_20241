@@ -42,13 +42,14 @@ const Billing = () => {
         body: JSON.stringify(body),
       });
       let datas = await response.json();
-      if (datas.message == "success") {
+      console.log(datas.message);
+      if (datas.message === "Success") {
         console.log(datas.product);
         setData(datas.product);
       } else {
         notify(2, "Load sản phẩm thất bại", "Thất bại");
       }
-      response = await fetch("http://localhost:8080/api/sell/get_customer", {
+      response = await fetch("http://localhost:8080/api/sell/getCustomer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +57,7 @@ const Billing = () => {
         body: JSON.stringify(body),
       });
       datas = await response.json();
-      if (datas.message == "success") {
+      if (datas.message === "Success") {
         setCustomers(datas.customers);
       } else {
         notify(2, "Load sản phẩm thất bại", "Thất bại");
@@ -90,7 +91,7 @@ const Billing = () => {
 
       setInvoices(updatedInvoices);
     } else {
-      const result = data.find((element) => element.sku == i);
+      const result = Array.from(data || []).find((element) => element.sku == i);
       if (result) {
         const newProduct = {
           ...result,
@@ -296,6 +297,8 @@ const Billing = () => {
   const onform = () => {
     if (total > 0) {
       setForm(true);
+    } else {
+      notify(2, "Chưa có sản phẩm để thanh toán");
     }
   };
   const onclose = () => {
@@ -385,8 +388,8 @@ const Billing = () => {
               value={productCode}
               onChange={(e) => {
                 setProductCode(e.target.value);
-                if (e.target.value != "") {
-                  const x = data.filter((product, index) =>
+                if (e.target.value !== "") {
+                  const x = Array.from(data || []).filter((product, index) =>
                     product.sku.includes(e.target.value)
                   );
                   setSuggestion(x);
