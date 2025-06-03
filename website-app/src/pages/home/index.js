@@ -788,7 +788,7 @@ function Home() {
                     {act.map((act) => {
                       return (
                         <li className={"feed-item " + act.type}>
-                          <time className="date" datetime={act.date}>
+                          <time className="date" dateTime={act.date}>
                             {act.date}
                           </time>
                           <span

@@ -11,7 +11,6 @@ function Header({size}) {
     <div className="header" style={{width:`${size}%`,marginLeft:`${100-size}%`}}>
       <div className="search-box">
       <FaSearch className="search-icon" />
-      <i class="fas fa-search"></i>
       <input type="text" placeholder="Search ..."/>
       </div>
       <AudioPlayer />

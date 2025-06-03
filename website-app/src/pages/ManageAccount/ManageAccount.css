@@ -340,193 +340,142 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(2px);
 }
 
 .modal-content {
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  width: 100%;
-  max-width: 500px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.18),
+    0 1.5px 8px rgba(0, 0, 0, 0.08);
+  padding: 36px 32px 28px 32px;
+  min-width: 350px;
+  max-width: 95vw;
+  min-height: 0;
   position: relative;
-  animation: modalSlideIn 0.3s ease-out;
-}
-
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.modal-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #e5e7eb;
+  animation: modalPopIn 0.25s cubic-bezier(0.4, 2, 0.6, 1) both;
 }
 
-.modal-title {
+@keyframes modalPopIn {
+  0% {
+    transform: scale(0.95) translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.close-modal {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #667eea;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-modal:hover {
+  color: #ef4444;
+}
+
+.create-account-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.create-account-form input,
+.create-account-form select {
+  width: 260px;
+  padding: 10px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 7px;
+  font-size: 15px;
+  background: #f8fafc;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.create-account-form input:focus,
+.create-account-form select:focus {
+  border-color: #667eea;
+  background: #fff;
+  box-shadow: 0 0 0 2px #a5b4fc44;
+  outline: none;
+}
+
+.create-account-form button[type="submit"] {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 0;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+.create-account-form button[type="submit"]:hover {
+  background: linear-gradient(90deg, #5a67d8 0%, #6b21a8 100%);
+}
+
+.create-account-form button[type="button"] {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+  border-radius: 7px;
+  padding: 10px 0;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 0;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.create-account-form button[type="button"]:hover {
+  background: #e5e7eb;
+  color: #ef4444;
+}
+
+.create-account-form h3 {
   font-size: 20px;
   font-weight: 700;
-  color: #1f2937;
-  margin: 0;
+  color: #4f46e5;
+  margin-bottom: 8px;
+  text-align: center;
 }
 
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #6b7280;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
+@media (max-width: 600px) {
+  .modal-content {
+    padding: 18px 4vw;
+    min-width: 0;
+  }
 
-.close-btn:hover {
-  background-color: #f3f4f6;
-  color: #374151;
-}
-
-/* ===== FORM STYLES ===== */
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
-  color: #374151;
-  font-size: 14px;
-}
-
-.form-input {
-  width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e5e7eb;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: all 0.2s ease;
-  background-color: #f9fafb;
-  box-sizing: border-box;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: #667eea;
-  background-color: white;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.form-input.error {
-  border-color: #ef4444;
-  background-color: #fef2f2;
-}
-
-.form-error {
-  color: #ef4444;
-  font-size: 12px;
-  margin-top: 4px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.password-input-container {
-  position: relative;
-}
-
-.password-toggle {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #6b7280;
-  padding: 4px;
-}
-
-.password-toggle:hover {
-  color: #374151;
-}
-
-/* ===== OTP SECTION ===== */
-.otp-section {
-  background-color: #f0f9ff;
-  border: 1px solid #0ea5e9;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 20px;
-}
-
-.otp-info {
-  color: #0369a1;
-  font-size: 14px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.resend-otp {
-  color: #0ea5e9;
-  text-decoration: underline;
-  cursor: pointer;
-  font-size: 14px;
-  background: none;
-  border: none;
-  padding: 0;
-}
-
-.resend-otp:hover {
-  color: #0284c7;
-}
-
-/* ===== FORM ACTIONS ===== */
-.form-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid #e5e7eb;
-}
-
-/* ===== LOADING STATES ===== */
-.loading-spinner {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid #ffffff;
-  border-radius: 50%;
-  border-top-color: transparent;
-  animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+  .create-account-form input,
+  .create-account-form select {
+    width: 90vw;
+    min-width: 0;
   }
 }
 
@@ -561,6 +510,23 @@
 
   .form-actions {
     flex-direction: column;
+  }
+}
+
+/* ===== LOADING STATES ===== */
+.loading-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 

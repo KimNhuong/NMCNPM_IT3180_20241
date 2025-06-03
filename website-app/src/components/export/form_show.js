@@ -34,7 +34,7 @@ const History = ({ turnoff, supplier }) => {
         });
       } else {
         response = await fetch(
-          "http://localhost:8080/api/products/getSupplier",
+          "http://localhost:8080/api/products/get_supplier",
           {
             method: "POST",
             headers: {
@@ -285,8 +285,8 @@ const History = ({ turnoff, supplier }) => {
               {filteredOrders.map((order, index) => (
                 <tr key={index}>
                   <td>
-                    {order?.creater.name}
-                    <br /> <small>{order?.creater.email}</small>
+                    {order?.creator?.name || ""}
+                    <br /> <small>{order?.creator?.email || ""}</small>
                   </td>
                   <td>{formatDateTime(order?.createdAt)}</td>
                   <td>

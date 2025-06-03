@@ -35,7 +35,7 @@ function LayoutDefault() {
             <Chat chats={chat} ring={ring} />
 
             <div
-              class="image-container2"
+              className="image-container2"
               style={
                 ring2
                   ? { animation: "tiltAnimation 1.5s infinite" }
@@ -43,7 +43,7 @@ function LayoutDefault() {
               }
             >
               <div
-                class="support-btn"
+                className="support-btn"
                 style={
                   chat
                     ? { right: "50px", bottom: "18px", cursor: "pointer" }
@@ -54,9 +54,9 @@ function LayoutDefault() {
                   setRing2(false);
                 }}
               >
-                <span class="support-text">{chat ? "tắt chat" : "Chat"}</span>
+                <span className="support-text">{chat ? "tắt chat" : "Chat"}</span>
               </div>
-              <img src={help} alt="Background" class="background-image" />
+              <img src={help} alt="Background" className="background-image" />
             </div>
           </div>
         </div>

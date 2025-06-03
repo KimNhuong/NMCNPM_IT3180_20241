@@ -52,6 +52,10 @@ const OrderManagement = forwardRef(
     };
 
     const fetchOrder = async (keyword) => {
+      if (!user || !user.id_owner || !user._id) {
+        console.warn("User info missing, skip fetchOrder");
+        return;
+      }
       try {
         const apiUrl = `http://localhost:8080/api/import/orderHistory/getOrder?search=${keyword}&ownerId=${user?.id_owner}&userId=${user._id}`;
         const response = await fetch(apiUrl);

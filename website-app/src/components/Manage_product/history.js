@@ -14,7 +14,7 @@ const History = ({ turnoff, customer, supplier }) => {
         if (customer) {
           url = "http://localhost:8080/api/sell/getHistoryCustomer";
         } else if (supplier) {
-          url = "http://localhost:8080/api/products/getHistorySupplier";
+          url = "http://localhost:8080/api/products/get_history_supplier";
         }
 
         const response = await fetch(url, {
@@ -31,7 +31,20 @@ const History = ({ turnoff, customer, supplier }) => {
         }
 
         const data = await response.json();
-        setInitialOrders(data);
+        // Đảm bảo initialOrders luôn là mảng, kể cả khi các trường không tồn tại hoặc không phải mảng
+        let arr = [];
+        if (Array.isArray(data)) {
+          arr = data;
+        } else if (data && typeof data === 'object') {
+          // Lấy trường đầu tiên là mảng nếu có
+          for (const key in data) {
+            if (Array.isArray(data[key])) {
+              arr = data[key];
+              break;
+            }
+          }
+        }
+        setInitialOrders(arr);
         stopLoading();
       } catch (error) {
         console.log(error);
@@ -43,7 +56,7 @@ const History = ({ turnoff, customer, supplier }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedOrders, setSelectedOrders] = useState([]);
   //   Lọc các đơn hàng theo tìm kiếm
-  const filteredOrders = initialOrders.filter((order) => {
+  const filteredOrders = (Array.isArray(initialOrders) ? initialOrders : []).filter((order) => {
     if (supplier) {
       return (
         order.employee.name.toLowerCase().includes(searchTerm) ||

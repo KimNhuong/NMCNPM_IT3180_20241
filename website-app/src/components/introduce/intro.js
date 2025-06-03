@@ -268,8 +268,8 @@ function LoginModal({ off, isSignup }) {
       <GoogleOAuthProvider clientId="1039484967279-b0uv9c8m0t6v453c7im8f0jiopq82v3j.apps.googleusercontent.com">
         <div className="login">
           <div className="login-modal">
-            <div class="image-top">
-              <img src={top} alt="Background" class="top-image" />
+            <div className="image-top">
+              <img src={top} alt="Background" className="top-image" />
             </div>
             <div className="login-header">
               <h2>{isSignup ? "Sign up" : "Login"}</h2>
