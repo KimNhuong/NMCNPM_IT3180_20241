@@ -45,8 +45,12 @@ const Billing = () => {
       let datas = await response.json();
       console.log(datas.message);
       if (datas.message === "Success") {
-        console.log(datas.products);
-        setData(datas.products);
+        // Map lại trường purchasePrice thành price cho mỗi sản phẩm
+        const mappedProducts = (datas.products || []).map((prd) => ({
+          ...prd,
+          price: prd.purchasePrice || "0",
+        }));
+        setData(mappedProducts);
       } else {
         notify(2, "Load sản phẩm thất bại", "Thất bại");
       }
@@ -142,9 +146,14 @@ const Billing = () => {
     const product = updatedInvoices[currentInvoice].products[index];
 
     product[field] = value;
+    // Đảm bảo price luôn là string hợp lệ
+    const priceString =
+      product.price !== undefined && product.price !== null
+        ? product.price.toString()
+        : "0";
     product.total =
       product.quantity *
-      parseInt(product.price.replace(/\./g, ""), 10) *
+      parseInt(priceString.replace(/\./g, ""), 10) *
       (1 - product.discount / 100);
     setInvoices(updatedInvoices);
   };
