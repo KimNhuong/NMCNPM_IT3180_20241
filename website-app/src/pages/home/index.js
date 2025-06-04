@@ -787,7 +787,7 @@ function Home() {
                   <ol className="activity-feed">
                     {act.map((act) => {
                       return (
-                        <li className={"feed-item " + act.type}>
+                        <li key={act.id || act.date || Math.random()} className={"feed-item " + act.type}>
                           <time className="date" dateTime={act.date}>
                             {act.date}
                           </time>

@@ -150,19 +150,19 @@ function Profile() {
   };
 
   return (
-    <div className="profile-container">
-      <div className="profile-header">
+    <div className="profile-container profile-glass">
+      <div className="profile-header profile-header-glass">
         <img
           src="https://th.bing.com/th?id=ORMS.56823debd4d1cba419b1262f94a12e45&pid=Wdp&w=612&h=304&qlt=90&c=1&rs=1&dpr=1.5&p=0"
           alt="Profile Banner"
-          className="banner"
+          className="banner banner-glass"
         />
-        <div>
+        <div className="profile-avatar-wrapper">
           <div
-            className="profile-picture"
+            className="profile-picture profile-picture-glass"
             onClick={() => setEditImage((prev) => !prev)}
           >
-            <div className="uy-avatar" style={{ cursor: "pointer" }}>
+            <div className="uy-avatar avatar-glass" style={{ cursor: "pointer", boxShadow: "0 4px 24px 0 rgba(0,0,0,0.15)", border: "4px solid #fff", borderRadius: "50%", overflow: "hidden", transition: "transform 0.3s", background: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)" }}>
               {data ? <Avatar name={data.name} imageUrl={data.avatar} /> : ""}
             </div>
           </div>
@@ -173,26 +173,25 @@ function Profile() {
             />
           )}
         </div>
-
-        <div className="profile-info">
+        <div className="profile-info profile-info-glass">
           {!edit ? (
-            <div className="profile-info__name">{data ? data.name : ""}</div>
+            <div className="profile-info__name profile-info__name-glass">{data ? data.name : ""}</div>
           ) : (
             <input
               type="text"
               name="name"
               value={newData ? newData.name : ""}
               onChange={handleEditChange}
+              className="profile-edit-input"
             />
           )}
-
           {edit ? (
             <>
-              <button className="message-btn" onClick={saveChanges}>
+              <button className="message-btn profile-btn-glass" onClick={saveChanges}>
                 Lưu
               </button>
               <button
-                className="message-btn"
+                className="message-btn profile-btn-glass"
                 onClick={() => setEdit(false)}
                 style={{ marginLeft: "10px" }}
               >
@@ -200,69 +199,39 @@ function Profile() {
               </button>
             </>
           ) : (
-            <button className="message-btn" onClick={() => setEdit(true)}>
+            <button className="message-btn profile-btn-glass" onClick={() => setEdit(true)}>
               Edit profile
             </button>
           )}
         </div>
       </div>
-
-      <div className="connect-section">
-        <div>Thông tin cá nhân</div>
-        <ul>
+      <div className="connect-section connect-section-glass">
+        <div className="section-title">Thông tin cá nhân</div>
+        <ul className="profile-list">
           <li>
-            <a href="#">
-              <FaRegUser /> Quán của : {data ? data.id_owner.name : ""}
-            </a>
+            <FaRegUser className="profile-icon" /> Quán của : {data ? data.id_owner.name : ""}
           </li>
           <li>
-            <a href="#">
-              <FaChild /> vị trí : {data ? data.role : ""}
-            </a>
+            <FaChild className="profile-icon" /> vị trí : {data ? data.role : ""}
           </li>
           <li>
-            <a href="#">
-              <FaCheckSquare /> Quyền :{" "}
-              {data
-                ? data.right
-                  ? data.right.permissions.map((p) => p).join(", ")
-                  : data.role == "Admin"
-                  ? "tất cả các quyền"
-                  : "Không có quyền gì"
-                : ""}
-            </a>
+            <FaCheckSquare className="profile-icon" /> Quyền : {data
+              ? data.right
+                ? data.right.permissions.map((p) => p).join(", ")
+                : data.role == "Admin"
+                ? "tất cả các quyền"
+                : "Không có quyền gì"
+              : ""}
           </li>
           <li>
-            <a href="#">
-              <MdEmail /> Email : {data ? data.email : ""}
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <RiLockPasswordFill /> Mật khẩu :
-              {!edit ? (
-                data ? (
-                  data.password
-                ) : (
-                  ""
-                )
-              ) : (
-                <input
-                  type="text"
-                  name="password"
-                  value={newData ? newData.password : ""}
-                  onChange={handleEditChange}
-                />
-              )}
-            </a>
+            <MdEmail className="profile-icon" /> Email : {data ? data.email : ""}
           </li>
         </ul>
       </div>
-
-      <div className="bank-section">
-        <div>Thông tin tài khoản ngân hàng</div>
+      <div className="bank-section bank-section-glass">
+        <div className="section-title">Thông tin tài khoản ngân hàng</div>
         <button
-          className="message-btn"
+          className="message-btn profile-btn-glass"
           onClick={() => {
             setShowBankForm((prev) => !prev);
             setNewBankAccount({
@@ -276,7 +245,7 @@ function Profile() {
           {showBankForm ? "Đóng form" : "Thêm tài khoản ngân hàng"}
         </button>
         {showBankForm && (
-          <div className="bank-form">
+          <div className="bank-form bank-form-glass">
             <form onSubmit={addBankAccount}>
               <input
                 type="text"
@@ -285,6 +254,7 @@ function Profile() {
                 value={newBankAccount.accountNumber}
                 onChange={handleBankInputChange}
                 required
+                className="profile-edit-input"
               />
               <div className="bank-select-container">
                 <label htmlFor="bankName" className="bank-select-label">
@@ -317,7 +287,6 @@ function Profile() {
                   <option value="EIB">Eximbank (EIB)</option>
                 </select>
               </div>
-
               <input
                 type="text"
                 name="name"
@@ -325,37 +294,25 @@ function Profile() {
                 value={newBankAccount.name}
                 onChange={handleBankInputChange}
                 required
+                className="profile-edit-input"
               />
-              {/* <label>mã QR</label>
-        <input type="file" name="image" onChange={handleChangeimage} required />
-        {image && (
-          <div>
-            <h3>Ảnh :</h3>
-            <img src={image} alt="Captured" style={{ width: '300px' }} />
-          </div>
-        )} */}
-              <button className="message-btn">Lưu tài khoản</button>
+              <button className="message-btn profile-btn-glass">Lưu tài khoản</button>
             </form>
           </div>
         )}
-        <ul>
+        <ul className="bank-list">
           {bankAccounts.map((account, index) => (
             <li
               key={index}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "10px",
-              }}
+              className="bank-list-item"
             >
               <span>
                 {account.name} - {account.bankName} ({account.accountNumber})
               </span>
-
               <button
                 style={{ marginLeft: "10px", cursor: "pointer" }}
                 onClick={() => handleDeleteAccount(index)}
-                className="delete_account"
+                className="delete_account profile-btn-glass"
               >
                 Delete
               </button>
@@ -363,9 +320,8 @@ function Profile() {
           ))}
         </ul>
       </div>
-
       <div className="profile-logout">
-        <button className="message-btn logout" onClick={logout}>
+        <button className="message-btn logout profile-btn-glass" onClick={logout}>
           Logout
         </button>
       </div>

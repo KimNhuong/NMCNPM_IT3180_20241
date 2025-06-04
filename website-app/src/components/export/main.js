@@ -28,13 +28,14 @@ const Billing = () => {
   const [form_history, setForm_history] = useState(false);
   useEffect(() => {
     const a = async () => {
-      if (loading) {
+      if (loading || !user) {
         return;
       }
+      console.log("user", user);
       let body = {
         user: user,
       };
-      let response = await fetch("http://localhost:8080/api/sell/findcode", {
+      let response = await fetch("http://localhost:8080/api/sell/findCode", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,8 +45,8 @@ const Billing = () => {
       let datas = await response.json();
       console.log(datas.message);
       if (datas.message === "Success") {
-        console.log(datas.product);
-        setData(datas.product);
+        console.log(datas.products);
+        setData(datas.products);
       } else {
         notify(2, "Load sản phẩm thất bại", "Thất bại");
       }
@@ -64,49 +65,48 @@ const Billing = () => {
       }
     };
     a();
-  }, [loading]);
+  }, [loading, user]);
   const addProduct = async (code = "") => {
     let i = "";
-    if (code != "") {
+    if (code !== "") {
       i = code;
     }
-    if (productCode != "") i = productCode;
-    if (i == "") return;
+    if (productCode !== "") i = productCode;
+    if (i === "") return;
     const updatedInvoices = [...invoices];
-    if (
-      updatedInvoices[currentInvoice].products.some(
-        (element) => element.sku == i
-      )
-    ) {
-      updatedInvoices[currentInvoice].products.forEach((element) => {
-        if (element.sku == i) {
-          element.quantity++;
-          element.total =
-            element.quantity *
-            parseInt(element.price.replace(/\./g, ""), 10) *
-            (1 - element.discount / 100);
-          return;
-        }
-      });
-
+    const searchValue = i.toLowerCase();
+    // Tìm sản phẩm theo sku hoặc name (không phân biệt hoa thường)
+    const result = Array.from(data || []).find(
+      (element) =>
+        (element.sku && element.sku.toLowerCase() === searchValue) ||
+        (element.name && element.name.toLowerCase() === searchValue)
+    );
+    // Kiểm tra đã có trong hóa đơn chưa
+    const existedIndex = updatedInvoices[currentInvoice].products.findIndex(
+      (element) =>
+        (element.sku && element.sku.toLowerCase() === searchValue) ||
+        (element.name && element.name.toLowerCase() === searchValue)
+    );
+    if (existedIndex !== -1) {
+      const element = updatedInvoices[currentInvoice].products[existedIndex];
+      element.quantity++;
+      element.total =
+        element.quantity *
+        parseInt(element.price.replace(/\./g, ""), 10) *
+        (1 - element.discount / 100);
+      setInvoices(updatedInvoices);
+    } else if (result) {
+      const priceString = (result.price || "0").toString();
+      const newProduct = {
+        ...result,
+        quantity: 1,
+        discount: 0,
+        total: parseInt(priceString.replace(/\./g, ""), 10),
+      };
+      updatedInvoices[currentInvoice].products.push(newProduct);
       setInvoices(updatedInvoices);
     } else {
-      const result = Array.from(data || []).find((element) => element.sku == i);
-      if (result) {
-        const newProduct = {
-          ...result,
-          // productCode:i,
-          quantity: 1,
-          // price:parseFloat(result.price),
-          discount: 0,
-          total: parseInt(result.price.replace(/\./g, ""), 10),
-          // name:result.name
-        };
-        updatedInvoices[currentInvoice].products.push(newProduct);
-        setInvoices(updatedInvoices);
-      } else {
-        notify(2, "Sản phẩm không tồn tại", "Thất bại");
-      }
+      notify(2, "Sản phẩm không tồn tại", "Thất bại");
     }
   };
   const adds = (x) => {
@@ -389,8 +389,10 @@ const Billing = () => {
               onChange={(e) => {
                 setProductCode(e.target.value);
                 if (e.target.value !== "") {
-                  const x = Array.from(data || []).filter((product, index) =>
-                    product.sku.includes(e.target.value)
+                  const searchValue = e.target.value.toLowerCase();
+                  const x = Array.from(data || []).filter((product) =>
+                    product.sku.toLowerCase().includes(searchValue) ||
+                    (product.name && product.name.toLowerCase().includes(searchValue))
                   );
                   setSuggestion(x);
                 } else {

@@ -56,25 +56,26 @@ const History = ({ turnoff, customer, supplier }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedOrders, setSelectedOrders] = useState([]);
   //   Lọc các đơn hàng theo tìm kiếm
-  const filteredOrders = (Array.isArray(initialOrders) ? initialOrders : []).filter((order) => {
+  const safeOrders = Array.isArray(initialOrders) ? initialOrders : [];
+  const filteredOrders = safeOrders.filter((order) => {
     if (supplier) {
       return (
-        order.employee.name.toLowerCase().includes(searchTerm) ||
-        order.supplier.toLowerCase().includes(searchTerm) ||
-        order.action.toLowerCase().includes(searchTerm)
+        order.employee?.name?.toLowerCase().includes(searchTerm) ||
+        (order.supplier?.toLowerCase?.() || "").includes(searchTerm) ||
+        (order.action?.toLowerCase?.() || "").includes(searchTerm)
       );
     }
     if (customer) {
       return (
-        order.employee.name.toLowerCase().includes(searchTerm) ||
-        order.customer.toLowerCase().includes(searchTerm) ||
-        order.action.toLowerCase().includes(searchTerm)
+        order.employee?.name?.toLowerCase().includes(searchTerm) ||
+        (order.customer?.toLowerCase?.() || "").includes(searchTerm) ||
+        (order.action?.toLowerCase?.() || "").includes(searchTerm)
       );
     }
     return (
-      order.employee.name.toLowerCase().includes(searchTerm) ||
-      order.product.toLowerCase().includes(searchTerm) ||
-      order.action.toLowerCase().includes(searchTerm)
+      order.employee?.name?.toLowerCase().includes(searchTerm) ||
+      (order.product?.toLowerCase?.() || "").includes(searchTerm) ||
+      (order.action?.toLowerCase?.() || "").includes(searchTerm)
     );
   });
   // Cập nhật selectedOrders mỗi khi filteredOrders thay đổi

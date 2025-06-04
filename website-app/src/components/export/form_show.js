@@ -63,7 +63,8 @@ const History = ({ turnoff, supplier }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedOrders, setSelectedOrders] = useState([]);
   //   Lọc các đơn hàng theo tìm kiếm
-  const filteredOrders = initialOrders.filter(
+  const safeOrders = Array.isArray(initialOrders) ? initialOrders : [];
+  const filteredOrders = safeOrders.filter(
     (order) =>
       (order?.name && order?.name?.includes(searchTerm)) ||
       (order?.email && order?.email.includes(searchTerm)) ||
