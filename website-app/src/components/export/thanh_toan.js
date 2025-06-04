@@ -182,7 +182,7 @@ function PaymentComponent({
             <select value={selectedBank} onChange={handleBankChange}>
               <option value="">--Vui lòng chọn Ngân hàng--</option>
               {banks.map((bank) => (
-                <option key={bank.id} value={bank.name}>
+                <option key={bank.id || bank._id || bank.name} value={bank.name}>
                   {bank.name}
                 </option>
               ))}

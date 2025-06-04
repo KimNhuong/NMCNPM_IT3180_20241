@@ -36,9 +36,9 @@ const OrderManagement = () => {
     setEditedOrder(prevOrder => ({ ...prevOrder, [name]: value }));
   };
   const filteredOrders = orders.filter(order => 
-    order.client.toLowerCase().includes(searchTerm) ||
-    order.email.toLowerCase().includes(searchTerm) ||
-    order.country.toLowerCase().includes(searchTerm)
+    (order.client?.toLowerCase?.() || order.creator?.name?.toLowerCase?.() || "").includes(searchTerm) ||
+    (order.email?.toLowerCase?.() || order.creator?.email?.toLowerCase?.() || "").includes(searchTerm) ||
+    (order.country?.toLowerCase?.() || "").includes(searchTerm)
   );
 
 
@@ -76,28 +76,28 @@ const OrderManagement = () => {
         </thead>
         <tbody>
           {filteredOrders.map((order, index) => (
-            <tr key={order.id}>
-              <td>#{order.id}</td>
+            <tr key={order.id || order._id}>
+              <td>#{order.id || order._id}</td>
               <td>
                 {editingIndex === index ? (
                  <div>
                  <input
                    type="text"
                    name="client"
-                   value={editedOrder.client}
+                   value={editedOrder.client || order.creator?.name || ""}
                    onChange={handleEditChange}
                  />
                  <input
                    type="email"
                    name="email"
-                   value={editedOrder.email}
+                   value={editedOrder.email || order.creator?.email || ""}
                    onChange={handleEditChange}
                  />
                </div>
              ) : (
                <div>
-                 {order.client} <br />
-                 <small>{order.email}</small>
+                 {order.client || order.creator?.name} <br />
+                 <small>{order.email || order.creator?.email}</small>
                </div>
                 )}
               </td>
@@ -106,18 +106,18 @@ const OrderManagement = () => {
                   <input
                     type="date"
                     name="date"
-                    value={editedOrder.date}
+                    value={editedOrder.date || order.orderDate?.slice(0,10) || ""}
                     onChange={handleEditChange}
                   />
                 ) : (
-                  order.date
+                  order.date || (order.orderDate && new Date(order.orderDate).toLocaleDateString())
                 )}
               </td>
               <td>
                 {editingIndex === index ? (
                   <select
                     name="status"
-                    value={editedOrder.status}
+                    value={editedOrder.status || order.status || ""}
                     onChange={handleEditChange}
                   >
                     <option value="Delivered">Delivered</option>
@@ -125,8 +125,8 @@ const OrderManagement = () => {
                     <option value="Canceled">Canceled</option>
                   </select>
                 ) : (
-                  <span className={`order-mgmt-status ${order.status.toLowerCase()}`}>
-                    {order.status}
+                  <span className={`order-mgmt-status ${(order.status || "").toLowerCase()}`}>
+                    {order.status || ""}
                   </span>
                 )}
               </td>
@@ -135,11 +135,11 @@ const OrderManagement = () => {
                   <input
                     type="text"
                     name="country"
-                    value={editedOrder.country}
+                    value={editedOrder.country || ""}
                     onChange={handleEditChange}
                   />
                 ) : (
-                  order.country
+                  order.country || ""
                 )}
               </td>
               <td>
@@ -147,12 +147,12 @@ const OrderManagement = () => {
                   <input
                     type="String"
                     name="total"
-                    value={editedOrder.total}
+                    value={editedOrder.total || order.totalAmount || ""}
                     onChange={handleEditChange}
                     step="0.01"
                   />
                 ) : (
-                  `$${order.total}`
+                  `$${order.total || order.totalAmount || ""}`
                 )}
               </td>
               <td>

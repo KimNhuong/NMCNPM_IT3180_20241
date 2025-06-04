@@ -31,7 +31,14 @@ const History = ({ turnoff }) => {
 
         const data = await response.json();
         console.log(data);
-        setInitialOrders(data);
+        // Xử lý dữ liệu trả về từ API: nếu có data.data thì lấy data.data, nếu là mảng thì lấy luôn
+        let orders = [];
+        if (Array.isArray(data)) {
+          orders = data;
+        } else if (data && Array.isArray(data.data)) {
+          orders = data.data;
+        }
+        setInitialOrders(orders);
         stopLoading();
       } catch (error) {
         console.log(error);
@@ -44,16 +51,23 @@ const History = ({ turnoff }) => {
   const [selectedOrders, setSelectedOrders] = useState([]);
   //   Lọc các đơn hàng theo tìm kiếm
   const filteredOrders = initialOrders.filter((order) => {
-    if (order.customerId && order.customerId.phone) {
+    // Sử dụng creator thay vì creater, và kiểm tra null an toàn
+    const ownerName = order.owner?.name?.toLowerCase() || "";
+    const creatorName = order.creator?.name?.toLowerCase() || "";
+    const orderDate = formatDateTime(order.orderDate || order.createdAt || "").toLowerCase();
+    const customerPhone = order.customerId?.phone?.toLowerCase() || "";
+    if (customerPhone) {
       return (
-        order.owner.name.toLowerCase().includes(searchTerm) ||
-        formatDateTime(order.orderDate).toLowerCase().includes(searchTerm) ||
-        order.customerId.phone.toLowerCase().includes(searchTerm)
+        ownerName.includes(searchTerm) ||
+        creatorName.includes(searchTerm) ||
+        orderDate.includes(searchTerm) ||
+        customerPhone.includes(searchTerm)
       );
     } else {
       return (
-        order.owner.name.toLowerCase().includes(searchTerm) ||
-        formatDateTime(order.orderDate).toLowerCase().includes(searchTerm)
+        ownerName.includes(searchTerm) ||
+        creatorName.includes(searchTerm) ||
+        orderDate.includes(searchTerm)
       );
     }
   });
@@ -138,30 +152,31 @@ const History = ({ turnoff }) => {
             </thead>
             <tbody>
               {filteredOrders.map((order, index) => (
-                <tr key={index}>
+                <tr key={order._id || index}>
                   <td>
-                    {order.creater.name} <br />{" "}
-                    <small>{order.creater.email}</small>
+                    {/* Ưu tiên creator, fallback creater */}
+                    {(order.creator?.name || order.creater?.name) || ""} <br />
+                    <small>{(order.creator?.email || order.creater?.email) || ""}</small>
                   </td>
-                  <td>{formatDateTime(order.orderDate)}</td>
+                  <td>{formatDateTime(order.orderDate || order.createdAt || "")}</td>
                   <td>
                     <span
                       className={`history-mgmt-status`}
                       style={{ display: "block" }}
                     >
-                      {order.totalAmount + " đồng"}
+                      {(order.totalAmount || "") + " đồng"}
                     </span>
                     <span
                       className={`history-mgmt-status`}
                       style={{ display: "block" }}
                     >
-                      {"discount : " + order.discount + " % "}
+                      {"discount : " + (order.discount || "0") + " % "}
                     </span>
                     <span
                       className={`history-mgmt-status`}
                       style={{ display: "block" }}
                     >
-                      {"vat : " + order.vat + " % "}
+                      {"vat : " + (order.vat || "0") + " % "}
                     </span>
                   </td>
                   <td

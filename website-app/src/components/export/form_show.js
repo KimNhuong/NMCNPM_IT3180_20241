@@ -87,16 +87,15 @@ const History = ({ turnoff, supplier }) => {
     setFormcustomer(true);
   };
   function formatDateTime(isoString) {
+    if (!isoString) return "";
     const date = new Date(isoString);
-
+    if (isNaN(date.getTime())) return "";
     const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Tháng tính từ 0 nên phải +1
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const day = date.getDate().toString().padStart(2, "0");
-
     const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
     const seconds = date.getSeconds().toString().padStart(2, "0");
-
     return `${hours}:${minutes}:${seconds}, ngày ${day}/${month}/${year}`;
   }
   const handleEditClick = (index, order) => {
@@ -289,7 +288,12 @@ const History = ({ turnoff, supplier }) => {
                     {order?.creator?.name || ""}
                     <br /> <small>{order?.creator?.email || ""}</small>
                   </td>
-                  <td>{formatDateTime(order?.createdAt)}</td>
+                  <td>
+                    {
+                      // Ưu tiên ngày mua cuối, nếu không có thì lấy ngày mua đầu
+                      formatDateTime(order?.lastPurchaseDate || order?.firstPurchaseDate)
+                    }
+                  </td>
                   <td>
                     {editingIndex === index ? (
                       <div>
@@ -355,7 +359,12 @@ const History = ({ turnoff, supplier }) => {
                             />
                           </div>
                         ) : (
-                          <div>{order?.money}</div>
+                          <div>{
+
+                            order?.money
+                              ? `${order.money} triệu VND`
+                              : ""
+                          }</div>
                         )}
                       </td>
                     </>
