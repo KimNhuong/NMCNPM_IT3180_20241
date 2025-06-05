@@ -162,25 +162,27 @@ const History = ({ turnoff }) => {
                       {order.creator?.email || order.creater?.email || ""}
                     </small>
                   </td>
-                  <td>{formatDateTime(order.orderDate)}</td>
+                  <td>
+                    {formatDateTime(order.orderDate || order.createdAt || "")}
+                  </td>
                   <td>
                     <span
                       className={`history-mgmt-status`}
                       style={{ display: "block" }}
                     >
-                      {order.totalAmount + " đồng"}
+                      {(order.totalAmount || "") + " đồng"}
                     </span>
                     <span
                       className={`history-mgmt-status`}
                       style={{ display: "block" }}
                     >
-                      {"discount : " + order.discount + " % "}
+                      {"discount : " + (order.discount || "0") + " % "}
                     </span>
                     <span
                       className={`history-mgmt-status`}
                       style={{ display: "block" }}
                     >
-                      {"vat : " + order.vat + " % "}
+                      {"vat : " + (order.vat || "0") + " % "}
                     </span>
                   </td>
                   <td
