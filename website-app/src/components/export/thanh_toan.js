@@ -63,6 +63,12 @@ function PaymentComponent({
 
   const success = async () => {
     try {
+      // Lấy owner từ products[0]?.owner hoặc user.id_owner
+      const owner = products[0]?.owner || user.id_owner || "";
+      if (!owner) {
+        notify(2, "Không xác định được owner cho hóa đơn", "Lỗi dữ liệu");
+        return;
+      }
       const billData = {
         owner,
         creator: {
