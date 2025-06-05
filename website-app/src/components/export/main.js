@@ -144,15 +144,19 @@ const Billing = () => {
   const handleBlur = () => {
     setEditingIndex(null);
   };
-
   const handleChangeProduct = (index, field, value) => {
     const updatedInvoices = [...invoices];
     const product = updatedInvoices[currentInvoice].products[index];
 
     product[field] = value;
+    // Đảm bảo price luôn là string hợp lệ
+    const priceString =
+      product.price !== undefined && product.price !== null
+        ? product.price.toString()
+        : "0";
     product.total =
       product.quantity *
-      parseInt(product.price.replace(/\./g, ""), 10) *
+      parseInt(priceString.replace(/\./g, ""), 10) *
       (1 - product.discount / 100);
     setInvoices(updatedInvoices);
   };
