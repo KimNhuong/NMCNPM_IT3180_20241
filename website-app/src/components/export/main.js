@@ -244,7 +244,6 @@ const Billing = () => {
           }
         );
       }
-
       // Xử lý sự kiện khi phát hiện mã vạch
       Quagga.offDetected(); // Xóa sự kiện trước đó
       Quagga.onDetected(async function (result) {
@@ -309,6 +308,8 @@ const Billing = () => {
   const onform = () => {
     if (total > 0) {
       setForm(true);
+    } else {
+      notify(2, "Chưa có sản phẩm để thanh toán");
     }
   };
   const onclose = () => {
@@ -398,9 +399,13 @@ const Billing = () => {
               value={productCode}
               onChange={(e) => {
                 setProductCode(e.target.value);
-                if (e.target.value != "") {
-                  const x = data.filter((product, index) =>
-                    product.sku.includes(e.target.value)
+                if (e.target.value !== "") {
+                  const searchValue = e.target.value.toLowerCase();
+                  const x = Array.from(data || []).filter(
+                    (product) =>
+                      product.sku.toLowerCase().includes(searchValue) ||
+                      (product.name &&
+                        product.name.toLowerCase().includes(searchValue))
                   );
                   setSuggestion(x);
                 } else {
