@@ -155,10 +155,12 @@ const History = ({ turnoff }) => {
             </thead>
             <tbody>
               {filteredOrders.map((order, index) => (
-                <tr key={index}>
+                <tr key={order._id || index}>
                   <td>
-                    {order.creater.name} <br />{" "}
-                    <small>{order.creater.email}</small>
+                    {order.creator?.name || order.creater?.name || ""} <br />
+                    <small>
+                      {order.creator?.email || order.creater?.email || ""}
+                    </small>
                   </td>
                   <td>{formatDateTime(order.orderDate)}</td>
                   <td>
