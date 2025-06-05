@@ -50,17 +50,27 @@ const History = ({ turnoff }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedOrders, setSelectedOrders] = useState([]);
   //   Lọc các đơn hàng theo tìm kiếm
+
   const filteredOrders = initialOrders.filter((order) => {
-    if (order.customerId && order.customerId.phone) {
+    // Sử dụng creator thay vì creater, và kiểm tra null an toàn
+    const ownerName = order.owner?.name?.toLowerCase() || "";
+    const creatorName = order.creator?.name?.toLowerCase() || "";
+    const orderDate = formatDateTime(
+      order.orderDate || order.createdAt || ""
+    ).toLowerCase();
+    const customerPhone = order.customerId?.phone?.toLowerCase() || "";
+    if (customerPhone) {
       return (
-        order.owner.name.toLowerCase().includes(searchTerm) ||
-        formatDateTime(order.orderDate).toLowerCase().includes(searchTerm) ||
-        order.customerId.phone.toLowerCase().includes(searchTerm)
+        ownerName.includes(searchTerm) ||
+        creatorName.includes(searchTerm) ||
+        orderDate.includes(searchTerm) ||
+        customerPhone.includes(searchTerm)
       );
     } else {
       return (
-        order.owner.name.toLowerCase().includes(searchTerm) ||
-        formatDateTime(order.orderDate).toLowerCase().includes(searchTerm)
+        ownerName.includes(searchTerm) ||
+        creatorName.includes(searchTerm) ||
+        orderDate.includes(searchTerm)
       );
     }
   });
