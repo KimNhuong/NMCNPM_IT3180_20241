@@ -13,15 +13,18 @@ const History = ({ turnoff }) => {
     const response = async () => {
       try {
         startLoading();
-        const response = await fetch("http://localhost:5000/sell/get_history", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user: user,
-          }),
-        });
+        const response = await fetch(
+          "http://localhost:8080/api/sell/getHistory",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              user: user,
+            }),
+          }
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
