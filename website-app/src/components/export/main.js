@@ -28,13 +28,14 @@ const Billing = () => {
   const [form_history, setForm_history] = useState(false);
   useEffect(() => {
     const a = async () => {
-      if (loading) {
+      if (loading || !user) {
         return;
       }
+      console.log("user", user);
       let body = {
         user: user,
       };
-      let response = await fetch("http://localhost:5000/sell/findcode", {
+      let response = await fetch("http://localhost:8080/api/sell/findCode", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,13 +43,18 @@ const Billing = () => {
         body: JSON.stringify(body),
       });
       let datas = await response.json();
-      if (datas.message == "success") {
-        console.log(datas.product);
-        setData(datas.product);
+      console.log(datas.message);
+      if (datas.message === "Success") {
+        // Map lại trường purchasePrice thành price cho mỗi sản phẩm
+        const mappedProducts = (datas.products || []).map((prd) => ({
+          ...prd,
+          price: prd.purchasePrice || "0",
+        }));
+        setData(mappedProducts);
       } else {
         notify(2, "Load sản phẩm thất bại", "Thất bại");
       }
-      response = await fetch("http://localhost:5000/sell/get_customer", {
+      response = await fetch("http://localhost:8080/api/sell/getCustomer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +62,7 @@ const Billing = () => {
         body: JSON.stringify(body),
       });
       datas = await response.json();
-      if (datas.message == "success") {
+      if (datas.message === "Success") {
         setCustomers(datas.customers);
       } else {
         notify(2, "Load sản phẩm thất bại", "Thất bại");
