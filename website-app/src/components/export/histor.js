@@ -31,7 +31,14 @@ const History = ({ turnoff }) => {
 
         const data = await response.json();
         console.log(data);
-        setInitialOrders(data);
+        // Xử lý dữ liệu trả về từ API: nếu có data.data thì lấy data.data, nếu là mảng thì lấy luôn
+        let orders = [];
+        if (Array.isArray(data)) {
+          orders = data;
+        } else if (data && Array.isArray(data.data)) {
+          orders = data.data;
+        }
+        setInitialOrders(orders);
         stopLoading();
       } catch (error) {
         console.log(error);
