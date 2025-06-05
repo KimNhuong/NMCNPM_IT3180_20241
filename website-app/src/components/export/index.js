@@ -84,20 +84,21 @@ const OrderManagement = () => {
                  <input
                    type="text"
                    name="client"
-                   value={editedOrder.client || order.creator?.name || ""}
+                   value={editedOrder.client || order.creator?.name || order.supplierName || ""}
                    onChange={handleEditChange}
                  />
                  <input
                    type="email"
                    name="email"
-                   value={editedOrder.email || order.creator?.email || ""}
+                   value={editedOrder.email || order.creator?.email || order.supplierEmail || ""}
                    onChange={handleEditChange}
                  />
                </div>
              ) : (
                <div>
-                 {order.client || order.creator?.name} <br />
-                 <small>{order.email || order.creator?.email}</small>
+                 {/* Ưu tiên client, nếu không có thì creator.name, nếu không có thì supplierName */}
+                 {order.client || order.creator?.name || order.supplierName || ""} <br />
+                 <small>{order.email || order.creator?.email || order.supplierEmail || ""}</small>
                </div>
                 )}
               </td>
@@ -106,11 +107,12 @@ const OrderManagement = () => {
                   <input
                     type="date"
                     name="date"
-                    value={editedOrder.date || order.orderDate?.slice(0,10) || ""}
+                    value={editedOrder.date || (order.orderDate ? order.orderDate.slice(0,10) : "")}
                     onChange={handleEditChange}
                   />
                 ) : (
-                  order.date || (order.orderDate && new Date(order.orderDate).toLocaleDateString())
+                  // Hiển thị ngày theo đúng format
+                  order.date || (order.orderDate && new Date(order.orderDate).toLocaleString())
                 )}
               </td>
               <td>
@@ -135,7 +137,7 @@ const OrderManagement = () => {
                   <input
                     type="text"
                     name="country"
-                    value={editedOrder.country || ""}
+                    value={editedOrder.country || order.country || ""}
                     onChange={handleEditChange}
                   />
                 ) : (
@@ -147,12 +149,13 @@ const OrderManagement = () => {
                   <input
                     type="String"
                     name="total"
-                    value={editedOrder.total || order.totalAmount || ""}
+                    value={editedOrder.total || order.totalAmount || order.total || ""}
                     onChange={handleEditChange}
                     step="0.01"
                   />
                 ) : (
-                  `$${order.total || order.totalAmount || ""}`
+                  // Hiển thị số tiền đúng định dạng, fallback 0 nếu không có
+                  `$${Number(order.totalAmount || order.total || 0).toLocaleString()}`
                 )}
               </td>
               <td>

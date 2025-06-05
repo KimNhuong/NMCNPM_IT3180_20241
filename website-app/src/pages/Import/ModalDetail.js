@@ -62,30 +62,41 @@ const ModalDetail = ({
       if (response.ok) {
         const data = await response.json(); // Phân tích dữ liệu JSON từ response
         if (data.tax) setMyTax(Number(data.tax));
-        console.log(data);
         setSupplierName(data);
       } else {
+        setSupplierName({});
         console.error("Error:", response.status, response.statusText);
       }
     } catch (error) {
+      setSupplierName({});
       console.error("Fetch error:", error);
     }
   };
   const getData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/import/orderDetail/listorder?idOrder=${idOrder}`
+        `http://localhost:8080/api/import/orderDetail/listOrder?idOrder=${idOrder}`
       );
+      if (!response.ok) {
+        setProducts([]);
+        setFilter([]);
+        return;
+      }
       const data = await response.json();
-
+      if (!Array.isArray(data)) {
+        setProducts([]);
+        setFilter([]);
+        return;
+      }
       const updatedData = data.map((product) => ({
         ...product,
         note: "",
       }));
-
       setProducts(updatedData);
       setFilter(updatedData.map((_, index) => index));
     } catch (error) {
+      setProducts([]);
+      setFilter([]);
       console.error("Error:", error);
     }
   };

@@ -30,13 +30,15 @@ function CustomerForm({ close, show_customer, show_bill, supplier, change }) {
     }
     startLoading();
     let response;
+    const now = new Date();
+    const customerWithDate = { ...customer, date: now.toISOString() };
     if (!supplier) {
       response = await fetch("http://localhost:8080/api/sell/createCustomer", {
         method: "Post",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...customer, user: user }),
+        body: JSON.stringify({ ...customerWithDate, user: user }),
       });
     } else {
       response = await fetch(
@@ -46,20 +48,19 @@ function CustomerForm({ close, show_customer, show_bill, supplier, change }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ ...customer, user: user }),
+          body: JSON.stringify({ ...customerWithDate, user: user }),
         }
       );
     }
 
     const data = await response.json();
     stopLoading();
-    if (data.message == "success") {
-      notify(1, "thêm supplier thành công", "Thành công");
-      change();
+    if (data.message === "success") {
+      notify(1, !supplier ? "Thêm khách hàng thành công" : "Thêm supplier thành công", "Thành công");
+      if (typeof change === "function") change(); // Gọi lại API cập nhật khách hàng
       close();
     } else {
-      notify(2, data.message, "Thất bại");
-      change();
+      notify(2, data.message || "Thất bại", "Thất bại");
     }
   };
   return (
@@ -134,9 +135,10 @@ function CustomerForm({ close, show_customer, show_bill, supplier, change }) {
                   {show_customer.money + " đồng"}
                 </p>
               </label>
+              {/* Bỏ cột rate */}
               <label>
-                Rate:
-                <p style={{ display: "inline-block" }}>{show_customer.rate}</p>
+                Date:
+                <p style={{ display: "inline-block" }}>{show_customer.date ? new Date(show_customer.date).toLocaleString() : ""}</p>
               </label>
             </>
           ) : (

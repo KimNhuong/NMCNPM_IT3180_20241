@@ -267,12 +267,11 @@ const History = ({ turnoff, supplier }) => {
             <thead>
               <tr>
                 <th>Tên người tạo</th>
-                <th>Date</th>
                 <th>{!supplier ? "Tên khách hàng" : "Tên nhà cung cấp"}</th>
                 <th>phone</th>
                 {!supplier ? (
                   <>
-                    <th>rate</th>
+                    {/* <th>rate</th> */}
                     <th>money</th>
                   </>
                 ) : (
@@ -288,12 +287,7 @@ const History = ({ turnoff, supplier }) => {
                     {order?.creator?.name || ""}
                     <br /> <small>{order?.creator?.email || ""}</small>
                   </td>
-                  <td>
-                    {
-                      // Ưu tiên ngày mua cuối, nếu không có thì lấy ngày mua đầu
-                      formatDateTime(order?.lastPurchaseDate || order?.firstPurchaseDate)
-                    }
-                  </td>
+                  {/* Bỏ cột Date */}
                   <td>
                     {editingIndex === index ? (
                       <div>
@@ -334,7 +328,7 @@ const History = ({ turnoff, supplier }) => {
                   </td>
                   {!supplier ? (
                     <>
-                      <td>
+                      {/* <td>
                         {editingIndex === index ? (
                           <div>
                             <input
@@ -347,7 +341,7 @@ const History = ({ turnoff, supplier }) => {
                         ) : (
                           <div>{order?.rate}</div>
                         )}
-                      </td>
+                      </td> */}
                       <td>
                         {editingIndex === index ? (
                           <div>
