@@ -25,11 +25,14 @@ function PaymentComponent({
     const fetchBanks = async () => {
       try {
         startLoading();
-        const response = await fetch("http://localhost:8080/bank/get_bank", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ user }),
-        });
+        const response = await fetch(
+          "http://localhost:8080/api/bank/get_bank",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user }),
+          }
+        );
         const data = await response.json();
         stopLoading();
         if (data) setBanks(data);
@@ -83,7 +86,7 @@ function PaymentComponent({
         notes: "",
       };
       startLoading();
-      const response = await fetch("http://localhost:8080/sell/history", {
+      const response = await fetch("http://localhost:8080/api/sell/history", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(billData),
@@ -174,7 +177,10 @@ function PaymentComponent({
             <select value={selectedBank} onChange={handleBankChange}>
               <option value="">--Vui lòng chọn Ngân hàng--</option>
               {banks.map((bank) => (
-                <option key={bank.id} value={bank.name}>
+                <option
+                  key={bank.id || bank._id || bank.name}
+                  value={bank.name}
+                >
                   {bank.name}
                 </option>
               ))}
