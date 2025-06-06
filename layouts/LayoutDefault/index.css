@@ -1,0 +1,9 @@
+.image-container2 {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
