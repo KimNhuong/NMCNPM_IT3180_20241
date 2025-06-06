@@ -150,72 +150,171 @@ function Profile() {
   };
 
   return (
-    <div className="profile-container profile-glass">
-      <div className="profile-header profile-header-glass">
-        <img
-          src="https://th.bing.com/th?id=ORMS.56823debd4d1cba419b1262f94a12e45&pid=Wdp&w=612&h=304&qlt=90&c=1&rs=1&dpr=1.5&p=0"
-          alt="Profile Banner"
-          className="banner banner-glass"
-        />
-        <div className="profile-avatar-wrapper">
-          <div
-            className="profile-picture profile-picture-glass"
-            onClick={() => setEditImage((prev) => !prev)}
-          >
-            <div className="uy-avatar avatar-glass" style={{ cursor: "pointer", boxShadow: "0 4px 24px 0 rgba(0,0,0,0.15)", border: "4px solid #fff", borderRadius: "50%", overflow: "hidden", transition: "transform 0.3s", background: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)" }}>
-              {data ? <Avatar name={data.name} imageUrl={data.avatar} /> : ""}
-            </div>
-          </div>
-          {editImage && (
-            <ProfilePictureOptions
-              image={data.avatar}
-              reload={() => setRefresh((prev) => !prev)}
-            />
-          )}
+    <div
+      className="profile-container profile-glass"
+      style={{
+        maxWidth: "700px",
+        width: "100%",
+        margin: "40px auto 32px auto",
+        background: "linear-gradient(135deg, #e0e7ff 0%, #fffde4 100%)",
+        borderRadius: 32,
+        boxShadow: "0 8px 40px 0 rgba(30,136,229,0.10)",
+        padding: "40px 32px 32px 32px",
+        transition: "box-shadow 0.4s, background 0.4s",
+        minHeight: "600px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <div
+        className="profile-avatar-wrapper"
+        style={{
+          marginBottom: 0,
+          position: "relative",
+          width: 120,
+          height: 190,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div
+          className="profile-picture profile-picture-glass"
+          onClick={() => setEditImage((prev) => !prev)}
+          style={{
+            cursor: "pointer",
+            boxShadow: "0 4px 24px 0 rgba(0,0,0,0.15)",
+            border: "4px solid #fff",
+            borderRadius: "50%",
+            overflow: "hidden",
+            background: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
+            width: 120,
+            height: 120,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "transform 0.3s, box-shadow 0.3s",
+          }}
+        >
+          {data ? <Avatar name={data.name} imageUrl={data.avatar} /> : ""}
         </div>
-        <div className="profile-info profile-info-glass">
-          {!edit ? (
-            <div className="profile-info__name profile-info__name-glass">{data ? data.name : ""}</div>
-          ) : (
-            <input
-              type="text"
-              name="name"
-              value={newData ? newData.name : ""}
-              onChange={handleEditChange}
-              className="profile-edit-input"
-            />
-          )}
-          {edit ? (
-            <>
-              <button className="message-btn profile-btn-glass" onClick={saveChanges}>
-                Lưu
-              </button>
-              <button
-                className="message-btn profile-btn-glass"
-                onClick={() => setEdit(false)}
-                style={{ marginLeft: "10px" }}
-              >
-                Thoát
-              </button>
-            </>
-          ) : (
-            <button className="message-btn profile-btn-glass" onClick={() => setEdit(true)}>
-              Edit profile
-            </button>
-          )}
-        </div>
+        {editImage && (
+          <ProfilePictureOptions
+            image={data.avatar}
+            reload={() => setRefresh((prev) => !prev)}
+          />
+        )}
       </div>
-      <div className="connect-section connect-section-glass">
-        <div className="section-title">Thông tin cá nhân</div>
-        <ul className="profile-list">
+      <div
+        className="profile-info profile-info-glass"
+        style={{ textAlign: "center", marginBottom: 24, marginTop: 12 }}
+      >
+        {!edit ? (
+          <div
+            className="profile-info__name profile-info__name-glass"
+            style={{
+              fontSize: 32,
+              fontWeight: 700,
+              color: "#1e88e5",
+              textShadow: "0 2px 8px #b3c6ff",
+              marginBottom: 8,
+              letterSpacing: 1,
+            }}
+          >
+            {data ? data.name : ""}
+          </div>
+        ) : (
+          <input
+            type="text"
+            name="name"
+            value={newData ? newData.name : ""}
+            onChange={handleEditChange}
+            className="profile-edit-input"
+            style={{
+              fontSize: 24,
+              fontWeight: 600,
+              borderRadius: 12,
+              padding: 8,
+              marginBottom: 8,
+            }}
+          />
+        )}
+        {edit ? (
+          <>
+            <button
+              className="message-btn profile-btn-glass"
+              style={{ marginRight: 8 }}
+              onClick={saveChanges}
+            >
+              Lưu
+            </button>
+            <button
+              className="message-btn profile-btn-glass"
+              onClick={() => setEdit(false)}
+            >
+              Thoát
+            </button>
+          </>
+        ) : (
+          <button
+            className="message-btn profile-btn-glass"
+            style={{
+              marginTop: 8,
+              position: "static",
+              display: "inline-block",
+            }}
+            onClick={() => setEdit(true)}
+          >
+            Edit profile
+          </button>
+        )}
+      </div>
+      <div
+        className="connect-section connect-section-glass"
+        style={{
+          background: "#fff",
+          borderRadius: 18,
+          boxShadow: "0 2px 12px #b3c6ff22",
+          padding: 24,
+          marginBottom: 24,
+          width: "100%",
+          transition: "box-shadow 0.3s, background 0.3s",
+        }}
+      >
+        <div
+          className="section-title"
+          style={{
+            color: "#1e88e5",
+            fontWeight: 700,
+            fontSize: 20,
+            marginBottom: 12,
+          }}
+        >
+          Thông tin cá nhân
+        </div>
+        <ul
+          className="profile-list"
+          style={{ fontSize: 17, color: "#333", lineHeight: 2 }}
+        >
           <li>
-            <FaRegUser className="profile-icon" /> Quán của : {data ? data.id_owner.name : ""}
+            <FaRegUser
+              className="profile-icon"
+              style={{ color: "#1976d2" }}
+            />{" "}
+            Quán của : {data ? data.id_owner.name : ""}
           </li>
           <li>
-            <FaChild className="profile-icon" /> vị trí : {data ? data.role : ""}
+            <FaChild className="profile-icon" style={{ color: "#43a047" }} />{" "}
+            vị trí : {data ? data.role : ""}
           </li>
           <li>
-            <FaCheckSquare className="profile-icon" /> Quyền : {data
+            <FaCheckSquare
+              className="profile-icon"
+              style={{ color: "#ff6b6b" }}
+            />{" "}
+            Quyền :{" "}
+            {data
               ? data.right
                 ? data.right.permissions.map((p) => p).join(", ")
                 : data.role == "Admin"
@@ -224,14 +323,45 @@ function Profile() {
               : ""}
           </li>
           <li>
-            <MdEmail className="profile-icon" /> Email : {data ? data.email : ""}
+            <MdEmail className="profile-icon" style={{ color: "#6d4c41" }} />{" "}
+            Email : {data ? data.email : ""}
           </li>
         </ul>
       </div>
-      <div className="bank-section bank-section-glass">
-        <div className="section-title">Thông tin tài khoản ngân hàng</div>
+      <div
+        className="bank-section bank-section-glass"
+        style={{
+          background: "#fff",
+          borderRadius: 18,
+          boxShadow: "0 2px 12px #a8edea33",
+          padding: 24,
+          width: "100%",
+          marginBottom: 24,
+          transition: "box-shadow 0.3s, background 0.3s",
+        }}
+      >
+        <div
+          className="section-title"
+          style={{
+            color: "#1e88e5",
+            fontWeight: 700,
+            fontSize: 20,
+            marginBottom: 12,
+          }}
+        >
+          Thông tin tài khoản ngân hàng
+        </div>
         <button
           className="message-btn profile-btn-glass"
+          style={{
+            background:
+              "linear-gradient(90deg, #a1c4fd 0%, #c2e9fb 100%)",
+            color: "#1e88e5",
+            fontWeight: 600,
+            borderRadius: 12,
+            marginBottom: 16,
+            transition: "background 0.3s",
+          }}
           onClick={() => {
             setShowBankForm((prev) => !prev);
             setNewBankAccount({
@@ -245,8 +375,18 @@ function Profile() {
           {showBankForm ? "Đóng form" : "Thêm tài khoản ngân hàng"}
         </button>
         {showBankForm && (
-          <div className="bank-form bank-form-glass">
-            <form onSubmit={addBankAccount}>
+          <div
+            className="bank-form bank-form-glass"
+            style={{ marginBottom: 16 }}
+          >
+            <form
+              onSubmit={addBankAccount}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 12,
+              }}
+            >
               <input
                 type="text"
                 name="accountNumber"
@@ -255,9 +395,21 @@ function Profile() {
                 onChange={handleBankInputChange}
                 required
                 className="profile-edit-input"
+                style={{
+                  borderRadius: 10,
+                  padding: 8,
+                  border: "1px solid #b3c6ff",
+                }}
               />
               <div className="bank-select-container">
-                <label htmlFor="bankName" className="bank-select-label">
+                <label
+                  htmlFor="bankName"
+                  className="bank-select-label"
+                  style={{
+                    fontWeight: 600,
+                    color: "#1e88e5",
+                  }}
+                >
                   Chọn ngân hàng:
                 </label>
                 <select
@@ -267,6 +419,11 @@ function Profile() {
                   onChange={handleBankInputChange}
                   required
                   className="bank-select"
+                  style={{
+                    borderRadius: 10,
+                    padding: 8,
+                    border: "1px solid #b3c6ff",
+                  }}
                 >
                   <option value="" disabled>
                     Chọn ngân hàng
@@ -295,22 +452,64 @@ function Profile() {
                 onChange={handleBankInputChange}
                 required
                 className="profile-edit-input"
+                style={{
+                  borderRadius: 10,
+                  padding: 8,
+                  border: "1px solid #b3c6ff",
+                }}
               />
-              <button className="message-btn profile-btn-glass">Lưu tài khoản</button>
+              <button
+                className="message-btn profile-btn-glass"
+                style={{
+                  background:
+                    "linear-gradient(90deg, #a1c4fd 0%, #c2e9fb 100%)",
+                  color: "#1e88e5",
+                  fontWeight: 600,
+                  borderRadius: 12,
+                  transition: "background 0.3s",
+                }}
+              >
+                Lưu tài khoản
+              </button>
             </form>
           </div>
         )}
-        <ul className="bank-list">
+        <ul
+          className="bank-list"
+          style={{ fontSize: 17, color: "#333", lineHeight: 2 }}
+        >
           {bankAccounts.map((account, index) => (
             <li
               key={index}
               className="bank-list-item"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                background: "#f8fafc",
+                borderRadius: 10,
+                padding: "8px 16px",
+                marginBottom: 8,
+                boxShadow: "0 1px 4px #b3c6ff11",
+                transition: "background 0.3s",
+              }}
             >
               <span>
                 {account.name} - {account.bankName} ({account.accountNumber})
               </span>
               <button
-                style={{ marginLeft: "10px", cursor: "pointer" }}
+                style={{
+                  marginLeft: "10px",
+                  cursor: "pointer",
+                  background:
+                    "linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 100%)",
+                  color: "#fff",
+                  fontWeight: 600,
+                  borderRadius: 10,
+                  padding: "4px 16px",
+                  border: "none",
+                  transition: "background 0.3s",
+                }}
                 onClick={() => handleDeleteAccount(index)}
                 className="delete_account profile-btn-glass"
               >
@@ -320,8 +519,21 @@ function Profile() {
           ))}
         </ul>
       </div>
-      <div className="profile-logout">
-        <button className="message-btn logout profile-btn-glass" onClick={logout}>
+      <div className="profile-logout" style={{ marginTop: 16 }}>
+        <button
+          className="message-btn logout profile-btn-glass"
+          style={{
+            background:
+              "linear-gradient(90deg, #fda085 0%, #f6d365 100%)",
+            color: "#fff",
+            fontWeight: 700,
+            borderRadius: 12,
+            padding: "8px 32px",
+            fontSize: 18,
+            transition: "background 0.3s",
+          }}
+          onClick={logout}
+        >
           Logout
         </button>
       </div>

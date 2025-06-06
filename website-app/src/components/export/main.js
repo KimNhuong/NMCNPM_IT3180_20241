@@ -325,6 +325,18 @@ const Billing = () => {
   const onform_history = () => {
     setForm_history(true);
   };
+  // Thêm hàm này để xóa hóa đơn hiện tại sau khi thanh toán thành công
+  const handleInvoicePaid = () => {
+    // Nếu chỉ còn 1 hóa đơn thì reset về hóa đơn rỗng
+    if (invoices.length === 1) {
+      setInvoices([{ products: [] }]);
+      setCurrentInvoice(0);
+    } else {
+      const updatedInvoices = invoices.filter((_, i) => i !== currentInvoice);
+      setInvoices(updatedInvoices);
+      setCurrentInvoice((prev) => (prev > 0 ? prev - 1 : 0));
+    }
+  };
   return (
     <>
       {form_history && <History turnoff={onclosehistory} />}
@@ -344,6 +356,7 @@ const Billing = () => {
           customers={customers}
           discount={taxall}
           vat={tax}
+          onPaid={handleInvoicePaid}
         />
       )}
       {camera && (

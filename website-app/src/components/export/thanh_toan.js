@@ -11,6 +11,7 @@ function PaymentComponent({
   customers,
   discount,
   vat,
+  onPaid,
 }) {
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerPaid, setCustomerPaid] = useState(0);
@@ -99,6 +100,7 @@ function PaymentComponent({
       stopLoading();
       if (response.ok) {
         notify(1, "Lưu hóa đơn thành công", "Thành công");
+        if (onPaid) onPaid(); // Xóa hóa đơn hiện tại
         await close();
       } else {
         notify(2, "Không thể lưu hóa đơn", "Thất bại");

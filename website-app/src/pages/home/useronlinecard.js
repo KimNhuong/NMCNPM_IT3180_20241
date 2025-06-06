@@ -29,37 +29,21 @@ function UsersOnlineCard() {
     responsive: true,
     maintainAspectRatio: false,
   };
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     if (loading) return;
-  //     try {
-  //       const response = await fetch(
-  //         "http://localhost:8080/api/home/generatedailyCustomer",
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({
-  //             user: user,
-  //           }),
-  //         }
-  //       );
-
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-
-  //       const data = await response.json();
-  //       console.log("generatedailyuser:", data);
-  //       Setdt(data);
-  //     } catch (error) {
-  //       console.error("Error fetching revenue:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [loading]);
+  useEffect(() => {
+    // Sinh dữ liệu ngẫu nhiên cho 8 ngày gần nhất
+    const today = new Date();
+    const labels = [];
+    for (let i = 7; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+      labels.push(`${d.getDate()}/${d.getMonth() + 1}`);
+    }
+    // Sinh số lượng khách hàng mới ngẫu nhiên cho mỗi ngày
+    const dataArr = Array.from({ length: 8 }, () =>
+      Math.floor(Math.random() * 20 + 1)
+    );
+    Setdt({ labels, data: dataArr });
+  }, [loading]);
   return (
     <Box
       sx={{

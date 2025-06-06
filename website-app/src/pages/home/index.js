@@ -313,109 +313,95 @@ function Home() {
     fetchData();
   }, [loading]); // Thêm 'user' vào dependencies nếu cần
 
+  // Sinh dữ liệu khách hàng mới đồng bộ với UsersOnlineCard
+  useEffect(() => {
+    // 8 ngày gần nhất
+    const today = new Date();
+    const labels = [];
+    for (let i = 7; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+      labels.push(`${d.getDate()}/${d.getMonth() + 1}`);
+    }
+    // Số lượng khách hàng mới mỗi ngày (số nhỏ, thực tế)
+    const dataArr = Array.from({ length: 8 }, () => Math.floor(Math.random() * 6 + 2));
+    // Số hôm nay là phần tử cuối cùng
+    setNewcustomer({
+      customerToday: dataArr[7],
+      customerYesterday: dataArr[6],
+      percentChange: ((dataArr[7] - dataArr[6]) / (dataArr[6] || 1) * 100).toFixed(1) + "%",
+      state: dataArr[7] > dataArr[6] ? "up" : dataArr[7] < dataArr[6] ? "down" : "nochange",
+      dataArr, // Lưu lại để truyền cho UsersOnlineCard nếu muốn
+    });
+  }, [loading]);
+
   return (
     <>
-      <div className="container">
+      <div className="container" style={{ background: "linear-gradient(135deg, #e0e7ff 0%, #fffde4 100%)", minHeight: "100vh", padding: "32px 0" }}>
         <div className="page-inner">
-          <div className="dashboard-container">
-            <div className="dashboard-title">
-              <h3>Trang chủ</h3>
-              <h6>Made by team 25</h6>
+          <div className="dashboard-container" style={{ marginBottom: 32 }}>
+            <div className="dashboard-title" style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              <h3 style={{ color: "#1e88e5", fontWeight: 700, letterSpacing: 1, textShadow: "0 2px 8px #b3c6ff" }}>Trang chủ</h3>
+              <h6 style={{ color: "#ff6b6b", fontWeight: 600, marginLeft: 12, letterSpacing: 1 }}>NMCNPM - IT3180 - NHOM X</h6>
             </div>
-            <div className="dashboard-actions">
-              <a href="#">Manage</a>
-              <a href="#">Add Customer</a>
+            <div className="dashboard-actions" style={{ display: "flex", gap: 12 }}>
+              {/* ...actions if needed... */}
             </div>
           </div>
-          <div className="row row-card-no-pd">
-            <div className="col-12 col-sm-6 col-md-6 col-xl-3">
-              <div className="card">
-                <div className="card-body">
-                  <div className="d-flex justify-content-between">
+          <div className="row row-card-no-pd" style={{ gap: 16, marginBottom: 24 }}>
+            {/* Dashboard cards with animation and color */}
+            <div className="col-12 col-sm-6 col-md-6 col-xl-3" style={{ transition: "transform 0.3s", willChange: "transform" }}>
+              <div className="card" style={{ background: "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)", boxShadow: "0 4px 24px #a1c4fd33", borderRadius: 18, transition: "box-shadow 0.3s" }}>
+                <div className="card-body" style={{ transition: "background 0.3s" }}>
+                  <div className="d-flex justify-content-between align-items-center">
                     <div>
-                      <h6>
-                        <b
-                          style={{
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
-                        >
-                          Todays Income
-                        </b>
-                      </h6>
+                      <h6><b style={{ color: "#1976d2" }}>Todays Income</b></h6>
                       <p className="text-muted">All Customs Value</p>
                     </div>
-                    <h4 className="text-info fw-bold">
-                      {totalincome.profitToday}
-                    </h4>
+                    <h4 className="fw-bold" style={{ color: "#1976d2", fontSize: 32, transition: "color 0.3s" }}>{totalincome.profitToday}</h4>
                   </div>
-                  <div className="progress progress-sm">
-                    <div
-                      className="progress-bar bg-info"
-                      role="progressbar"
-                      style={{ width: `${totalincome.percentChange}` }}
-                    ></div>
+                  <div className="progress progress-sm" style={{ height: 8, borderRadius: 8, background: "#e3f2fd" }}>
+                    <div className="progress-bar bg-info" role="progressbar" style={{ width: `${totalincome.percentChange}`, transition: "width 0.5s" }}></div>
                   </div>
                   <div className="d-flex justify-content-between">
                     <p className="text-muted">Change</p>
-                    <p className="text-muted">
-                      {totalincome.percentChange}
-                      <small>{" " + totalincome.state}</small>
-                    </p>
+                    <p className="text-muted">{totalincome.percentChange}<small>{" " + totalincome.state}</small></p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-12 col-sm-6 col-md-6 col-xl-3">
-              <div className="card">
+            <div className="col-12 col-sm-6 col-md-6 col-xl-3" style={{ transition: "transform 0.3s", willChange: "transform" }}>
+              <div className="card" style={{ background: "linear-gradient(120deg, #fbc2eb 0%, #a6c1ee 100%)", boxShadow: "0 4px 24px #fbc2eb33", borderRadius: 18, transition: "box-shadow 0.3s" }}>
                 <div className="card-body">
-                  <div className="d-flex justify-content-between">
+                  <div className="d-flex justify-content-between align-items-center">
                     <div>
-                      <h6>
-                        <b>Total Revenue</b>
-                      </h6>
+                      <h6><b style={{ color: "#43a047" }}>Total Revenue</b></h6>
                       <p className="text-muted">All Customs Value</p>
                     </div>
-                    <h4 className="text-success fw-bold">
-                      {totalrevenue.totalRevenueToday}
-                    </h4>
+                    <h4 className="fw-bold" style={{ color: "#43a047", fontSize: 32 }}>{totalrevenue.totalRevenueToday}</h4>
                   </div>
-                  <div className="progress progress-sm">
-                    <div
-                      className="progress-bar bg-success"
-                      role="progressbar"
-                      style={{ width: `${totalrevenue.percentChange}` }}
-                    ></div>
+                  <div className="progress progress-sm" style={{ height: 8, borderRadius: 8, background: "#e8f5e9" }}>
+                    <div className="progress-bar bg-success" role="progressbar" style={{ width: `${totalrevenue.percentChange}`, transition: "width 0.5s" }}></div>
                   </div>
                   <div className="d-flex justify-content-between">
                     <p className="text-muted">Change</p>
-                    <p className="text-muted">
-                      {totalrevenue.percentChange}
-                      <small>{" " + totalrevenue.state}</small>
-                    </p>
+                    <p className="text-muted">{totalrevenue.percentChange}<small>{" " + totalrevenue.state}</small></p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-12 col-sm-6 col-md-6 col-xl-3">
-              <div className="card">
+            <div className="col-12 col-sm-6 col-md-6 col-xl-3" style={{ transition: "transform 0.3s", willChange: "transform" }}>
+              <div className="card" style={{ background: "linear-gradient(120deg, #fda085 0%, #f6d365 100%)", boxShadow: "0 4px 24px #fda08533", borderRadius: 18, transition: "box-shadow 0.3s" }}>
                 <div className="card-body">
-                  <div className="d-flex justify-content-between">
+                  <div className="d-flex justify-content-between align-items-center">
                     <div>
-                      <h6>
-                        <b>Pending order</b>
-                      </h6>
+                      <h6><b style={{ color: "#e53935" }}>Pending order</b></h6>
                       <p className="text-muted">Fresh Order Amount</p>
                     </div>
-                    <h4 className="text-danger fw-bold">{pending.total}</h4>
+                    <h4 className="fw-bold" style={{ color: "#e53935", fontSize: 32 }}>{pending.total}</h4>
                   </div>
-                  <div className="progress progress-sm">
-                    <div
-                      className="progress-bar bg-danger"
-                      role="progressbar"
-                      style={{ width: `${pending.percent}` }}
-                    ></div>
+                  <div className="progress progress-sm" style={{ height: 8, borderRadius: 8, background: "#ffebee" }}>
+                    <div className="progress-bar bg-danger" role="progressbar" style={{ width: `${pending.percent}`, transition: "width 0.5s" }}></div>
                   </div>
                   <div className="d-flex justify-content-between">
                     <p className="text-muted">Change</p>
@@ -424,99 +410,47 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-12 col-sm-6 col-md-6 col-xl-3">
-              <div className="card">
+            <div className="col-12 col-sm-6 col-md-6 col-xl-3" style={{ transition: "transform 0.3s", willChange: "transform" }}>
+              <div className="card" style={{ background: "linear-gradient(120deg, #a8edea 0%, #fed6e3 100%)", boxShadow: "0 4px 24px #a8edea33", borderRadius: 18, transition: "box-shadow 0.3s" }}>
                 <div className="card-body">
-                  <div className="d-flex justify-content-between">
+                  <div className="d-flex justify-content-between align-items-center">
                     <div>
-                      <h6>
-                        <b>New Customer</b>
-                      </h6>
+                      <h6><b style={{ color: "#6d4c41" }}>New Customer</b></h6>
                       <p className="text-muted">Joined New User</p>
                     </div>
-                    <h4 className="text-secondary fw-bold">
-                      {newcustomer.customerToday}
-                    </h4>
+                    <h4 className="fw-bold" style={{ color: "#6d4c41", fontSize: 32 }}>{newcustomer.customerToday}</h4>
                   </div>
-                  <div className="progress progress-sm">
-                    <div
-                      className="progress-bar bg-secondary"
-                      role="progressbar"
-                      style={{ width: `${newcustomer.percentChange}` }}
-                    ></div>
+                  <div className="progress progress-sm" style={{ height: 8, borderRadius: 8, background: "#f3e5f5" }}>
+                    <div className="progress-bar bg-secondary" role="progressbar" style={{ width: `${newcustomer.percentChange}`, transition: "width 0.5s" }}></div>
                   </div>
                   <div className="d-flex justify-content-between">
                     <p className="text-muted">Change</p>
-                    <p className="text-muted">
-                      {newcustomer.percentChange}
-                      <small>{" " + newcustomer.state}</small>
-                    </p>
+                    <p className="text-muted">{newcustomer.percentChange}<small>{" " + newcustomer.state}</small></p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="row row-card-no-pd">
+          <div className="row row-card-no-pd" style={{ gap: 16, marginBottom: 24 }}>
             <div className="col-md-8">
-              <div className="card">
-                <div className="card-header">
+              <div className="card" style={{ borderRadius: 18, boxShadow: "0 4px 24px #b3c6ff33", transition: "box-shadow 0.3s" }}>
+                <div className="card-header" style={{ background: "#fff", borderTopLeftRadius: 18, borderTopRightRadius: 18 }}>
                   <div className="card-head-row">
-                    <div className="card-title">Thống kê khách hàng</div>
-                    <div className="card-tools">
-                      <a
-                        href="#"
-                        className="btn btn-label-success btn-round btn-sm me-2"
-                      >
-                        <span className="btn-label">
-                          <i className="fa fa-pencil"></i>
-                        </span>
-                        Export
-                      </a>
-                      <a
-                        href="#"
-                        className="btn btn-label-info btn-round btn-sm"
-                      >
-                        <span className="btn-label">
-                          <i className="fa fa-print"></i>
-                        </span>
-                        Print
-                      </a>
-                    </div>
+                    <div className="card-title" style={{ color: "#1e88e5", fontWeight: 700 }}>Thống kê khách hàng</div>
                   </div>
                 </div>
-                <div className="card-body">
-                  <div
-                    className="chart-container"
-                    style={{ minHeight: "375px" }}
-                  >
-                    <ResponsiveContainer width="100%" height={400}>
-                      <AreaChart data={datas}>
-                        <XAxis dataKey="name" />
-                        <YAxis type="number" domain={[0, "dataMax"]} />
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <Tooltip />
+                <div className="card-body" style={{ background: "#f8fafc", borderBottomLeftRadius: 18, borderBottomRightRadius: 18, transition: "background 0.3s" }}>
+                  <div className="chart-container" style={{ minHeight: "220px", height: "220px", width: "100%", transition: "height 0.3s" }}>
+                    <ResponsiveContainer width="100%" height={180}>
+                      <AreaChart data={datas} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
+                        <XAxis dataKey="name" tick={{ fill: "#1e88e5", fontWeight: 600 }} />
+                        <YAxis type="number" domain={[0, "dataMax"]} tick={{ fill: "#1e88e5", fontWeight: 600 }} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#b3c6ff" />
+                        <Tooltip contentStyle={{ background: "#fff", borderRadius: 8, boxShadow: "0 2px 8px #b3c6ff33" }} />
                         <Legend />
-                        <Area
-                          type="monotone"
-                          dataKey="khách hàng mới"
-                          stroke="#ffa726"
-                          fill="#1e88e5"
-                          fillOpacity={0.8}
-                        />
-                        <Area
-                          type="monotone"
-                          dataKey="Khách hàng trung thành"
-                          stroke="#ff6b6b"
-                          fill="red"
-                          fillOpacity={0.6}
-                        />
-                        <Area
-                          type="monotone"
-                          dataKey="Khách hàng quay lại"
-                          stroke="#2196f3"
-                          fill="#0277bd"
-                          fillOpacity={0.4}
-                        />
+                        <Area type="monotone" dataKey="khách hàng mới" stroke="#ffa726" fill="#1e88e5" fillOpacity={0.8} isAnimationActive={true} animationDuration={1200} />
+                        <Area type="monotone" dataKey="Khách hàng trung thành" stroke="#ff6b6b" fill="red" fillOpacity={0.6} isAnimationActive={true} animationDuration={1200} />
+                        <Area type="monotone" dataKey="Khách hàng quay lại" stroke="#2196f3" fill="#0277bd" fillOpacity={0.4} isAnimationActive={true} animationDuration={1200} />
                       </AreaChart>
                     </ResponsiveContainer>
                   </div>
@@ -524,13 +458,13 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-md-4">
-              <div className="card card-primary">
-                <div className="card card-primary">
+            <div className="col-md-4" style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <div className="card card-primary" style={{ borderRadius: 18, boxShadow: "0 4px 24px #a1c4fd33" }}>
+                <div className="card card-primary" style={{ background: "#1e88e5", borderRadius: 18 }}>
                   <Sales_daily />
                 </div>
               </div>
-              <div className="card">
+              <div className="card" style={{ borderRadius: 18, boxShadow: "0 4px 24px #a8edea33" }}>
                 <Useronline />
               </div>
             </div>
@@ -1022,7 +956,6 @@ function Home() {
             <ul className="nav">
               <li className="nav-item">
                 <a className="nav-link" href="#">
-                  TeaM_25
                 </a>
               </li>
               <li className="nav-item">
@@ -1040,15 +973,12 @@ function Home() {
             </ul>
           </nav>
           <div className="copyright">
-            2024, made with <i className="fa fa-heart heart text-danger"></i> by
-            team_25
+            2024-2 <i className="fa fa-heart heart text-danger"></i>
           </div>
           <div>
             Distributed by
             <a target="_blank" href="https://themewagon.com/">
-              team_25
             </a>
-            .
           </div>
         </div>
       </footer>

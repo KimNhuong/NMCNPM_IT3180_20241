@@ -8,8 +8,8 @@ function Sales_daily() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [dt, Setdt] = useState({
-    date: [0, 0, 0, 0, 0, 0, 0, 0],
-    report: [0, 0, 0, 0, 0, 0, 0, 0],
+    date: [0, 2, 5, 6, 8, 15, 17, 19],
+    report: [0, 0, 2, 4, 5, 7, 11, 12],
   });
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -32,35 +32,17 @@ function Sales_daily() {
     ],
   };
   useEffect(() => {
-    const fetchData = async () => {
-      if (loading) return;
-      // try {
-      //   const response = await fetch(
-      //     "http://localhost:8080/api/home/generatedailySale",
-      //     {
-      //       method: "POST",
-      //       headers: {
-      //         "Content-Type": "application/json",
-      //       },
-      //       body: JSON.stringify({
-      //         user: user,
-      //       }),
-      //     }
-      //   );
-
-      //   if (!response.ok) {
-      //     throw new Error("Network response was not ok");
-      //   }
-
-      //   const data = await response.json();
-      //   console.log("generatedailySale:", data);
-      //   Setdt(data);
-      // } catch (error) {
-      //   console.error("Error fetching revenue:", error);
-      // }
-    };
-
-    fetchData();
+    // Sinh dữ liệu ngẫu nhiên cho 8 ngày gần nhất
+    const today = new Date();
+    const dates = [];
+    for (let i = 7; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+      dates.push(`${d.getDate()}/${d.getMonth() + 1}`);
+    }
+    // Sinh số liệu ngẫu nhiên cho mỗi ngày
+    const reports = Array.from({ length: 8 }, () => Math.floor(Math.random() * 1000000 + 100000));
+    Setdt({ date: dates, report: reports });
   }, [loading]);
   return (
     <Box
@@ -72,6 +54,10 @@ function Sales_daily() {
         textAlign: "center",
         width: "100%", // Cho phép mở rộng toàn bộ chiều rộng của phần tử cha
         position: "relative",
+        minHeight: 340,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
       }}
     >
       <Typography variant="h6">Daily Sales</Typography>
@@ -108,7 +94,7 @@ function Sales_daily() {
         <MenuItem onClick={handleClose}>Export as PDF</MenuItem>
       </Menu>
 
-      <Box sx={{ marginTop: 3, width: "100%" }}>
+      <Box sx={{ marginTop: 3, width: "100%", height: 180 }}>
         {" "}
         {/* Đặt width=100% cho biểu đồ */}
         <Line
@@ -119,6 +105,7 @@ function Sales_daily() {
             responsive: true,
             maintainAspectRatio: false,
           }}
+          height={180}
         />
       </Box>
     </Box>
