@@ -190,147 +190,47 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
     });
   };
   return (
-    <div className="product-detail-overlay">
-      <div className="product-detail-container">
-        <span className="close-button" onClick={onClose}>
-          &times;
-        </span>
+    <div className="product-detail-overlay" style={{ background: 'rgba(30, 40, 80, 0.18)', zIndex: 1000, position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.3s' }}>
+      <div className="product-detail-container" style={{ background: '#fff', borderRadius: 24, boxShadow: '0 8px 32px #1e88e522', padding: 36, minWidth: 420, maxWidth: 540, width: '100%', position: 'relative', animation: 'fadeInUp 0.4s', transition: 'box-shadow 0.3s' }}>
+        <span className="close-button" onClick={onClose} style={{ position: 'absolute', top: 18, right: 24, fontSize: 28, color: '#1e88e5', cursor: 'pointer', fontWeight: 700, transition: 'color 0.2s' }}>&times;</span>
         {!isEditing ? (
-          <div className="product-info">
-            {/* <h2 style={{ whiteSpace: "wrap" }}>Tên : {products.name}</h2>
-            <p style={{ whiteSpace: "normal", overflowWrap: "break-word" }}>
-              <strong>Loại:</strong> {products.category}
-            </p>
-            <p style={{ whiteSpace: "normal", overflowWrap: "break-word" }}>
-              <strong>Thương hiệu:</strong> {products.brand}
-            </p>
-            <p style={{ whiteSpace: "normal", overflowWrap: "break-word" }}>
-              <strong>Mã:</strong> {products.sku}
-            </p>
-            <p style={{ whiteSpace: "normal", overflowWrap: "break-word" }}>
-              <strong>Giá bán:</strong> ${products.price}
-            </p>
-            <p style={{ whiteSpace: "normal", overflowWrap: "break-word" }}>
-              <strong>số lượng trên kệ:</strong> {products.stock_in_shelf}
-            </p>
-            <p style={{ whiteSpace: "normal", overflowWrap: "break-word" }}>
-              <strong>Mức độ cần được nhập hàng:</strong>{" "}
-              {products.reorderLevel}
-            </p>
-            <p style={{ whiteSpace: "normal", overflowWrap: "break-word" }}>
-              <strong>Nhà cung cấp:</strong> {products.supplier.name}
-            </p>
-            <p style={{ whiteSpace: "normal", overflowWrap: "break-word" }}>
-              <strong>Ngày nhập:</strong>{" "}
-              {new Date(products.purchaseDate).toLocaleDateString()}
-            </p>
-            <p style={{ whiteSpace: "normal", overflowWrap: "break-word" }}>
-              <strong>Vị trí:</strong> {products.location}
-            </p>
-            <p style={{ whiteSpace: "normal", overflowWrap: "break-word" }}>
-              <strong>Số lượng trong kho hàng:</strong>{" "}
-              {products.stock_in_Warehouse}
-            </p>
-            <p style={{ whiteSpace: "normal", overflowWrap: "break-word" }}>
-              <strong>Đơn vị:</strong> {products.unit}
-            </p>
-            <p style={{ whiteSpace: "normal", overflowWrap: "break-word" }}>
-              <strong>Giá nhập:</strong> ${products.purchasePrice}
-            </p>
-            <p style={{ whiteSpace: "normal", overflowWrap: "break-word" }}>
-              <strong>Notes:</strong> {products.notes}
-            </p>
-            <p style={{ whiteSpace: "normal", overflowWrap: "break-word" }}>
-              <strong>Link ảnh :</strong>{" "}
-              {products.image ? products.image.secure_url : ""}
-            </p> */}
-            <div className="product-info-details">
-              <div className="product-info-details-row">
-                <strong>Tên:</strong>
-                <span>{products.name}</span>
-              </div>
-              <div className="product-info-details-row">
-                <strong>Loại:</strong>
-                <span>{products.category}</span>
-              </div>
-              <div className="product-info-details-row">
-                <strong>Thương hiệu:</strong>
-                <span>{products.brand}</span>
-              </div>
-              <div className="product-info-details-row">
-                <strong>Mã:</strong>
-                <span>{products.sku}</span>
-              </div>
-              <div className="product-info-details-row">
-                <strong>Giá bán:</strong>
-                <span>${products.price}</span>
-              </div>
-              <div className="product-info-details-row">
-                <strong>Số lượng trên kệ:</strong>
-                <span>{products.stock_in_shelf}</span>
-              </div>
-              <div className="product-info-details-row">
-                <strong>Mức độ cần được nhập hàng:</strong>
-                <span>{products.reorderLevel}</span>
-              </div>
-              <div className="product-info-details-row">
-                <strong>Nhà cung cấp:</strong>
-                <span>
-                  {products.supplier
-                    ? products.supplier.name
-                    : "nhà cung cấp của sản phầm này  đã bị xóa vui lòng hãy thêm nhà cung cấp"}
-                </span>
-              </div>
-              <div className="product-info-details-row">
-                <strong>Ngày nhập:</strong>
-                <span>
-                  {new Date(products.purchaseDate).toLocaleDateString()}
-                </span>
-              </div>
-              <div className="product-info-details-row">
-                <strong>Vị trí:</strong>
-                <span>{products.location}</span>
-              </div>
-              <div className="product-info-details-row">
-                <strong>Số lượng trong kho hàng:</strong>
-                <span>{products.stock_in_Warehouse}</span>
-              </div>
-              <div className="product-info-details-row">
-                <strong>Đơn vị:</strong>
-                <span>{products.unit}</span>
-              </div>
-              <div className="product-info-details-row">
-                <strong>Giá nhập:</strong>
-                <span>${products.purchasePrice}</span>
-              </div>
-              <div className="product-info-details-row">
-                <strong>Notes:</strong>
-                <span>{products.notes}</span>
-              </div>
-              <div className="product-info-details-row">
-                <strong>Link ảnh:</strong>
-                <span>{products.image ? products.image.secure_url : ""}</span>
-              </div>
-            </div>
+          <div className="product-info" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18 }}>
             <img
-              src={
-                products.image
-                  ? products.image.secure_url
-                  : "https://www.shutterstock.com/shutterstock/photos/600304136/display_1500/stock-vector-full-basket-of-food-grocery-shopping-special-offer-vector-line-icon-design-600304136.jpg"
-              }
+              src={products.image ? products.image.secure_url : 'https://www.shutterstock.com/shutterstock/photos/600304136/display_1500/stock-vector-full-basket-of-food-grocery-shopping-special-offer-vector-line-icon-design-600304136.jpg'}
               alt="Product Image"
               className="product-image-show"
+              style={{ width: 140, height: 140, objectFit: 'cover', borderRadius: 18, boxShadow: '0 2px 12px #b3c6ff33', marginBottom: 12, border: '3px solid #e0e7ff' }}
             />
-            <br></br>
-
-            <button className="edit-button-detail" onClick={handleEditToggle}>
-              Edit
-            </button>
+            <div className="product-info-details" style={{ width: '100%', marginBottom: 10 }}>
+              {[
+                ['Tên', products.name],
+                ['Loại', products.category],
+                ['Thương hiệu', products.brand],
+                ['Mã', products.sku],
+                ['Giá bán', `$${products.price}`],
+                ['Số lượng trên kệ', products.stock_in_shelf],
+                ['Mức độ cần nhập', products.reorderLevel],
+                ['Nhà cung cấp', products.supplier ? products.supplier.name : 'nhà cung cấp của sản phẩm này đã bị xóa, hãy thêm nhà cung cấp'],
+                ['Ngày nhập', new Date(products.purchaseDate).toLocaleDateString()],
+                ['Vị trí', products.location],
+                ['Số lượng trong kho', products.stock_in_Warehouse],
+                ['Đơn vị', products.unit],
+                ['Giá nhập', `$${products.purchasePrice}`],
+                ['Notes', products.notes],
+                ['Link ảnh', products.image ? products.image.secure_url : '']
+              ].map(([label, value]) => (
+                <div className="product-info-details-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0', borderBottom: '1px solid #f0f4fa', fontSize: 15 }} key={label}>
+                  <strong style={{ color: '#1e88e5', minWidth: 110 }}>{label}:</strong>
+                  <span style={{ color: '#1e293b', textAlign: 'right', flex: 1, marginLeft: 12, wordBreak: 'break-word' }}>{value}</span>
+                </div>
+              ))}
+            </div>
+            <button className="edit-button-detail" onClick={handleEditToggle} style={{ background: 'linear-gradient(90deg, #1e88e5 0%, #43cea2 100%)', color: '#fff', border: 'none', borderRadius: 16, fontWeight: 600, fontSize: 16, padding: '10px 36px', marginTop: 10, boxShadow: '0 2px 8px #1e88e522', cursor: 'pointer', transition: 'background 0.3s, transform 0.2s' }}>Edit</button>
           </div>
         ) : (
-          <div className="product-edit-form">
-            <h2>Edit Product</h2>
-            <form onSubmit={handleUpdate}>
+          <div className="product-edit-form" style={{ width: '100%' }}>
+            <h2 style={{ color: '#1e88e5', fontWeight: 700, textAlign: 'center', marginBottom: 18 }}>Edit Product</h2>
+            <form onSubmit={handleUpdate} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <div className="form-group">
                 <label htmlFor="name">Tên *</label>
                 <input
@@ -340,6 +240,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   value={editData.name}
                   onChange={handleNChange}
                   required
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                 />
               </div>
               <div className="form-group">
@@ -351,6 +252,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   value={editData.category}
                   onChange={handleNChange}
                   required
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                 />
               </div>
               <div className="form-group">
@@ -361,6 +263,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   name="brand"
                   value={editData.brand}
                   onChange={handleNChange}
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                 />
               </div>
               <div className="form-group">
@@ -372,6 +275,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   value={editData.sku}
                   onChange={handleNChange}
                   required
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                 />
               </div>
               <div className="form-group">
@@ -383,6 +287,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   value={editData.price}
                   onChange={handleChange}
                   required
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                 />
               </div>
               <div className="form-group">
@@ -393,6 +298,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   name="purchasePrice"
                   value={editData.purchasePrice}
                   onChange={handleChange}
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                 />
               </div>
               <div className="form-group">
@@ -403,6 +309,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   name="stock_in_shelf"
                   value={editData.stock_in_shelf}
                   onChange={handleNChange}
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                 />
               </div>
               <div className="form-group">
@@ -415,6 +322,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   name="reorderLevel"
                   value={editData.reorderLevel}
                   onChange={handleNChange}
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                 />
               </div>
               <div className="form-group">
@@ -424,6 +332,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   name="supplier"
                   value={editData.supplier ? editData.supplier._id : ""}
                   onChange={handleNChange}
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                 >
                   {suppliers.map((supplier) => (
                     <option key={supplier._id} value={supplier._id}>
@@ -440,6 +349,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   name="purchaseDate"
                   value={editData.purchaseDate}
                   onChange={handleNChange}
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                 />
               </div>
               <div className="form-group">
@@ -450,6 +360,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   name="location"
                   value={editData.location}
                   onChange={handleNChange}
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                 />
               </div>
               <div className="form-group">
@@ -462,6 +373,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   name="stock_in_Warehouse"
                   value={editData.stock_in_Warehouse}
                   onChange={handleNChange}
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                 />
               </div>
               <div className="form-group">
@@ -472,6 +384,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   name="unit"
                   value={editData.unit}
                   onChange={handleNChange}
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                 />
               </div>
               <div className="form-group">
@@ -481,6 +394,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   name="notes"
                   value={editData.notes}
                   onChange={handleNChange}
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s', minHeight: 80 }}
                 ></textarea>
               </div>
               <div className="form-group">
@@ -489,6 +403,7 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   src={link}
                   className="product-image-show"
                   alt="Product Image"
+                  style={{ width: 140, height: 140, objectFit: 'cover', borderRadius: 18, boxShadow: '0 2px 12px #b3c6ff33', marginBottom: 12, border: '3px solid #e0e7ff' }}
                 />
                 <div
                   className="change_image"
@@ -497,33 +412,32 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                       return !x;
                     });
                   }}
+                  style={{ cursor: 'pointer', color: '#1e88e5', fontWeight: 500, marginTop: 8, transition: 'color 0.2s' }}
                 >
                   Thay đổi ảnh
                 </div>
                 {g && (
-                  <div className="form-group">
+                  <div className="form-group" style={{ marginTop: 12 }}>
                     <label htmlFor="image">Image (3 cách để nhập ảnh)</label>
-                    <p style={{ marginBottom: "3px" }}>1. tải ảnh lên từ máy</p>
+                    <p style={{ marginBottom: "3px", fontSize: 14 }}>1. tải ảnh lên từ máy</p>
                     <input
                       type="file"
                       ref={fileInputRef}
                       name="image"
                       onChange={handleChangeimage}
+                      style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                     />
-                    <p style={{ marginBottom: "3px", marginTop: "3px" }}>
-                      2. link ảnh trên mạng
-                    </p>
+                    <p style={{ marginBottom: "3px", marginTop: "3px", fontSize: 14 }}>2. link ảnh trên mạng</p>
                     <input
                       type="text"
                       id="image"
                       name="image"
                       value={editData.image}
                       onChange={handleChange_link}
+                      style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s' }}
                     />
-                    <p style={{ marginBottom: "3px", marginTop: "3px" }}>
-                      3. chụp ảnh trực tiếp
-                    </p>
-                    <div className="capture" onClick={startCamera}>
+                    <p style={{ marginBottom: "3px", marginTop: "3px", fontSize: 14 }}>3. chụp ảnh trực tiếp</p>
+                    <div className="capture" onClick={startCamera} style={{ background: 'linear-gradient(90deg, #1e88e5 0%, #43cea2 100%)', color: '#fff', border: 'none', borderRadius: 16, fontWeight: 600, fontSize: 16, padding: '10px 36px', cursor: 'pointer', transition: 'background 0.3s, transform 0.2s', textAlign: 'center' }}>
                       Chụp ảnh
                     </div>
 
@@ -539,12 +453,14 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                           <button
                             className="button-capture"
                             onClick={captureImage}
+                            style={{ background: '#1e88e5', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 24px', cursor: 'pointer', transition: 'background 0.3s' }}
                           >
                             Chụp
                           </button>
                           <button
                             className="button-capture"
                             onClick={stopCamera}
+                            style={{ background: '#f44336', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 24px', cursor: 'pointer', transition: 'background 0.3s' }}
                           >
                             Hủy
                           </button>
@@ -563,16 +479,18 @@ const ProductDetail = ({ product, onClose, onUpdate }) => {
                   name="detail"
                   value={details}
                   onChange={handleChangedetail}
+                  style={{ padding: 10, borderRadius: 8, border: '1px solid #d1d5db', fontSize: 14, transition: 'border-color 0.3s', minHeight: 80 }}
                 ></textarea>
               </div>
-              <div className="submit-row">
-                <button type="submit" className="save-button">
+              <div className="submit-row" style={{ display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
+                <button type="submit" className="save-button" style={{ background: 'linear-gradient(90deg, #1e88e5 0%, #43cea2 100%)', color: '#fff', border: 'none', borderRadius: 16, fontWeight: 600, fontSize: 16, padding: '10px 36px', cursor: 'pointer', transition: 'background 0.3s, transform 0.2s' }}>
                   Save
                 </button>
                 <button
                   type="button"
                   className="cancel-button"
                   onClick={handleEditToggle}
+                  style={{ background: '#f44336', color: '#fff', border: 'none', borderRadius: 16, fontWeight: 600, fontSize: 16, padding: '10px 36px', cursor: 'pointer', transition: 'background 0.3s, transform 0.2s' }}
                 >
                   Cancel
                 </button>

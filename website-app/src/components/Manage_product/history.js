@@ -100,71 +100,74 @@ const History = ({ turnoff, customer, supplier }) => {
     return `${hours}:${minutes}:${seconds}, ngày ${day}/${month}/${year}`;
   }
   return (
-    <div className="history-mgmt-main">
-      <div className="history-mgmt-container">
-        <div className="close" onClick={turnoff}>
-          x
-        </div>
-        <div className="history-mgmt-header">
-          <h2 className="history-mgmt-title">History</h2>
-          <div className="history-mgmt-header-controls">
+    <div className="history-mgmt-main" style={{ background: 'rgba(30, 40, 80, 0.18)', zIndex: 1000, position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.3s' }}>
+      <div className="history-mgmt-container" style={{ background: '#fff', borderRadius: 24, boxShadow: '0 8px 32px #1e88e522', padding: 36, minWidth: 480, maxWidth: 800, width: '100%', position: 'relative', animation: 'fadeInUp 0.4s', transition: 'box-shadow 0.3s' }}>
+        <div className="close" onClick={turnoff} style={{ position: 'absolute', top: 18, right: 24, fontSize: 28, color: '#1e88e5', cursor: 'pointer', fontWeight: 700, transition: 'color 0.2s' }}>x</div>
+        <div className="history-mgmt-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+          <h2 className="history-mgmt-title" style={{ color: '#1e88e5', fontWeight: 700, letterSpacing: 1, textShadow: '0 2px 8px #b3c6ff' }}>Lịch sử thay đổi</h2>
+          <div className="history-mgmt-header-controls" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
             <input
               type="text"
               className="history-mgmt-search"
-              placeholder="Search for..."
+              placeholder="Tìm kiếm..."
               value={searchTerm}
               onChange={handleSearch}
+              style={{ borderRadius: 16, border: '1.5px solid #b3c6ff', padding: '8px 18px', fontSize: 16, minWidth: 220, background: '#fff', boxShadow: '0 1px 4px #b3c6ff22', outline: 'none', transition: 'border 0.3s' }}
+              onFocus={e => e.target.style.border = '1.5px solid #1e88e5'}
+              onBlur={e => e.target.style.border = '1.5px solid #b3c6ff'}
             />
-            {/* <input
-            type="month"
-            className="history-mgmt-date-picker"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-          /> */}
           </div>
         </div>
-
-        <table className="history-mgmt-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Date</th>
-              <th>Status</th>
-              {!supplier && !customer ? (
-                <th>Product</th>
-              ) : !supplier ? (
-                <th>customer</th>
-              ) : (
-                <th>supplier</th>
-              )}
-              <th>Details</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredOrders.map((order, index) => (
-              <tr key={index}>
-                <td>
-                  {order.employee.name} <br />{" "}
-                  <small>{order.employee.email}</small>
-                </td>
-                <td>{formatDateTime(order.timestamp)}</td>
-                <td>
-                  <span className={`history-mgmt-status ${order.action}`}>
-                    {order.action}
-                  </span>
-                </td>
+        <div style={{ overflowX: 'auto', borderRadius: 18 }}>
+          <table className="history-mgmt-table" style={{ width: '100%', borderRadius: 18, overflow: 'hidden', background: '#fff', boxShadow: '0 4px 24px #b3c6ff33', transition: 'box-shadow 0.3s', marginBottom: 0 }}>
+            <thead style={{ background: '#f0f4fa' }}>
+              <tr style={{ color: '#1e88e5', fontWeight: 700, fontSize: 16 }}>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Status</th>
                 {!supplier && !customer ? (
-                  <td>{order.product}</td>
+                  <th>Product</th>
                 ) : !supplier ? (
-                  <td>{order.customer}</td>
+                  <th>Customer</th>
                 ) : (
-                  <td>{order.supplier}</td>
+                  <th>Supplier</th>
                 )}
-                <td>{order.details}</td>
+                <th>Details</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredOrders.map((order, index) => (
+                <tr key={index} style={{ transition: 'background 0.2s', background: index % 2 === 0 ? '#f8fafc' : '#fff' }}>
+                  <td style={{ fontWeight: 600, color: '#1e88e5' }}>
+                    {order.employee.name} <br />
+                    <small style={{ color: '#64748b' }}>{order.employee.email}</small>
+                  </td>
+                  <td style={{ color: '#1e293b', fontWeight: 500 }}>{formatDateTime(order.timestamp)}</td>
+                  <td>
+                    <span className={`history-mgmt-status ${order.action}`} style={{
+                      padding: '4px 14px',
+                      borderRadius: 12,
+                      fontWeight: 600,
+                      fontSize: 14,
+                      background: order.action === 'update' ? 'linear-gradient(90deg, #ffd200 0%, #f7971e 100%)' : order.action === 'delete' ? 'linear-gradient(90deg, #ff5858 0%, #f857a6 100%)' : 'linear-gradient(90deg, #43cea2 0%, #1e88e5 100%)',
+                      color: '#fff',
+                      boxShadow: '0 2px 8px #b3c6ff22',
+                      transition: 'background 0.3s',
+                    }}>{order.action}</span>
+                  </td>
+                  {!supplier && !customer ? (
+                    <td style={{ color: '#1e293b', fontWeight: 500 }}>{order.product}</td>
+                  ) : !supplier ? (
+                    <td style={{ color: '#1e293b', fontWeight: 500 }}>{order.customer}</td>
+                  ) : (
+                    <td style={{ color: '#1e293b', fontWeight: 500 }}>{order.supplier}</td>
+                  )}
+                  <td style={{ color: '#64748b', fontSize: 15 }}>{order.details}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

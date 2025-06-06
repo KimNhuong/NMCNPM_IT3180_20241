@@ -188,48 +188,44 @@ function Import2() {
       />
 
       <Modal isOpen={isOpen} onClose={closeModal}>
-        <div className="Modal-title">Create your order opening</div>
-        <div className="divide"></div>
-        <div className="header-order">
-          <div className="search-container">
-            <div style={{ display: "flex", flex: 1, marginLeft: 10 }}>
-              <span style={{ display: "block", paddingTop: "10px" }}>
-                Tìm kiếm:{" "}
-              </span>
-              <div className="search-result-container">
+        <div className="Modal-title" style={{ color: '#1e88e5', fontWeight: 700, fontSize: 24, textAlign: 'center', marginBottom: 8 }}>Create your order opening</div>
+        <div className="divide" style={{ margin: '12px 0', background: '#e0e7ff', height: 2, borderRadius: 2 }}></div>
+        <div className="header-order" style={{ display: 'flex', alignItems: 'center', gap: 18, marginBottom: 18, flexWrap: 'wrap' }}>
+          <div className="search-container" style={{ flex: 1 }}>
+            <div style={{ display: 'flex', flex: 1, marginLeft: 10, alignItems: 'center', gap: 8 }}>
+              <span style={{ display: 'block', paddingTop: '10px', color: '#1e88e5', fontWeight: 600 }}>Tìm kiếm: </span>
+              <div className="search-result-container" style={{ position: 'relative', flex: 1 }}>
                 <input
                   type="text"
-                  style={{ flex: 1 }}
+                  style={{ flex: 1, borderRadius: 16, border: '1.5px solid #b3c6ff', padding: '10px 18px', fontSize: 16, background: '#fff', boxShadow: '0 1px 4px #b3c6ff22', outline: 'none', transition: 'border 0.3s' }}
                   className="order-mgmt-search"
                   placeholder="Search by code or product name"
                   value={searchTerm}
                   onChange={handleSearch}
-                  onBlur={handleBlur} // Thêm onBlur để ẩn dropdown
-                  onFocus={() => setShowDropdown(true)} // Hiển thị dropdown khi focus
+                  onBlur={handleBlur}
+                  onFocus={() => setShowDropdown(true)}
                 />
                 {showDropdown && results.length > 0 && (
-                  <ul className="dropdown">
+                  <ul className="dropdown" style={{ position: 'absolute', top: 44, left: 0, right: 0, background: '#fff', borderRadius: 14, boxShadow: '0 4px 24px #b3c6ff33', zIndex: 10, padding: 0, margin: 0, listStyle: 'none', border: '1.5px solid #e0e7ff' }}>
                     {results.map((result, index) => (
                       <li
                         key={index}
                         className="search-item"
                         onClick={() => handleSelectLiResult(result)}
+                        style={{ padding: '10px 18px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10, transition: 'background 0.2s', borderBottom: '1px solid #f0f4fa' }}
                       >
-                        <div className="search-container-item">
+                        <div className="search-container-item" style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10 }}>
                           {result}
                           {suppOrPro && suggestions.length > 0 && (
                             <div
                               className="search-container-img"
                               style={{
-                                backgroundImage: `url(${suggestions[index].image.secure_url})`,
+                                width: 32, height: 32, borderRadius: 8, backgroundSize: 'cover', backgroundPosition: 'center', marginLeft: 8,
+                                backgroundImage: `url(${suggestions[index].image ? suggestions[index].image.secure_url : 'https://www.shutterstock.com/shutterstock/photos/600304136/display_1500/stock-vector-full-basket-of-food-grocery-shopping-special-offer-vector-line-icon-design-600304136.jpg'})`,
                               }}
                             ></div>
                           )}
                         </div>
-                        <div
-                          className="divide"
-                          style={{ margin: "8px 2px 0", background: "white" }}
-                        ></div>
                       </li>
                     ))}
                   </ul>
@@ -237,11 +233,9 @@ function Import2() {
               </div>
             </div>
           </div>
-          <button className="btn-add-order" onClick={handleAddToOrder}>
-            Add to order
-          </button>
+          <button className="btn-add-order" onClick={handleAddToOrder} style={{ background: 'linear-gradient(90deg, #1e88e5 0%, #43cea2 100%)', color: '#fff', border: 'none', borderRadius: 16, fontWeight: 600, fontSize: 16, padding: '10px 36px', boxShadow: '0 2px 8px #1e88e522', cursor: 'pointer', transition: 'background 0.3s, transform 0.2s' }}>Add to order</button>
         </div>
-        <div className="body-modal">
+        <div className="body-modal" style={{ background: '#f5f7fa', borderRadius: 18, padding: 18, boxShadow: '0 2px 8px #b3c6ff22', marginTop: 8 }}>
           <ContentOrder
             dataHis={idProductAdded}
             setIdProductAdded={setIdProductAdded}
@@ -290,6 +284,7 @@ function Import2() {
   );
 }
 
+// ContentOrder: làm đẹp bảng sản phẩm trong đơn hàng
 const ContentOrder = ({
   dataHis,
   setIdProductAdded,
@@ -527,12 +522,12 @@ const ContentOrder = ({
 
   return (
     <>
-      <div className="list-product-title">List product </div>
-      <div className="list-product-content">
-        <div className="list-product-detail">
-          <table>
-            <thead>
-              <tr>
+      <div className="list-product-title" style={{ color: '#1e88e5', fontWeight: 700, fontSize: 20, marginBottom: 12 }}>List product</div>
+      <div className="list-product-content" style={{ background: '#fff', borderRadius: 18, boxShadow: '0 2px 8px #b3c6ff22', padding: 18, marginBottom: 12 }}>
+        <div className="list-product-detail" style={{ overflowX: 'auto', borderRadius: 12 }}>
+          <table style={{ width: '100%', borderRadius: 12, overflow: 'hidden', background: '#fff', boxShadow: '0 2px 8px #b3c6ff22', transition: 'box-shadow 0.3s', marginBottom: 0 }}>
+            <thead style={{ background: '#f0f4fa' }}>
+              <tr style={{ color: '#1e88e5', fontWeight: 700, fontSize: 15 }}>
                 <th>STT</th>
                 <th>Ảnh Mô Tả</th>
                 <th>Sản Phẩm</th>
@@ -546,132 +541,58 @@ const ContentOrder = ({
             </thead>
             <tbody>
               {listProductWereAdded.map((product, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
+                <tr key={index} style={{ background: index % 2 === 0 ? '#f8fafc' : '#fff', transition: 'background 0.2s' }}>
+                  <td style={{ fontWeight: 600, color: '#1e88e5' }}>{index + 1}</td>
                   <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <div
-                        className="body-container-img-description"
-                        style={{ backgroundImage: `url(${product.imageUrl})` }}
-                      ></div>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <div className="body-container-img-description" style={{ width: 48, height: 48, borderRadius: 12, backgroundSize: 'cover', backgroundPosition: 'center', backgroundImage: `url(${product.imageUrl})`, border: '2px solid #e0e7ff', boxShadow: '0 2px 8px #b3c6ff22' }}></div>
                     </div>
                   </td>
                   <td>
-                    <div className="modal-body-product-name">
-                      {product.name}
-                    </div>
-                    <div className="modal-body-product-description">
-                      {product.description}
-                    </div>
+                    <div className="modal-body-product-name" style={{ fontWeight: 700, color: '#1e88e5', fontSize: 16 }}>{product.name}</div>
+                    <div className="modal-body-product-description" style={{ color: '#64748b', fontSize: 14 }}>{product.description}</div>
                   </td>
                   <td>
-                    <div style={{ position: "relative" }}>
-                      {product.supplier}
+                    <div style={{ position: 'relative', color: '#1e293b', fontWeight: 600 }}>{product.supplier}</div>
+                  </td>
+                  <td>
+                    <div className="Quantity" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <button className="Quantity-button" onClick={() => decrease(index)} style={{ background: '#e0e7ff', color: '#1e88e5', border: 'none', borderRadius: 8, fontWeight: 700, fontSize: 18, width: 32, height: 32, cursor: 'pointer', transition: 'background 0.2s' }}>-</button>
+                      <input value={listProductWereAdded[index].quantity} className="Quantity-input" onChange={(e) => handleInputQuantitty(index, e)} style={{ borderRadius: 8, border: '1.5px solid #b3c6ff', width: 48, textAlign: 'center', fontSize: 16, padding: '4px 0', outline: 'none', transition: 'border 0.3s' }} />
+                      <button className="Quantity-button" onClick={() => increase(index)} style={{ background: '#e0e7ff', color: '#1e88e5', border: 'none', borderRadius: 8, fontWeight: 700, fontSize: 18, width: 32, height: 32, cursor: 'pointer', transition: 'background 0.2s' }}>+</button>
                     </div>
                   </td>
-                  <td>
-                    <div className="Quantity">
-                      <button
-                        className="Quantity-button"
-                        onClick={() => decrease(index)}
-                      >
-                        -
-                      </button>
-                      <input
-                        value={listProductWereAdded[index].quantity}
-                        className="Quantity-input"
-                        onChange={(e) => handleInputQuantitty(index, e)}
-                      />
-                      <button
-                        className="Quantity-button"
-                        onClick={() => increase(index)}
-                      >
-                        +
-                      </button>
-                    </div>
+                  <td style={{ color: '#1e293b', fontWeight: 600 }}>
+                    {(product.price * listProductWereAdded[index].quantity).toLocaleString()} VND
                   </td>
                   <td>
-                    {(
-                      product.price.replace(/\./g, "") *
-                      listProductWereAdded[index].quantity
-                    ).toLocaleString()}{" "}
-                    VND
-                  </td>
-                  <td>
-                    <div
-                      className={`product-status ${listProductWereAdded[index].status}`}
-                      onClick={() => handleStatusClick(index)}
-                      style={{ position: "relative", cursor: "pointer" }}
-                    >
+                    <div className={`product-status ${listProductWereAdded[index].status}`} onClick={() => handleStatusClick(index)} style={{ position: 'relative', cursor: 'pointer', padding: '4px 14px', borderRadius: 12, fontWeight: 600, fontSize: 14, background: product.status === 'pending' ? 'linear-gradient(90deg, #ffd200 0%, #f7971e 100%)' : product.status === 'deliveried' ? 'linear-gradient(90deg, #43cea2 0%, #1e88e5 100%)' : 'linear-gradient(90deg, #ff5858 0%, #f857a6 100%)', color: '#fff', boxShadow: '0 2px 8px #b3c6ff22', transition: 'background 0.3s' }}>
                       {product.status}
                       {dropdownOpenIndex === index && (
-                        <div ref={dropdownRef} className="dropdown">
-                          <div
-                            className="dropdown-item"
-                            onClick={() => handleStatusChange(index, "pending")}
-                          >
-                            Pending
-                          </div>
-                          <div
-                            className="dropdown-item "
-                            onClick={() =>
-                              handleStatusChange(index, "deliveried")
-                            }
-                          >
-                            Delivered
-                          </div>
-                          <div
-                            className="dropdown-item "
-                            onClick={() =>
-                              handleStatusChange(index, "canceled")
-                            }
-                          >
-                            Canceled
-                          </div>
+                        <div ref={dropdownRef} className="dropdown" style={{ position: 'absolute', top: 36, left: 0, background: '#fff', borderRadius: 12, boxShadow: '0 4px 24px #b3c6ff33', zIndex: 10, minWidth: 120, overflow: 'hidden', border: '1.5px solid #e0e7ff' }}>
+                          <div className="dropdown-item" style={{ padding: '10px 18px', cursor: 'pointer', color: '#1e88e5', fontWeight: 600, transition: 'background 0.2s' }} onClick={() => handleStatusChange(index, 'pending')}>Pending</div>
+                          <div className="dropdown-item" style={{ padding: '10px 18px', cursor: 'pointer', color: '#43cea2', fontWeight: 600, transition: 'background 0.2s' }} onClick={() => handleStatusChange(index, 'deliveried')}>Delivered</div>
+                          <div className="dropdown-item" style={{ padding: '10px 18px', cursor: 'pointer', color: '#ff5858', fontWeight: 600, transition: 'background 0.2s' }} onClick={() => handleStatusChange(index, 'canceled')}>Canceled</div>
                         </div>
                       )}
                     </div>
                   </td>
                   <td>
-                    <input
-                      type="checkbox"
-                      checked={product.isChecked}
-                      onChange={() => handleRemove(index)} // Call handler on change
-                      id={`checkbox-${index}`}
-                    />
+                    <input type="checkbox" checked={product.isChecked} onChange={() => handleRemove(index)} id={`checkbox-${index}`} style={{ width: 20, height: 20, accentColor: '#ff5858', cursor: 'pointer' }} />
                   </td>
                   <td>
-                    <input
-                      type="checkbox"
-                      checked={listProductWereAdded[index].email}
-                      onChange={() => handleCheckboxChange(index)}
-                    />
+                    <input type="checkbox" checked={listProductWereAdded[index].email} onChange={() => handleCheckboxChange(index)} style={{ width: 20, height: 20, accentColor: '#1e88e5', cursor: 'pointer' }} />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div className="order-tax">
-          TAX :{" "}
+        <div className="order-tax" style={{ marginTop: 18, fontWeight: 600, color: '#1e88e5', fontSize: 16 }}>
+          TAX :
           <input
             type="text"
-            style={{
-              borderRadius: "8px",
-              maxWidth: "60px",
-              border: "1px solid #333",
-              fontSize: "16px",
-              color: "#333",
-              textAlign: "right",
-              lineHeight: "24px",
-              paddingRight: "8px",
-            }}
+            style={{ borderRadius: '8px', maxWidth: '60px', border: '1.5px solid #b3c6ff', fontSize: '16px', color: '#333', textAlign: 'right', lineHeight: '24px', paddingRight: '8px', marginLeft: 8, marginRight: 4 }}
             value={myTax}
             name="tax"
             onChange={(e) => {
@@ -680,20 +601,17 @@ const ContentOrder = ({
               }
             }}
           />
-          <span style={{ fontSize: 16, fontWeight: 300 }}>{"   "}%</span>{" "}
+          <span style={{ fontSize: 16, fontWeight: 300 }}> %</span>
         </div>
-        <div className="order-tax">
-          Tổng tiền:{" "}
-          <span style={{ fontSize: 16, fontWeight: 300 }}>
-            {((amountBill() * (myTax + 100)) / 100)
-              .toFixed(0)
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+        <div className="order-tax" style={{ marginTop: 8, fontWeight: 600, color: '#1e88e5', fontSize: 16 }}>
+          Tổng tiền:
+          <span style={{ fontSize: 16, fontWeight: 700, color: '#1e293b', marginLeft: 8 }}>
+            {((amountBill() * (myTax + 100)) / 100).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
             VND
           </span>
         </div>
-        <div className="complete-order">
-          <button onClick={() => handleSubmit()}>Complete</button>
+        <div className="complete-order" style={{ display: 'flex', justifyContent: 'center', marginTop: 18 }}>
+          <button onClick={() => handleSubmit()} style={{ background: 'linear-gradient(90deg, #1e88e5 0%, #43cea2 100%)', color: '#fff', border: 'none', borderRadius: 16, fontWeight: 700, fontSize: 18, padding: '10px 36px', boxShadow: '0 2px 8px #1e88e522', cursor: 'pointer', transition: 'background 0.3s, transform 0.2s' }}>Complete</button>
         </div>
       </div>
     </>

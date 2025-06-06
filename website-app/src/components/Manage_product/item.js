@@ -217,10 +217,47 @@ const ProductGrid = ({
           onDelete={(a, b) => onDelete(a, b)}
         />
       )}
-      <div className="product-grid" style={{ marginBottom: "200px" }}>
+      <div
+        className="product-grid"
+        style={{
+          marginBottom: "200px",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 32,
+          justifyContent: "flex-start",
+        }}
+      >
         {filteredProducts.map((product, index) => (
-          <div className="item" key={index}>
-            <div className="product-card">
+          <div
+            className="item"
+            key={index}
+            style={{
+              flex: "0 1 260px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              className="product-card"
+              style={{
+                background: "#fff",
+                borderRadius: 22,
+                boxShadow: "0 4px 24px #b3c6ff33",
+                padding: 24,
+                minWidth: 220,
+                maxWidth: 280,
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                transition:
+                  "box-shadow 0.3s, transform 0.2s",
+                position: "relative",
+                cursor: "pointer",
+                gap: 12,
+                border: "1.5px solid #e0e7ff",
+              }}
+            >
               <img
                 src={
                   product.image
@@ -229,18 +266,94 @@ const ProductGrid = ({
                 }
                 alt="Product Image"
                 className="product-image"
+                style={{
+                  width: 90,
+                  height: 90,
+                  objectFit: "cover",
+                  borderRadius: 16,
+                  boxShadow: "0 2px 12px #b3c6ff33",
+                  border: "2px solid #e0e7ff",
+                  marginBottom: 8,
+                }}
               />
-              <h3 className="product-name">{product.name}</h3>
-              <div className="actions">
+              <h3
+                className="product-name"
+                style={{
+                  fontWeight: 700,
+                  color: "#1e88e5",
+                  fontSize: 18,
+                  margin: 0,
+                  textAlign: "center",
+                  marginBottom: 4,
+                }}
+              >
+                {product.name}
+              </h3>
+              <div
+                style={{
+                  color: "#64748b",
+                  fontSize: 15,
+                  marginBottom: 2,
+                  textAlign: "center",
+                }}
+              >
+                {product.category}
+              </div>
+              <div
+                style={{
+                  color: "#1e293b",
+                  fontWeight: 600,
+                  fontSize: 16,
+                  marginBottom: 6,
+                }}
+              >
+                {`$${product.price}`}
+              </div>
+              <div
+                className="actions"
+                style={{
+                  display: "flex",
+                  gap: 10,
+                  marginTop: 8,
+                }}
+              >
                 <button
                   className="action-button edit-button"
                   onClick={() => show(product._id)}
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #1e88e5 0%, #43cea2 100%)",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 14,
+                    fontWeight: 600,
+                    fontSize: 15,
+                    padding: "7px 22px",
+                    boxShadow: "0 2px 8px #1e88e522",
+                    cursor: "pointer",
+                    transition:
+                      "background 0.3s, transform 0.2s",
+                  }}
                 >
-                  chi tiết
+                  Chi tiết
                 </button>
                 <button
                   className="action-button delete-button"
                   onClick={() => SetFdelete(product)}
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #ff5858 0%, #f857a6 100%)",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 14,
+                    fontWeight: 600,
+                    fontSize: 15,
+                    padding: "7px 22px",
+                    boxShadow: "0 2px 8px #f857a633",
+                    cursor: "pointer",
+                    transition:
+                      "background 0.3s, transform 0.2s",
+                  }}
                 >
                   Xóa
                 </button>
