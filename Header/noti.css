@@ -1,0 +1,121 @@
+.notification-container {
+    position: relative;
+  }
+  
+  .notification-popup {
+    font-size: 14px;
+    position: absolute;
+    top: 50px;  /* Khoảng cách từ trên xuống */
+    right: 0;
+    background-color: #fff;
+    border-radius: 10px;
+    width: 250px;
+    z-index: 9999999;
+    padding: 20px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    color: #333;
+    display: none; /* Mặc định là ẩn */
+    transition: opacity 0.3s ease-in-out; 
+    /* Thêm hiệu ứng khi hiển thị */
+  }
+  
+  .notification-popup.show {
+    display: block; /* Khi có class 'show', sẽ hiển thị */
+    opacity: 1; /* Đảm bảo opacity = 1 khi hiển thị */
+  }
+  
+  .notification-header {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #4A90E2; /* Thêm màu cho tiêu đề */
+  }
+  
+  .notification-content {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px; /* Đảm bảo không bị cắt khi có scroll */
+  }
+  
+  .notification-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .notification-item:hover {
+    background-color: #E7EDFF;
+    color: #1514ef;
+    border-radius: 5px;
+  }
+  
+  .notification-item img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .notification-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .notification-name {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .notification-stock {
+    font-size: 12px;
+    color: #A0A0B1;
+  }
+  
+  hr {
+    border: none;
+    border-top: 1px solid #E7EDFF;
+    margin: 15px 0;
+  }
+  
+  /* Thêm hiệu ứng khi popup xuất hiện */
+  .notification-popup.show {
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  @keyframes slideIn {
+    0% {
+      right: -250px; /* Bắt đầu từ bên ngoài */
+      opacity: 0;
+    }
+    100% {
+      right: 0;
+      opacity: 1;
+    }
+  }
+  .notification-bell {
+  /* /* /*  color: red;  */
+    /* outline: 2px solid black; Viền bao quanh chuông */
+    outline-offset: 4px; /* Khoảng cách giữa viền và chuông */
+    transition: color 0.3s, outline-color 0.3s;
+  }
+  
+  .notification-bell:hover {
+    /* color: white; Đổi màu chuông khi hover */
+    outline-color: white; /* Đổi màu viền khi hover */
+  }
+  .notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
