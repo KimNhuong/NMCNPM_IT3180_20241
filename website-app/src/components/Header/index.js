@@ -9,15 +9,14 @@ function Header({size}) {
   return(<>
   
     <div className="header" style={{width:`${size}%`,marginLeft:`${100-size}%`}}>
-      <div className="search-box">
+      {/* <div className="search-box">
       <FaSearch className="search-icon" />
       <input type="text" placeholder="Search ..."/>
-      </div>
-      <AudioPlayer />
-      <div className="header__right">
+      </div> */}
+      <div className="header__right" style={{ display: "flex", alignItems: "center", gap: 16 }}>
         {/* <div className="header__setting"><RiSettings4Line /></div> */}
-        <div className="header__notify"><Notification /></div>
-        <div className="header__user"><Modal /></div>
+        <div className="header__notify"></div>
+        <div className="header__user" style={{ marginLeft: "1350px" }}><Modal /></div>
       </div>
     </div></>
   )

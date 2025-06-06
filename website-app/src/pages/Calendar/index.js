@@ -237,28 +237,147 @@ const CalendarComponent = ({ defaultView }) => {
   };
 
   return (
-    <div style={{ height: "80vh" }}>
-      <Calendar
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 500 }}
-        selectable
-        defaultView={defaultView}
-        onSelectSlot={handleSelectSlot}
-        onSelectEvent={handleSelectEvent}
-      />
-
+    <div
+      style={{
+        width: "100%",
+        maxWidth: 1100,
+        margin: "0 auto",
+        padding: 24,
+        background:
+          "linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%)",
+        borderRadius: 24,
+        boxShadow: "0 8px 32px 0 rgba(30,136,229,0.10)",
+        transition: "box-shadow 0.4s, background 0.4s",
+      }}
+    >
+      <div style={{ marginBottom: 24, textAlign: "center" }}>
+        <h2
+          style={{
+            color: "#1e88e5",
+            fontWeight: 700,
+            fontSize: 32,
+            letterSpacing: 1,
+            textShadow: "0 2px 8px #b3c6ff33",
+            marginBottom: 0,
+            transition: "color 0.3s",
+          }}
+        >
+          Lịch làm việc
+        </h2>
+        <div
+          style={{
+            color: "#888",
+            fontSize: 16,
+            marginTop: 4,
+          }}
+        >
+          Quản lý công việc, lịch trình cho nhân viên
+        </div>
+      </div>
+      <div
+        style={{
+          borderRadius: 18,
+          overflow: "hidden",
+          boxShadow: "0 4px 24px #b3c6ff22",
+          background: "#fff",
+          transition: "box-shadow 0.3s, background 0.3s",
+        }}
+      >
+        <Calendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          style={{
+            height: 540,
+            background: "#fff",
+            borderRadius: 18,
+            padding: 16,
+            transition: "box-shadow 0.3s, background 0.3s",
+          }}
+          selectable
+          defaultView={defaultView}
+          onSelectSlot={handleSelectSlot}
+          onSelectEvent={handleSelectEvent}
+          eventPropGetter={(event) => ({
+            style: {
+              background:
+                "linear-gradient(90deg, #a1c4fd 0%, #c2e9fb 100%)",
+              color: "#1e88e5",
+              borderRadius: 10,
+              border: "none",
+              boxShadow: "0 2px 8px #a1c4fd33",
+              fontWeight: 600,
+              fontSize: 16,
+              transition:
+                "background 0.3s, color 0.3s, box-shadow 0.3s",
+            },
+          })}
+          popup
+        />
+      </div>
       {isModalOpen && (
-        <div className="ca-modal-overlay">
-          <div className="ca-modal">
-            <h2>{selectedEvent ? "Chỉnh sửa sự kiện" : "Thêm sự kiện"}</h2>
+        <div
+          className="ca-modal-overlay"
+          style={{
+            position: "fixed",
+            left: 0,
+            top: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(30,136,229,0.10)",
+            zIndex: 2000,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "background 0.3s",
+          }}
+        >
+          <div
+            className="ca-modal"
+            style={{
+              background:
+                "linear-gradient(135deg, #e0e7ff 0%, #fffde4 100%)",
+              borderRadius: 18,
+              boxShadow: "0 8px 32px 0 rgba(30,136,229,0.15)",
+              padding: 32,
+              minWidth: 340,
+              minHeight: 220,
+              animation:
+                "fadeInScale 0.4s cubic-bezier(.4,2,.6,1)",
+              transition: "box-shadow 0.4s, background 0.4s",
+            }}
+          >
+            <h2
+              style={{
+                color: "#1e88e5",
+                fontWeight: 700,
+                fontSize: 24,
+                marginBottom: 18,
+                textAlign: "center",
+                letterSpacing: 1,
+              }}
+            >
+              {" "}
+              {selectedEvent ? "Chỉnh sửa sự kiện" : "Thêm sự kiện"}
+            </h2>
             <form
               className="ca-modal-form"
               onSubmit={selectedEvent ? handleEditEvent : handleSubmit}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 12,
+              }}
             >
-              <label>Việc cần làm:</label>
+              <label
+                style={{
+                  fontWeight: 600,
+                  color: "#1e88e5",
+                }}
+              >
+                Việc cần làm:
+              </label>
               <input
                 type="text"
                 value={formData.title}
@@ -266,8 +385,20 @@ const CalendarComponent = ({ defaultView }) => {
                   setFormData({ ...formData, title: e.target.value })
                 }
                 required
+                style={{
+                  borderRadius: 10,
+                  padding: 8,
+                  border: "1px solid #b3c6ff",
+                }}
               />
-              <label>Tên nhân viên:</label>
+              <label
+                style={{
+                  fontWeight: 600,
+                  color: "#1e88e5",
+                }}
+              >
+                Tên nhân viên:
+              </label>
               <input
                 type="text"
                 value={formData.employee}
@@ -275,8 +406,20 @@ const CalendarComponent = ({ defaultView }) => {
                   setFormData({ ...formData, employee: e.target.value })
                 }
                 required
+                style={{
+                  borderRadius: 10,
+                  padding: 8,
+                  border: "1px solid #b3c6ff",
+                }}
               />
-              <label>Thời gian làm (bắt đầu):</label>
+              <label
+                style={{
+                  fontWeight: 600,
+                  color: "#1e88e5",
+                }}
+              >
+                Thời gian làm (bắt đầu):
+              </label>
               <input
                 type="time"
                 value={formData.start_time}
@@ -284,8 +427,20 @@ const CalendarComponent = ({ defaultView }) => {
                   setFormData({ ...formData, start_time: e.target.value })
                 }
                 required
+                style={{
+                  borderRadius: 10,
+                  padding: 8,
+                  border: "1px solid #b3c6ff",
+                }}
               />
-              <label>Thời gian làm (kết thúc):</label>
+              <label
+                style={{
+                  fontWeight: 600,
+                  color: "#1e88e5",
+                }}
+              >
+                Thời gian làm (kết thúc):
+              </label>
               <input
                 type="time"
                 value={formData.end_time}
@@ -293,26 +448,117 @@ const CalendarComponent = ({ defaultView }) => {
                   setFormData({ ...formData, end_time: e.target.value })
                 }
                 required
+                style={{
+                  borderRadius: 10,
+                  padding: 8,
+                  border: "1px solid #b3c6ff",
+                }}
               />
-              <button type="submit">
-                {selectedEvent ? "Lưu thay đổi" : "Lưu"}
-              </button>
-              {selectedEvent && (
+              <div
+                style={{
+                  display: "flex",
+                  gap: 10,
+                  marginTop: 10,
+                  justifyContent: "center",
+                }}
+              >
+                <button
+                  type="submit"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #a1c4fd 0%, #c2e9fb 100%)",
+                    color: "#1e88e5",
+                    fontWeight: 700,
+                    borderRadius: 10,
+                    padding: "8px 24px",
+                    border: "none",
+                    fontSize: 16,
+                    cursor: "pointer",
+                    transition: "background 0.3s",
+                  }}
+                >
+                  {selectedEvent ? "Lưu thay đổi" : "Lưu"}
+                </button>
+                {selectedEvent && (
+                  <button
+                    type="button"
+                    className="danger"
+                    onClick={handleDeleteEvent}
+                    style={{
+                      background:
+                        "linear-gradient(90deg, #fda085 0%, #f6d365 100%)",
+                      color: "#fff",
+                      fontWeight: 700,
+                      borderRadius: 10,
+                      padding: "8px 24px",
+                      border: "none",
+                      fontSize: 16,
+                      cursor: "pointer",
+                      transition: "background 0.3s",
+                    }}
+                  >
+                    Xóa
+                  </button>
+                )}
                 <button
                   type="button"
-                  className="danger"
-                  onClick={handleDeleteEvent}
+                  className="exit"
+                  onClick={closeModal}
+                  style={{
+                    background: "#fff",
+                    color: "#1e88e5",
+                    fontWeight: 700,
+                    borderRadius: 10,
+                    padding: "8px 24px",
+                    border: "1px solid #b3c6ff",
+                    fontSize: 16,
+                    cursor: "pointer",
+                    transition: "background 0.3s",
+                  }}
                 >
-                  Xóa
+                  Hủy
                 </button>
-              )}
-              <button type="button" className="exit" onClick={closeModal}>
-                Hủy
-              </button>
+              </div>
             </form>
           </div>
         </div>
       )}
+      <style>{`
+        @keyframes fadeInScale {
+          0% { opacity: 0; transform: scale(0.95); }
+          100% { opacity: 1; transform: scale(1); }
+        }
+        .rbc-event, .rbc-selected {
+          transition: box-shadow 0.3s, background 0.3s, color 0.3s;
+        }
+        .rbc-event:active, .rbc-event:focus, .rbc-selected {
+          box-shadow: 0 4px 16px #1e88e522;
+          background: linear-gradient(90deg, #c2e9fb 0%, #a1c4fd 100%) !important;
+          color: #0d47a1 !important;
+        }
+        .rbc-today {
+          background: #e3f2fd !important;
+          transition: background 0.3s;
+        }
+        .rbc-toolbar button {
+          background: linear-gradient(90deg, #a1c4fd 0%, #c2e9fb 100%);
+          color: #1e88e5;
+          font-weight: 600;
+          border-radius: 8px;
+          border: none;
+          margin: 0 2px;
+          transition: background 0.3s, color 0.3s;
+        }
+        .rbc-toolbar button:active, .rbc-toolbar button:focus {
+          background: #1e88e5;
+          color: #fff;
+        }
+        .rbc-toolbar-label {
+          color: #1e88e5;
+          font-weight: 700;
+          font-size: 20px;
+        }
+      `}</style>
     </div>
   );
 };
