@@ -22,8 +22,8 @@ Một hệ thống quản lý cửa hàng hiện đại được phát triển v
 
 - **Frontend**: React.js + TailwindCSS / Bootstrap
 - **Backend**: Node.js + Express.js
-- **Cơ sở dữ liệu**: MySQL / MongoDB (tuỳ cấu hình)
-- **Giao tiếp**: RESTful API / WebSocket (nếu có real-time)
+- **Cơ sở dữ liệu**: MongoDB
+- **Giao tiếp**: RESTful API 
 
 ---
 
